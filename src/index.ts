@@ -3,6 +3,7 @@ export * from "./hsv";
 export * from "./hsl";
 export * from "./rgb";
 export * from "./rgb-number";
+export * from "./cmyk";
 
 import {RGB} from "./rgb";
 

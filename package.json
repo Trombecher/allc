@@ -1,7 +1,8 @@
 {
     "name": "allc",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "A small typescript package for color conversion.",
+    "repository": "https://github.com/Trombecher/allc",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
