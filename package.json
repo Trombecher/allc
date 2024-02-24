@@ -1,0 +1,27 @@
+{
+    "name": "allc",
+    "version": "0.0.0",
+    "description": "A small typescript package for color conversion.",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "test": "vitest --no-watch"
+    },
+    "keywords": [
+        "color",
+        "colors",
+        "conversion"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "type": "module",
+    "author": "Tobias Hillemanns",
+    "license": "ISC",
+    "devDependencies": {
+        "vitest": "^1.3.1"
+    }
+}
