@@ -4,13 +4,14 @@ A small typescript package for color conversion.
 
 ## Color Models/Representations
 
-`allc` provides three color models in various representations:
+`allc` provides color models in various representations:
 
-- `Hex`
-- `RGBNumber`
+- `Hex` (sRGB)
+- `RGBNumber` (sRGB)
 - `RGB` (sRGB)
 - `HSV`
 - `HSL`
+- `CMYK`
 
 More models/representations might be added in the future.
 
