@@ -1,32 +1,46 @@
-# `allc`
+# Allc
 
 A small typescript package for color conversion.
 
 ## Color Models And Spaces
 
-`allc` provides color models in various representations:
+This library provides these:
 
-- sRGB
-  - Integer RGB 3x8bit + Hex
-  - Float RGB 3x32bit
-  - HSL
-  - HSB
-  - CMYK
+- `RGB<"sRGB">` (3x`number`)
+  - `RGBNumber` (3x`integer 0..=255`)
+  - `Hex` (3x`integer 0..=255`)
+  - `HSL` (3x`number`)
+  - `HSB` (3x`number`)
+- `CIE 1931 XYZ`
 
 The following color spaces are in development:
 
-- CIE 1931 XYZ
 - OKLAB
 - OKLCH
 - Display P3
+- Adobe RGB
 
-More models/representations might be added in the future.
+More color spaces might be added in the future.
+
+## How To Use This Library
+
+You can create colors by using the literal syntax `{r: ..., g: ..., b: ...}` or by using a factory function, like: `rgb(...)`.
+
+Converting between colors is straight forward. It uses the scheme `to{TARGET}From{SOURCE}` where `{TARGET}` and `{SOURCE}` are color spaces.
+
+This library does not have a fully featured conversion matrix (meaning, you cannot convert every type in every other **directly**). Instead, do the following:
+
+- `Hex` ↔ `RGBNumber` ↔ `RGB`
+- `HSL` ↔ `RGB`
+- `HSV` ↔ `RGB`
+
+From there you can convert to `CIE1931XYZ` and from there you can convert to any other type.
 
 ## Guarantees
 
 - This package does not throw.
 - Only types and functions are used.
-- This package is side effect free.
+- This package is side effect free (only pay for what you use).
 
 ## Implementation Decisions
 
@@ -35,9 +49,3 @@ No classes are used in this package. Although color conversions via chaining all
 This is an issue with JavaScript in general: bundlers are not able to minify object/class properties and functions because they might be accessed dynamically during runtime. Therefore, this package includes minified but still descriptive object properties (color channels) like `r`, `g` and `b` and type aliases for objects that will be compiled away. Independent functions operate on those objects (color models), allowing for tree shaking and a small bundle size.
 
 In source, color models are separated by file and accessed via re-exports by one import (`import {} from "allc"`) in library use. This prevents import hell from various subdirectories.
-
-### Naming
-
-Every color model is a type-alias, including primitives like `RGBNumber`. Functions that provide interconversion are named `to{TARGET}From{SOURCE}(...)`. They do not modify the source color which is ensured by a `Readonly<...>` wrapper.
-
-Functions that change the input color are named `{ACTION}{COLOR_MODEL}(...)`.

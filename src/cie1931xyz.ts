@@ -1,5 +1,5 @@
-import {SRGB} from "@/srgb";
 import {applyMatrix3X3, Matrix3X3} from "@/matrix";
+import {RGB} from "@/rgb";
 
 export type CIE1931XYZ = {
     x: number,
@@ -29,7 +29,7 @@ const SRGB_TO_CIE1931XYZ_MATRIX: Readonly<Matrix3X3> = [
  * the method described [here](https://en.wikipedia.org/wiki/SRGB#From_sRGB_to_CIE_XYZ).
  * @param from
  */
-export const toCIE1931XYZFromSRGB = ({r, g, b}: SRGB): CIE1931XYZ => {
+export const toCIE1931XYZFromSRGB = ({r, g, b}: RGB): CIE1931XYZ => {
     const [x, y, z] = applyMatrix3X3(
         sRGBToCIE1931XYZGammaExpandChannel(r),
         sRGBToCIE1931XYZGammaExpandChannel(g),

@@ -1,6 +1,6 @@
 {
     "name": "allc",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "description": "A small typescript package for color conversion.",
     "repository": "https://github.com/Trombecher/allc",
     "main": "./dist/index.js",
@@ -11,12 +11,23 @@
     "keywords": [
         "color",
         "colors",
-        "conversion"
+        "conversion",
+        "rgb",
+        "rgba",
+        "hsl",
+        "hsla",
+        "hsv",
+        "hsva",
+        "cie 1931 xyz"
     ],
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
+        },
+        "./rgb": {
+            "types": "./dist/rgb/index.d.ts",
+            "default": "./dist/rgb/index.js"
         },
         "./srgb": {
             "types": "./dist/srgb.d.ts",

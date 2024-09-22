@@ -1,25 +1,27 @@
 import {expect, test} from "vitest";
-import {RGB, toHCVFromRGB} from "../src";
-import {
-    randomSRGB, randomSRGBNumber,
-    SRGB,
-    toSRGBFromHSL,
-    toSRGBFromHSV,
-    toSRGBFromRGBNumber,
-    toSRGBFromSRGBNumber,
-    toSRGBNumberFromSRGB,
-} from "../src/srgb";
-import {HSL, toHSLFromHSV, toHSLFromSRGB} from "../src/hsl";
-import {toHSVFromHSL, toHSVFromSRGB} from "../src/hsv";
 
-function expectAboutEqual<T extends {[index: string]: number} | {
+import {toHCVFromRGB} from "../src";
+import {HSL, toHSLFromHSV, toHSLFromRGB} from "../src/hsl";
+import {toHSVFromHSL, toHSVFromRGB} from "../src/hsv";
+import {
+    randomRGB,
+    randomRGBNumber, stripHash,
+    toHexFromRGBNumber,
+    toRGBFromHSL,
+    toRGBFromHSV,
+    toRGBFromRGBNumber,
+    toRGBNumberFromHex,
+    toRGBNumberFromRGB,
+} from "../src/rgb";
+import {toSRGBFromCIE1931XYZ} from "../src/srgb";
+import {toCIE1931XYZFromSRGB} from "../src/cie1931xyz";
+
+const expectAboutEqual = <T extends {[index: string]: number} | {
     [index: number]: number
-}>(a: T, b: T, accuracy: number = 12) {
-    Object.keys(a).forEach(key => {
-        // @ts-ignore key matches.
-        expect(a[key] - b[key]).toBeLessThanOrEqual(.1 ** accuracy);
-    });
-}
+}>(a: T, b: T, accuracy: number = 12) => Object.keys(a).forEach(key => {
+    // @ts-ignore key matches.
+    expect(a[key] - b[key]).toBeLessThanOrEqual(.1 ** accuracy, `${a[key]} - ${b[key]}`);
+});
 
 test("toHCVFromRGB", () => {
     // Green
@@ -34,20 +36,20 @@ test("toHCVFromRGB", () => {
     ]);
 });
 
-test("sRGB <=> HSL(sRGB)", () => {
+test("RGB <=> HSL", () => {
     // Yellow
     expectAboutEqual({
         r: 1,
         g: 1,
         b: 0
-    }, toSRGBFromHSL({
+    }, toRGBFromHSL({
         h: 60,
         s: 1,
         l: .5
     }));
 
     // Blue
-    expectAboutEqual(toHSLFromSRGB({
+    expectAboutEqual(toHSLFromRGB({
         r: 0,
         g: 0,
         b: 1,
@@ -57,17 +59,17 @@ test("sRGB <=> HSL(sRGB)", () => {
         l: .5
     });
 
-    const rgb = randomSRGB();
-    expectAboutEqual(rgb, toSRGBFromHSL(toHSLFromSRGB(rgb)));
+    const rgb = randomRGB();
+    expectAboutEqual(rgb, toRGBFromHSL(toHSLFromRGB(rgb)));
 });
 
-test("sRGB <=> HSV(sRGB)", () => {
-    const rgb = randomSRGB();
-    expectAboutEqual(rgb, toSRGBFromHSV(toHSVFromSRGB(rgb)));
+test("RGB <=> HSV", () => {
+    const rgb = randomRGB();
+    expectAboutEqual(rgb, toRGBFromHSV(toHSVFromRGB(rgb)));
 });
 
 test("HSL <=> HSV", () => {
-    const hsl: Readonly<HSL<RGB>> = {
+    const hsl: Readonly<HSL> = {
         h: 50,
         s: 0.5,
         l: 0.5,
@@ -75,13 +77,13 @@ test("HSL <=> HSV", () => {
     expectAboutEqual(hsl, toHSLFromHSV(toHSVFromHSL(hsl)));
 });
 
-test("SRGB <=> SRGBNumber", () => {
+test("RGB <=> RGBNumber", () => {
     for(let i = 0; i < 100; i++) {
-        const rgb = randomSRGB();
-        expectAboutEqual(rgb, toSRGBFromSRGBNumber(toSRGBNumberFromSRGB(rgb)), 2);
+        const rgb = randomRGB();
+        expectAboutEqual(rgb, toRGBFromRGBNumber(toRGBNumberFromRGB(rgb)), 2);
 
-        const rgbNumber = randomSRGBNumber();
-        expect(rgbNumber).toBe(toSRGBNumberFromSRGB(toSRGBFromSRGBNumber(rgbNumber)));
+        const rgbNumber = randomRGBNumber();
+        expect(rgbNumber).toBe(toRGBNumberFromRGB(toRGBFromRGBNumber(rgbNumber)));
     }
 });
 
@@ -94,10 +96,7 @@ test("RGBNumber <=> Hex", () => {
     expect(stripHash(hex)).toBe(toHexFromRGBNumber(toRGBNumberFromHex(hex)));
 });
 
-test("RGB <=> CMYK", () => {
-    const rgb = randomRGB();
-    expectAboutEqual(rgb, toRGBFromCMYK(toCMYKFromRGB(rgb)));
-
-    const cmyk = toCMYKFromRGB(randomRGB());
-    expectAboutEqual(cmyk, toCMYKFromRGB(toRGBFromCMYK(cmyk)));
+test("SRGB <=> CIE 1931 XYZ", () => {
+    const srgb = randomRGB();
+    expectAboutEqual(toSRGBFromCIE1931XYZ(toCIE1931XYZFromSRGB(srgb)), srgb, 4);
 });

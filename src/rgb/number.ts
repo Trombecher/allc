@@ -1,6 +1,5 @@
 import {Hex, stripHash} from "./hex";
-import {RGB} from "@/rgb";
-import {SRGB} from "@/srgb";
+import {RGB, RGBColorSpace} from "@/rgb";
 
 /**
  * An integer number in range [0, 16777216) (24 bits)
@@ -17,17 +16,19 @@ import {SRGB} from "@/srgb";
  * ```
  */
 // @ts-ignore
-export type RGBNumber<ColorSpace extends RGB = SRGB> = number;
+export type RGBNumber<CS extends RGBColorSpace = "srgb"> = number;
 
 /**
  * Generates a random RGB number in the given color space.
  */
-export const randomRGBNumber = <ColorSpace extends RGB = SRGB>(): RGBNumber<ColorSpace> => Math.round(Math.random() * 2 ** 24);
+export const randomRGBNumber = <CS extends RGBColorSpace = "srgb">(): RGBNumber<CS> => Math.round(Math.random() * 2 ** 24);
 
-export const toRGBNumberFromHex = <ColorSpace extends RGB = SRGB>(hex: Hex<ColorSpace>): RGBNumber<ColorSpace> =>
-    parseInt(stripHash(hex), 16);
+/**
+ * Strips the hashtag if there is one.
+ */
+export const toRGBNumberFromHex = <CS extends RGBColorSpace>(hex: Hex<CS>): RGBNumber<CS> => parseInt(stripHash(hex), 16);
 
-export const toRGBNumberFromSRGB = ({r, g, b}: Readonly<SRGB>): RGBNumber =>
+export const toRGBNumberFromRGB = ({r, g, b}: Readonly<RGB>): RGBNumber =>
     (scale(r) << 16) | (scale(g) << 8) | scale(b);
 
 const scale = (x: number) => Math.round(x * 255);
