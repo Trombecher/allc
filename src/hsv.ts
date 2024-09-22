@@ -1,11 +1,16 @@
 import {HSL} from "./hsl";
-import {RGB} from "./rgb";
 import {clamp01, toHCVFromRGB} from "./index";
+import {SRGB} from "@/srgb";
+import {RGB} from "@/rgb";
 
 /**
- * A representation of the [HSV color model](https://en.wikipedia.org/wiki/HSL_and_HSV).
+ * The **H**ue **S**aturation **V**alue color model.
+ *
+ * This is an alternative representation of a RGB color.
+ * Read more [here](https://en.wikipedia.org/wiki/HSL_and_HSV).
  */
-export type HSV = {
+// @ts-ignore
+export type HSV<Source extends RGB> = {
     /** The hue component in range [0, 360) */
     h: number;
     /** The saturation component in range [0; 1] */
@@ -15,11 +20,9 @@ export type HSV = {
 }
 
 /**
- * Converts {@link HSL} to {@link HSV}.
- *
- * Based on https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_HSV.
+ * Conversion based off https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_HSV.
  */
-export function toHSVFromHSL({h, s, l}: Readonly<HSL>): HSV {
+export function toHSVFromHSL<Source extends RGB>({h, s, l}: Readonly<HSL<Source>>): HSV<Source> {
     const v = l + s * Math.min(l, 1 - l);
     return {
         h,
@@ -29,12 +32,10 @@ export function toHSVFromHSL({h, s, l}: Readonly<HSL>): HSV {
 }
 
 /**
- * Converts {@link RGB} to {@link HSV}.
- *
- * Based on https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB.
+ * Conversion based off https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB.
  */
-export function toHSVFromRGB(rgb: RGB): HSV {
-    const [h, c, v] = toHCVFromRGB(rgb);
+export function toHSVFromSRGB(srgb: SRGB): HSV<SRGB> {
+    const [h, c, v] = toHCVFromRGB(srgb);
     return {
         h,
         s: v === 0 ? 0 : c / v,
@@ -43,26 +44,9 @@ export function toHSVFromRGB(rgb: RGB): HSV {
 }
 
 /**
- * Creates a random {@link HSV} color.
- *
- * This is not a uniform distribution due to
- * [the HSV color model](https://en.wikipedia.org/wiki/HSL_and_HSV#Basic_principle);
- * darker colors are less dense and therefore more likely.
- * If you want a uniform distribution, use {@link randomRGB}
- * and {@link toHSVFromRGB} to convert to {@link HSV}.
- */
-export function randomHSV(): HSV {
-    return {
-        h: Math.random(),
-        s: Math.random(),
-        v: Math.random(),
-    }
-}
-
-/**
  * Ensures that all components are in their ranges.
  */
-export function clampHSV(hsv: HSV) {
+export function clampHSV(hsv: HSV<RGB>) {
     hsv.h = (hsv.h % 360 + 360) % 360;
     hsv.s = clamp01(hsv.s);
     hsv.v = clamp01(hsv.v);

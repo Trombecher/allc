@@ -2,16 +2,23 @@
 
 A small typescript package for color conversion.
 
-## Color Models/Representations
+## Color Models And Spaces
 
 `allc` provides color models in various representations:
 
-- `Hex` (sRGB)
-- `RGBNumber` (sRGB)
-- `RGB` (sRGB)
-- `HSV`
-- `HSL`
-- `CMYK`
+- sRGB
+  - Integer RGB 3x8bit + Hex
+  - Float RGB 3x32bit
+  - HSL
+  - HSB
+  - CMYK
+
+The following color spaces are in development:
+
+- CIE 1931 XYZ
+- OKLAB
+- OKLCH
+- Display P3
 
 More models/representations might be added in the future.
 

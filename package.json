@@ -17,13 +17,34 @@
         ".": {
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
+        },
+        "./srgb": {
+            "types": "./dist/srgb.d.ts",
+            "default": "./dist/srgb.js"
+        },
+        "./hsl": {
+            "types": "./dist/hsl.d.ts",
+            "default": "./dist/hsl.js"
+        },
+        "./hsv": {
+            "types": "./dist/hsv.d.ts",
+            "default": "./dist/hsv.js"
+        },
+        "./ok": {
+            "types": "./dist/ok.d.ts",
+            "default": "./dist/ok.js"
+        },
+        "./cie1931xyz": {
+            "types": "./dist/cie1931xyz.d.ts",
+            "default": "./dist/cie1931xyz.js"
         }
     },
     "type": "module",
     "author": "Tobias Hillemanns",
     "license": "ISC",
     "devDependencies": {
-        "vitest": "^1.3.1"
+        "vitest": "^2.1.1",
+        "typescript": "^5.6.2"
     },
     "files": [
         "src",
