@@ -1,4 +1,4 @@
-import {WithAlpha} from "./index.js";
+import {Tagged, WithAlpha} from "./index.js";
 import {HSL} from "./hsl.js";
 import {HSV} from "./hsv.js";
 
@@ -13,9 +13,7 @@ export type RGB<ColorSpace extends RGBColorSpace = "srgb"> = {
     b: number,
 };
 
-export function toRGBFromRGBNumber<CS extends RGBColorSpace>(
-    rgbNumber: RGBNumber<CS>,
-): RGB<CS>;
+export function toRGBFromRGBNumber<CS extends RGBColorSpace>(rgbNumber: RGBNumber<CS>): RGB<CS>;
 
 /**
  * Creates a random {@link RGB} color from `Math.random()`.
@@ -25,16 +23,18 @@ export function randomRGB<CS extends RGBColorSpace>(): RGB<CS>;
 /**
  * Conversion based off https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB_alternative.
  */
-export function toRGBFromHSL<CS extends RGBColorSpace, C extends HSL<CS> | WithAlpha<HSL<CS>>>(
-    hsl: Readonly<C>
-): C extends WithAlpha ? WithAlpha<RGB<CS>> : RGB<CS>;
+export function toRGBFromHSL<CS extends RGBColorSpace>(hsl: Readonly<HSL<CS>>): RGB<CS>;
+export function toRGBFromHSL<CS extends RGBColorSpace>(hsl: Readonly<Tagged<HSL<CS>>>): Tagged<RGB<CS>>;
+export function toRGBFromHSL<CS extends RGBColorSpace>(hsl: Readonly<WithAlpha<HSL<CS>>>): WithAlpha<RGB<CS>>;
+export function toRGBFromHSL<CS extends RGBColorSpace>(hsl: Readonly<Tagged<WithAlpha<HSL<CS>>>>): Tagged<WithAlpha<RGB<CS>>>;
 
 /**
  * Conversion based off https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB_alternative.
  */
-export function toRGBFromHSV<CS extends RGBColorSpace>(
-    hsv: Readonly<HSV<CS>>
-): RGB<CS>;
+export function toRGBFromHSV<CS extends RGBColorSpace>(hsv: Readonly<HSV<CS>>): RGB<CS>;
+export function toRGBFromHSV<CS extends RGBColorSpace>(hsv: Readonly<Tagged<HSV<CS>>>): Tagged<RGB<CS>>;
+export function toRGBFromHSV<CS extends RGBColorSpace>(hsv: Readonly<WithAlpha<HSV<CS>>>): WithAlpha<RGB<CS>>;
+export function toRGBFromHSV<CS extends RGBColorSpace>(hsv: Readonly<Tagged<WithAlpha<HSV<CS>>>>): Tagged<WithAlpha<RGB<CS>>>;
 
 // ---- RGBNumber ----
 
@@ -62,13 +62,9 @@ export function randomRGBNumber<CS extends RGBColorSpace>(): RGBNumber<CS>;
 /**
  * Strips the hashtag if there is one.
  */
-export function toRGBNumberFromHex<CS extends RGBColorSpace>(
-    hex: Hex<CS>
-): RGBNumber<CS>;
+export function toRGBNumberFromHex<CS extends RGBColorSpace>(hex: Hex<CS>): RGBNumber<CS>;
 
-export function toRGBNumberFromRGB<CS extends RGBColorSpace>(
-    rgb: Readonly<RGB<CS>>
-): RGBNumber<CS>;
+export function toRGBNumberFromRGB<CS extends RGBColorSpace>(rgb: Readonly<RGB<CS>>): RGBNumber<CS>;
 
 // ---- Hex ----
 
@@ -86,6 +82,4 @@ export function stripHash<CS extends RGBColorSpace>(hex: string): Hex<CS>;
 /**
  * @returns The hex-string representation of the `rgbNumber`. A leading '#' is **not** added.
  */
-export function toHexFromRGBNumber<CS extends RGBColorSpace>(
-    rgbNumber: RGBNumber<CS>
-): Hex<CS>;
+export function toHexFromRGBNumber<CS extends RGBColorSpace>(rgbNumber: RGBNumber<CS>): Hex<CS>;

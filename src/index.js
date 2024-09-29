@@ -13,10 +13,10 @@ export let clampColor = color =>
     Object
         .keys(color)
         // Iterate over all property keys of `object`:
-        .forEach(key => (key !== "_" && key === "h"
+        .forEach(key => (key !== "_" && (key === "h"
             // Key `_` is ignored; key `h` is treated specially:
             ? (color.h = color.h < 0 ? color.h % 360 + 360 : color.h % 360)
-            : (color[key] = clamp01(color[key])), color));
+            : (color[key] = clamp01(color[key])), color)));
 
 export let lerp = (a, b, t) => a + (b - a) * t;
 

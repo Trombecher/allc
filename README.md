@@ -24,7 +24,7 @@ More color spaces might be added in the future.
 
 ## How To Use This Library
 
-You can create colors by using the literal syntax `{r: ..., g: ..., b: ...}` or by using a factory function, like: `rgb(...)`.
+You can create colors by using the literal syntax `{r: ..., g: ..., b: ...}`.
 
 Converting between colors is straight forward. It uses the scheme `to{TARGET}From{SOURCE}` where `{TARGET}` and `{SOURCE}` are color spaces.
 
@@ -42,10 +42,6 @@ From there you can convert to `CIE1931XYZ` and from there you can convert to any
 - Only types and functions are used.
 - This package is side effect free (only pay for what you use).
 
-## Implementation Decisions
+---
 
-No classes are used in this package. Although color conversions via chaining allow for great developer experience, the bundler would not be able to minify the class member function names. This would also block tree shaking and therefore include all color models and their interconversions by default when using only one model.
-
-This is an issue with JavaScript in general: bundlers are not able to minify object/class properties and functions because they might be accessed dynamically during runtime. Therefore, this package includes minified but still descriptive object properties (color channels) like `r`, `g` and `b` and type aliases for objects that will be compiled away. Independent functions operate on those objects (color models), allowing for tree shaking and a small bundle size.
-
-In source, color models are separated by file and accessed via re-exports by one import (`import {} from "allc"`) in library use. This prevents import hell from various subdirectories.
+The _implementation decisions_ section is gone; a replacement article will be published on https://trombecher.github.io/.

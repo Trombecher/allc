@@ -25,5 +25,6 @@ export let toHCVFromRGB = (
 
 export let conditionalAssign = (target, alpha, tag) => (
     alpha !== undefined && (target.a = alpha),
-    tag !== undefined && (target._ = tag)
+    tag !== undefined && (target._ = tag),
+        target
 );

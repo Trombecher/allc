@@ -1,6 +1,6 @@
 {
     "name": "allc",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A small typescript package for color conversion.",
     "repository": "https://github.com/Trombecher/allc",
     "main": "./dist/index.js",
@@ -22,32 +22,28 @@
     ],
     "exports": {
         ".": {
-            "types": "./dist/index.d.ts",
-            "default": "./dist/index.js"
+            "types": "./src/index.d.ts",
+            "default": "./src/index.js"
         },
         "./rgb": {
-            "types": "./dist/rgb/index.d.ts",
-            "default": "./dist/rgb/index.js"
+            "types": "./src/rgb.d.ts",
+            "default": "./src/rgb.js"
         },
         "./srgb": {
-            "types": "./dist/srgb.d.ts",
-            "default": "./dist/srgb.js"
+            "types": "./src/srgb.d.ts",
+            "default": "./src/srgb.js"
         },
         "./hsl": {
-            "types": "./dist/hsl.d.ts",
-            "default": "./dist/hsl.js"
+            "types": "./src/hsl.d.ts",
+            "default": "./src/hsl.js"
         },
         "./hsv": {
-            "types": "./dist/hsv.d.ts",
-            "default": "./dist/hsv.js"
-        },
-        "./ok": {
-            "types": "./dist/ok.d.ts",
-            "default": "./dist/ok.js"
+            "types": "./src/hsv.d.ts",
+            "default": "./src/hsv.js"
         },
         "./cie1931xyz": {
-            "types": "./dist/cie1931xyz.d.ts",
-            "default": "./dist/cie1931xyz.js"
+            "types": "./src/cie1931xyz.d.ts",
+            "default": "./src/cie1931xyz.js"
         }
     },
     "type": "module",
@@ -59,7 +55,6 @@
     },
     "files": [
         "src",
-        "dist",
         "README.md",
         "LICENSE"
     ]

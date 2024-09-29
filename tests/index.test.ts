@@ -1,10 +1,14 @@
 import {expect, test} from "vitest";
-import {clamp01, clampColor, lerp, lerpColor, tag} from "../src";
-import {rgb} from "../src/rgb";
-import {hsl} from "../src/hsl";
+import {clamp01, clampColor, lerp, lerpColor, tag, Tagged, WithAlpha} from "../src";
+import {RGB} from "../src/rgb";
+import {HSL} from "../src/hsl";
 
 test("tag", () => {
-    expect(tag("srgb", rgb(0, 0, 0))._).toBe("srgb");
+    expect(tag({
+        r: 1,
+        g: 1,
+        b: 1,
+    }, "srgb")._).toBe("srgb");
 });
 
 test("clamp01", () => {
@@ -22,20 +26,58 @@ test("lerp", () => {
 });
 
 test("lerpColor", () => {
-    expect(lerpColor(
-        rgb(0, 1, 0, 0),
-        rgb(1, .5, 0, 1),
+    expect(lerpColor<WithAlpha<RGB>>(
+        {
+            r: 0,
+            g: 1,
+            b: 0,
+            a: 0,
+        },
+        {
+            r: 1,
+            g: .5,
+            b: 0,
+            a: 1,
+        },
         .5
-    )).toEqual(rgb(.5, .75, 0, .5));
+    )).toEqual({
+        r: .5,
+        g: .75,
+        b: 0,
+        a: .5
+    });
 });
 
 test("clampColor", () => {
-    expect(clampColor(rgb(-34, 0.2, 45325, 4))).toEqual({
+    const c1: Tagged<WithAlpha<RGB>> = {
+        r: -34,
+        g: 0.2,
+        b: 45325,
+        a: 4,
+        _: "srgb"
+    };
+
+    clampColor(c1);
+
+    expect(c1).toEqual({
         r: 0,
         g: 0.2,
         b: 1,
         a: 1,
+        _: "srgb"
     });
 
-    expect(clampColor(hsl(-400, 23.5, -4))).toEqual(hsl(320, 1, 0));
+    const c2: HSL = {
+        h: -400,
+        s: 23.5,
+        l: -4,
+    };
+
+    clampColor(c2);
+
+    expect(c2).toEqual({
+        h: 320,
+        s: 1,
+        l: 0
+    });
 });

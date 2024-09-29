@@ -1,12 +1,12 @@
-import {conditionalAssign, toHCVFromRGB} from "./internal";
+import {conditionalAssign, mathMin, toHCVFromRGB} from "./internal";
 
 export let toHSVFromHSL = (
     {h, s, l, a, _},
-    v = l + s * Math.min(l, 1 - l)
+    v = l + s * mathMin(l, 1 - l)
 ) => conditionalAssign({
     h,
-    s,
-    v: v === 0 ? 0 : 2 * (1 - l / v),
+    s: v === 0 ? 0 : 2 * (1 - l / v),
+    v,
 }, a, _);
 
 export let toHSVFromRGB = (
