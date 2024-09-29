@@ -1,6 +1,5 @@
 import {expect, test} from "vitest";
 
-import {toHCVFromRGB} from "../src";
 import {HSL, toHSLFromHSV, toHSLFromRGB} from "../src/hsl";
 import {toHSVFromHSL, toHSVFromRGB} from "../src/hsv";
 import {
@@ -15,6 +14,7 @@ import {
 } from "../src/rgb";
 import {toSRGBFromCIE1931XYZ} from "../src/srgb";
 import {toCIE1931XYZFromSRGB} from "../src/cie1931xyz";
+import {toHCVFromRGB} from "../src/internal";
 
 const expectAboutEqual = <T extends {[index: string]: number} | {
     [index: number]: number

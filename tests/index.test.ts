@@ -1,6 +1,6 @@
 import {expect, test} from "vitest";
 import {clamp01, clampColor, lerp, lerpColor, tag} from "../src";
-import {rgb, rgba} from "../src/rgb";
+import {rgb} from "../src/rgb";
 import {hsl} from "../src/hsl";
 
 test("tag", () => {
@@ -23,14 +23,14 @@ test("lerp", () => {
 
 test("lerpColor", () => {
     expect(lerpColor(
-        rgba(0, 1, 0, 0),
-        rgba(1, .5, 0, 1),
+        rgb(0, 1, 0, 0),
+        rgb(1, .5, 0, 1),
         .5
-    )).toEqual(rgba(.5, .75, 0, .5));
+    )).toEqual(rgb(.5, .75, 0, .5));
 });
 
 test("clampColor", () => {
-    expect(clampColor(rgba(-34, 0.2, 45325, 4))).toEqual({
+    expect(clampColor(rgb(-34, 0.2, 45325, 4))).toEqual({
         r: 0,
         g: 0.2,
         b: 1,
