@@ -1,7 +1,7 @@
 import {expect, test} from "vitest";
 
-import {HSL, toHSLFromHSV, toHSLFromRGB} from "../src/hsl";
-import {toHSVFromHSL, toHSVFromRGB} from "../src/hsv";
+import {HSL, toHSLFromHSV, toHSLFromRGB} from "../old_src/hsl";
+import {toHSVFromHSL, toHSVFromRGB} from "../old_src/hsv";
 import {
     randomRGB,
     randomRGBNumber, stripHash,
@@ -11,10 +11,10 @@ import {
     toRGBFromRGBNumber,
     toRGBNumberFromHex,
     toRGBNumberFromRGB,
-} from "../src/rgb";
-import {toSRGBFromCIE1931XYZ} from "../src/srgb";
-import {toCIE1931XYZFromSRGB} from "../src/cie1931xyz";
-import {toHCVFromRGB} from "../src/internal";
+} from "../old_src/rgb";
+import {toSRGBFromCIE1931XYZ} from "../old_src/srgb";
+import {toCIE1931XYZFromSRGB} from "../old_src/cie1931xyz";
+import {toHCVFromRGB} from "../old_src/internal";
 
 const expectAboutEqual = <T extends {[index: string]: number} | {
     [index: number]: number

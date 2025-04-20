@@ -1,5 +1,5 @@
 import {expect, test} from "vitest";
-import {conditionalAssign} from "../src/internal";
+import {conditionalAssign} from "../old_src/internal";
 
 test("conditionalAssign", () => {
     expect(conditionalAssign({

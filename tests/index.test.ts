@@ -1,7 +1,7 @@
 import {expect, test} from "vitest";
-import {clamp01, clampColor, lerp, lerpColor, tag, Tagged, WithAlpha} from "../src";
-import {RGB} from "../src/rgb";
-import {HSL} from "../src/hsl";
+import {clamp01, clampColor, lerp, lerpColor, tag, Tagged, WithAlpha} from "../old_src";
+import {RGB} from "../old_src/rgb";
+import {HSL} from "../old_src/hsl";
 
 test("tag", () => {
     expect(tag({

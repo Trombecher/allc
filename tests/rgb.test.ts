@@ -6,7 +6,7 @@ import {
     toRGBFromRGBNumber,
     toRGBNumberFromHex,
     toRGBNumberFromRGB,
-} from "../src/rgb";
+} from "../old_src/rgb";
 
 test("randomRGBNumber", () => {
     const color = randomRGBNumber();

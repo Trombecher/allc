@@ -1,6 +1,6 @@
 {
     "name": "allc",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "A small typescript package for color conversion.",
     "repository": "https://github.com/Trombecher/allc",
     "main": "./dist/index.js",
@@ -18,43 +18,26 @@
         "hsla",
         "hsv",
         "hsva",
-        "cie 1931 xyz"
+        "cie 1931 xyz",
+        "oklab",
+        "oklch"
     ],
     "exports": {
         ".": {
-            "types": "./src/index.d.ts",
-            "default": "./src/index.js"
-        },
-        "./rgb": {
-            "types": "./src/rgb.d.ts",
-            "default": "./src/rgb.js"
-        },
-        "./srgb": {
-            "types": "./src/srgb.d.ts",
-            "default": "./src/srgb.js"
-        },
-        "./hsl": {
-            "types": "./src/hsl.d.ts",
-            "default": "./src/hsl.js"
-        },
-        "./hsv": {
-            "types": "./src/hsv.d.ts",
-            "default": "./src/hsv.js"
-        },
-        "./cie1931xyz": {
-            "types": "./src/cie1931xyz.d.ts",
-            "default": "./src/cie1931xyz.js"
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
         }
     },
     "type": "module",
     "author": "Tobias Hillemanns",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
-        "vitest": "^2.1.1",
-        "typescript": "^5.6.2"
+        "vitest": "^3.1.1",
+        "typescript": "^5.8.3"
     },
     "files": [
         "src",
+        "dist",
         "README.md",
         "LICENSE"
     ]
