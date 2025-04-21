@@ -1,5 +1,13 @@
 import {LAB, PerceptualColorSpace} from "./lab";
-import {clamp01, D_65_XN, D_65_YN, D_65_ZN, Matrix3x3, matrixTimesVector} from "./internal";
+import {
+    clamp01,
+    D_65_XN,
+    D_65_YN,
+    D_65_ZN,
+    Matrix3x3,
+    matrixTimesVector,
+    sharedDistanceImplementation,
+} from "./internal";
 import {LinearRGB} from "./lrgb";
 import {RGBColorSpace} from "./rgb";
 import {Color} from "./common";
@@ -76,6 +84,8 @@ export class CIE1931XYZ implements Color<CIE1931XYZ> {
         public readonly z: number,
     ) {
     }
+
+    distance = sharedDistanceImplementation;
 
     clamp(): CIE1931XYZ {
         return new CIE1931XYZ(

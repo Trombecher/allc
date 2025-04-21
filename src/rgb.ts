@@ -1,7 +1,7 @@
 import {HSV} from "./hsv";
 import {HSL} from "./hsl";
 import {LinearRGB} from "./lrgb";
-import {clamp01} from "./internal";
+import {clamp01, sharedDistanceImplementation} from "./internal";
 import {Color} from "./common";
 
 /**
@@ -56,8 +56,10 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     ) {
     }
 
-    toCSS(_withAlpha?: number): string {
-        throw new Error("Method not implemented."); // TODO
+    distance = sharedDistanceImplementation;
+
+    toCSS(withAlpha?: number): string {
+        return `rgb(${this.r} ${this.g} ${this.b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }
 
     /**

@@ -1,5 +1,7 @@
 import {HSV} from "./hsv";
 import {RGBColorSpace, RGB} from "./rgb";
+import {Color} from "./common";
+import {clamp01, sharedDistanceImplementation} from "./internal";
 
 /**
  * Represents a color in the HSL (Hue, Saturation, Lightness) color model.
@@ -9,7 +11,7 @@ import {RGBColorSpace, RGB} from "./rgb";
  * @template S The underlying color space.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV
  */
-export class HSL<S extends RGBColorSpace> {
+export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
     constructor(
         public readonly h: number,
         public readonly s: number,
@@ -17,6 +19,21 @@ export class HSL<S extends RGBColorSpace> {
         public readonly _: S,
     ) {
     }
+
+    clamp(): HSL<S> {
+        return new HSL(
+            this.h,
+            clamp01(this.s),
+            clamp01(this.l),
+            this._,
+        )
+    }
+
+    toCSS(withAlpha?: number): string {
+        return `hsl(${this.h}rad ${this.s} ${this.l}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+    }
+
+    distance = sharedDistanceImplementation;
 
     /**
      * Converts the current color to {@link RGB `RGB`}.
