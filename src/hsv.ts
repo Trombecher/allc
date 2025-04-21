@@ -1,7 +1,7 @@
 import {RGBColorSpace, RGB} from "./rgb";
 import {HSL} from "./hsl";
 import {clamp01, sharedDistanceImplementation} from "./internal";
-import {Color} from "./common";
+import {Color} from "./index";
 
 /**
  * Represents a color in the HSV (Hue, Saturation, Value / Brightness) color model.
@@ -24,7 +24,9 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
         return `hsv(${this.h}rad ${this.s} ${this.v}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }
 
-    distance = sharedDistanceImplementation;
+    distance(other: HSV<S>) {
+        return sharedDistanceImplementation(this, other);
+    }
 
     clamp(): HSV<S> {
         return new HSV(
@@ -69,6 +71,16 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
             (l === 0 || l === 1) ? 0 : (this.v - l) / Math.min(l, 1 - l),
             l,
             this._,
+        );
+    }
+
+    // TODO: docs
+    static random<S extends RGBColorSpace>(colorSpace: S): HSV<S> {
+        return new HSV(
+            Math.random() * Math.PI * 2,
+            Math.random(),
+            Math.random(),
+            colorSpace
         );
     }
 }

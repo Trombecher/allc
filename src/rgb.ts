@@ -2,7 +2,7 @@ import {HSV} from "./hsv";
 import {HSL} from "./hsl";
 import {LinearRGB} from "./lrgb";
 import {clamp01, sharedDistanceImplementation} from "./internal";
-import {Color} from "./common";
+import {Color} from "./index";
 
 /**
  * A color space that has RGB as its default color model.
@@ -56,7 +56,9 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     ) {
     }
 
-    distance = sharedDistanceImplementation;
+    distance(other: RGB<S>) {
+        return sharedDistanceImplementation(this, other);
+    }
 
     toCSS(withAlpha?: number): string {
         return `rgb(${this.r} ${this.g} ${this.b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
@@ -229,6 +231,16 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
             nanTo0(parseInt(hex.slice(4, 6), 16)),
             colorSpace,
         );
+    }
+
+    // TODO: docs
+    static random<S extends RGBColorSpace>(colorSpace: S): RGB<S> {
+        return new RGB(
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            colorSpace
+        )
     }
 }
 

@@ -1,6 +1,6 @@
 import {HSV} from "./hsv";
 import {RGBColorSpace, RGB} from "./rgb";
-import {Color} from "./common";
+import {Color} from "./index";
 import {clamp01, sharedDistanceImplementation} from "./internal";
 
 /**
@@ -33,7 +33,9 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
         return `hsl(${this.h}rad ${this.s} ${this.l}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }
 
-    distance = sharedDistanceImplementation;
+    distance(other: HSL<S>) {
+        return sharedDistanceImplementation(this, other);
+    }
 
     /**
      * Converts the current color to {@link RGB `RGB`}.
@@ -71,6 +73,16 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
             value === 0 ? 0 : 2 * (1 - this.l / value),
             value,
             this._
+        );
+    }
+
+    // TODO: docs
+    static random<S extends RGBColorSpace>(colorSpace: S): HSL<S> {
+        return new HSL(
+            Math.random() * Math.PI * 2,
+            Math.random(),
+            Math.random(),
+            colorSpace
         );
     }
 }
