@@ -99,14 +99,7 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
         const chroma = max - min;
 
         const lightness = (max + min) / 2;
-
-        const hue = chroma === 0
-            ? 0
-            : max === this.r
-                ? Math.PI / 3 * (((this.g - this.b) / chroma) % 6)
-                : max === this.g
-                    ? Math.PI / 3 * (2 + (this.b - this.r) / chroma)
-                    : Math.PI / 3 * (4 + (this.r - this.g) / chroma);
+        const hue = calcHue(this, chroma, max);
 
         const saturation = (lightness === 0 || lightness === 1)
             ? 0
@@ -131,8 +124,8 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
         const min = Math.min(this.r, this.g, this.b);
         const chroma = value - min;
 
-        const hue = chroma === 0 ? 0 : Math.PI / 3 * chroma / (1 - Math.abs(2 * value - 1));
-        const saturation = chroma === 0 ? 0 : chroma / value;
+        const hue = calcHue(this, chroma, value);
+        const saturation = value === 0 ? 0 : chroma / value;
 
         return new HSV(
             hue,
@@ -255,3 +248,9 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
 }
 
 const nanTo0 = (x: number) => isNaN(x) ? 0 : x;
+const calcHue = (rgb: RGB<RGBColorSpace>, chroma: number, max: number) => {
+    if(chroma === 0) return 0;
+    if(max === rgb.r) return Math.PI / 3 * (((rgb.g - rgb.b) / chroma) % 6);
+    if(max === rgb.g) return Math.PI / 3 * (2 + (rgb.b - rgb.r) / chroma);
+    return Math.PI / 3 * (4 + (rgb.r - rgb.g) / chroma);
+}

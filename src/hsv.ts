@@ -51,7 +51,7 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     toRGB(): RGB<S> {
         const f = (n: number) => {
             const k = (n + this.h * 3 / Math.PI) % 6;
-            return this.v - this.v * this.s + Math.max(0, Math.min(k, 4 - k, 1));
+            return this.v - this.v * this.s * Math.max(0, Math.min(k, 4 - k, 1));
         };
 
         return new RGB(

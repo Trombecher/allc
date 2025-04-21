@@ -3,25 +3,33 @@ import {HSV, RGB} from "../src";
 import {TOLERANCE} from "./common";
 
 const EXTREMA: [RGB<"sRGB">, HSV<"sRGB">][] = [
+    // Black / White
     [new RGB(0, 0, 0, "sRGB"), new HSV(0, 0, 0, "sRGB")],
-    [new RGB(0, 0, 0, "sRGB"), new HSV(0, 0, 0, "sRGB")],
+    [new RGB(0.5, 0.5, 0.5, "sRGB"), new HSV(0, 0, 0.5, "sRGB")],
+    [new RGB(1, 1, 1, "sRGB"), new HSV(0, 0, 1, "sRGB")],
+
+    // Corners
+    [new RGB(1, 0, 0, "sRGB"), new HSV(0, 1, 1, "sRGB")],
+    [new RGB(1, 1, 0, "sRGB"), new HSV(Math.PI / 3, 1, 1, "sRGB")],
+    [new RGB(0, 1, 0, "sRGB"), new HSV(2 * Math.PI / 3, 1, 1, "sRGB")],
+    [new RGB(0, 1, 1, "sRGB"), new HSV(Math.PI, 1, 1, "sRGB")],
+    [new RGB(0, 0, 1, "sRGB"), new HSV(4 * Math.PI / 3, 1, 1, "sRGB")],
+    [new RGB(1, 0, 1, "sRGB"), new HSV(5 * Math.PI / 3, 1, 1, "sRGB")],
 ];
 
-test("Extrema", () => {
-
-})
+test("Field", () => {
+    EXTREMA.forEach(([rgb, hsv]) => {
+        expect(rgb.toHSV().distance(hsv)).toBeLessThanOrEqual(TOLERANCE);
+        expect(hsv.toRGB().distance(rgb)).toBeLessThanOrEqual(TOLERANCE);
+    });
+});
 
 test("RGB -> HSV -> RGB", () => {
     for(let i = 0; i < 100; i++) {
         const rgb = RGB.random("sRGB");
-        console.log(rgb.toCSS());
-
         const hsv = rgb.toHSV();
-        console.log(hsv.toCSS());
-
         const rgb2 = hsv.toRGB();
-        console.log(rgb2.toCSS());
 
         expect(rgb2.distance(rgb)).toBeLessThanOrEqual(TOLERANCE);
     }
-})
+});
