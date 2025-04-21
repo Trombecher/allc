@@ -4,3 +4,4 @@ export * from "./rgb";
 export * from "./lrgb";
 export * from "./hsv";
 export * from "./hsl";
+export * from "./common";

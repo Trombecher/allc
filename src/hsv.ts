@@ -1,4 +1,4 @@
-import {EngineeringColorModelCompatibleAbsoluteColorSpace, RGB} from "./rgb";
+import {RGBColorSpace, RGB} from "./rgb";
 import {HSL} from "./hsl";
 import {clamp01} from "./internal";
 
@@ -10,7 +10,7 @@ import {clamp01} from "./internal";
  * @template S The underlying color space.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV
  */
-export class HSV<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
+export class HSV<S extends RGBColorSpace> {
     constructor(
         public readonly h: number,
         public readonly s: number,

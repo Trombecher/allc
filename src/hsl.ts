@@ -1,5 +1,5 @@
 import {HSV} from "./hsv";
-import {EngineeringColorModelCompatibleAbsoluteColorSpace, RGB} from "./rgb";
+import {RGBColorSpace, RGB} from "./rgb";
 
 /**
  * Represents a color in the HSL (Hue, Saturation, Lightness) color model.
@@ -9,7 +9,7 @@ import {EngineeringColorModelCompatibleAbsoluteColorSpace, RGB} from "./rgb";
  * @template S The underlying color space.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV
  */
-export class HSL<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
+export class HSL<S extends RGBColorSpace> {
     constructor(
         public readonly h: number,
         public readonly s: number,

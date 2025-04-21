@@ -1,6 +1,6 @@
-# All Colors
+<h1 align="center">All Colors (allc)</h1>
 
-A small TypeScript package for color management.
+<p align="center">A small TypeScript package for color management.</p>
 
 ## Installation
 
@@ -8,7 +8,11 @@ A small TypeScript package for color management.
 bun i allc
 ```
 
+...or use your favourite package manager.
+
 ## Spaces, Models, and Conversions
+
+(All colors have the standard illuminant D65.)
 
 ![](./conversions.excalidraw.svg)
 
@@ -17,9 +21,16 @@ bun i allc
 - This package does not throw.
 - This package is side-effect-free (only pay for what you use).
 
-## Work In Progress
+## Planned Features
 
+* ProPhoto support
+* Rec. 2020 support
 * Rec. 2100 support
+* HSI color model support
+* HWB color model support
+* D50 support
+
+If you would like to implement one of these features, feel free to submit a PR :)
 
 ## License
 

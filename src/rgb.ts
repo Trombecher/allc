@@ -2,8 +2,12 @@ import {HSV} from "./hsv";
 import {HSL} from "./hsl";
 import {LinearRGB} from "./lrgb";
 import {clamp01} from "./internal";
+import {Color} from "./common";
 
-export type EngineeringColorModelCompatibleAbsoluteColorSpace =
+/**
+ * A color space that has RGB as its default color model.
+ */
+export type RGBColorSpace =
     "Display P3"
     | "Adobe RGB"
     | "sRGB";
@@ -15,8 +19,7 @@ const sRGBTransferFunction = (x: number) => x <= 0.04045
     ? x / 12.92
     : Math.pow((x + 0.055) / 1.055, 2.4)
 
-// TODO
-const LINEARIZE_MAP: Record<EngineeringColorModelCompatibleAbsoluteColorSpace, (x: number) => number> = {
+const LINEARIZE_MAP: Record<RGBColorSpace, (x: number) => number> = {
     "sRGB": sRGBTransferFunction,
     "Display P3": sRGBTransferFunction,
 
@@ -31,15 +34,30 @@ const LINEARIZE_MAP: Record<EngineeringColorModelCompatibleAbsoluteColorSpace, (
  * * sRGB
  * * Display P3
  * * Adobe RGB
- * * Adobe Wide Gamut RGB
  */
-export class RGB<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
+export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     constructor(
+        /**
+         * The red channel.
+         */
         public readonly r: number,
+        /**
+         * The green channel.
+         */
         public readonly g: number,
+        /**
+         * The blue channel.
+         */
         public readonly b: number,
+        /**
+         * The color space.
+         */
         public readonly _: S,
     ) {
+    }
+
+    toCSS(_withAlpha?: number): string {
+        throw new Error("Method not implemented."); // TODO
     }
 
     /**
@@ -48,15 +66,10 @@ export class RGB<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
      * @param newColorSpace The target absolute color space model to cast to.
      * @returns A new RGB instance within the specified absolute color space.
      */
-    cast<B extends EngineeringColorModelCompatibleAbsoluteColorSpace>(newColorSpace: B): RGB<B> {
+    cast<B extends RGBColorSpace>(newColorSpace: B): RGB<B> {
         return new RGB(this.r, this.g, this.b, newColorSpace);
     }
 
-    /**
-     * Clamps the RGB color channel values to ensure they are within the range [0, 1].
-     *
-     * @return {RGB} A new RGB instance with clamped color channel values.
-     */
     clamp(): RGB<S> {
         return new RGB(
             clamp01(this.r),
@@ -121,7 +134,11 @@ export class RGB<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
         );
     }
 
-    // TODO: docs
+    /**
+     * Converts the current color to linear RGB by undoing gamma correction on the channels.
+     *
+     * @returns A new {@link LinearRGB `LinearRGB`} instance with the color values linearized.
+     */
     toLinearRGB(): LinearRGB<S> {
         const linearize = LINEARIZE_MAP[this._];
 
@@ -154,9 +171,9 @@ export class RGB<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
      *
      * @param integer The integer representation of the color.
      * @param colorSpace The color space of the color.
-     * @return {RGB} The RGB color instance.
+     * @returns The RGB color instance.
      */
-    static fromInteger<S extends EngineeringColorModelCompatibleAbsoluteColorSpace>(integer: number, colorSpace: S): RGB<S> {
+    static fromInteger<S extends RGBColorSpace>(integer: number, colorSpace: S): RGB<S> {
         return new RGB(
             ((integer >> 16) & 255) / 255,
             ((integer >> 8) & 255) / 255,
@@ -192,7 +209,7 @@ export class RGB<S extends EngineeringColorModelCompatibleAbsoluteColorSpace> {
      * @param colorSpace The color space of the color.
      * @returns The RGB color instance.
      */
-    static fromHex<S extends EngineeringColorModelCompatibleAbsoluteColorSpace>(hex: string, colorSpace: S): RGB<S> {
+    static fromHex<S extends RGBColorSpace>(hex: string, colorSpace: S): RGB<S> {
         if(hex.startsWith("#")) hex = hex.slice(1);
 
         if(hex.length <= 4) {
