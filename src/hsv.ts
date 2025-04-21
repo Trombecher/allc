@@ -1,6 +1,6 @@
 import {RGBColorSpace, RGB} from "./rgb";
 import {HSL} from "./hsl";
-import {clamp01, sharedDistanceImplementation} from "./internal";
+import {clamp01} from "./internal";
 import {Color} from "./index";
 
 /**
@@ -25,7 +25,12 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     }
 
     distance(other: HSV<S>) {
-        return sharedDistanceImplementation(this, other);
+        // Convert to 3D space and calculate Euclidean distance.
+        return Math.hypot(
+            this.s * Math.cos(this.h) - other.s * Math.cos(other.h),
+            this.s * Math.sin(this.h) - other.s * Math.sin(other.h),
+            this.v - other.v
+        )
     }
 
     clamp(): HSV<S> {

@@ -6,7 +6,6 @@ import {
     D_65_ZN,
     Matrix3x3,
     matrixTimesVector,
-    sharedDistanceImplementation,
 } from "./internal";
 import {Color} from "./index";
 import {LCH} from "./lch";
@@ -69,7 +68,11 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
     }
 
     distance(other: LAB<S>) {
-        return sharedDistanceImplementation(this, other);
+        return Math.hypot(
+            this.l - other.l,
+            this.a - other.a,
+            this.b - other.b,
+        )
     }
 
     clamp(): LAB<S> {

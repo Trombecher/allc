@@ -1,5 +1,5 @@
 import {CIE1931XYZ, Color} from "./index";
-import {clamp01, sharedDistanceImplementation} from "./internal";
+import {clamp01} from "./internal";
 
 /**
  * Represents a color in the CIE 1931 xyY color space.
@@ -32,7 +32,11 @@ export class Cie1931xyY implements Color<Cie1931xyY> {
     }
 
     distance(other: Cie1931xyY): number {
-        return sharedDistanceImplementation(this, other);
+        return Math.hypot(
+            this.x - other.x,
+            this.y - other.y,
+            this.Y - other.Y,
+        );
     }
 
     toCSS(withAlpha?: number): string {

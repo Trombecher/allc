@@ -6,7 +6,6 @@ import {
     D_65_ZN,
     Matrix3x3,
     matrixTimesVector,
-    sharedDistanceImplementation,
 } from "./internal";
 import {LinearRGB} from "./lrgb";
 import {RGBColorSpace} from "./rgb";
@@ -87,7 +86,11 @@ export class CIE1931XYZ implements Color<CIE1931XYZ> {
     }
 
     distance(other: CIE1931XYZ) {
-        return sharedDistanceImplementation(this, other);
+        return Math.hypot(
+            this.x - other.x,
+            this.y - other.y,
+            this.z - other.z,
+        );
     }
 
     clamp(): CIE1931XYZ {

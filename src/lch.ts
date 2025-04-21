@@ -1,5 +1,5 @@
 import {Color} from "./index";
-import {clamp01, sharedDistanceImplementation} from "./internal";
+import {clamp01} from "./internal";
 import {LAB, PerceptualColorSpace} from "./lab";
 
 /**
@@ -27,7 +27,12 @@ export class LCH<S extends PerceptualColorSpace> implements Color<LCH<S>> {
     }
 
     distance(other: LCH<S>) {
-        return sharedDistanceImplementation(this, other);
+        // Convert to LAB and then calculate Euclidean distance.
+        return Math.hypot(
+            this.l - other.l,
+            this.c * Math.cos(this.h) - other.c * Math.cos(other.h),
+            this.c * Math.sin(this.h) - other.c * Math.sin(other.h),
+        )
     }
 
     clamp(): LCH<S> {

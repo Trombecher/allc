@@ -1,4 +1,4 @@
-import {clamp01, Matrix3x3, matrixTimesVector, sharedDistanceImplementation, Vector3} from "./internal";
+import {clamp01, Matrix3x3, matrixTimesVector, Vector3} from "./internal";
 import {CIE1931XYZ} from "./cie1931xyz";
 import {RGBColorSpace, RGB} from "./rgb";
 import {Color} from "./index";
@@ -70,7 +70,11 @@ export class LinearRGB<S extends RGBColorSpace> implements Color<LinearRGB<S>> {
     }
 
     distance(other: LinearRGB<S>) {
-        return sharedDistanceImplementation(this, other);
+        return Math.hypot(
+            other.r - this.r,
+            other.g - this.g,
+            other.b - this.b,
+        )
     }
 
     clamp(): LinearRGB<S> {

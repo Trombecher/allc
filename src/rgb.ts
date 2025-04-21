@@ -1,7 +1,7 @@
 import {HSV} from "./hsv";
 import {HSL} from "./hsl";
 import {LinearRGB} from "./lrgb";
-import {clamp01, sharedDistanceImplementation} from "./internal";
+import {clamp01} from "./internal";
 import {Color} from "./index";
 
 /**
@@ -57,11 +57,15 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     }
 
     distance(other: RGB<S>) {
-        return sharedDistanceImplementation(this, other);
+        return Math.hypot(
+            other.r - this.r,
+            other.g - this.g,
+            other.b - this.b,
+        );
     }
 
     toCSS(withAlpha?: number): string {
-        return `rgb(${this.r} ${this.g} ${this.b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+        return `rgb(${this.r * 255} ${this.g * 255} ${this.b * 255}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }
 
     /**
@@ -233,7 +237,13 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
         );
     }
 
-    // TODO: docs
+    /**
+     * Creates a new random RGB color from a uniform distribution.
+     *
+     * Note that this does not create _perceptually uniform_ colors. For that purpose use Oklab.
+     *
+     * @param colorSpace The color space of the color.
+     */
     static random<S extends RGBColorSpace>(colorSpace: S): RGB<S> {
         return new RGB(
             Math.random(),

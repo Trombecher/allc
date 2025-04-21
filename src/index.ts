@@ -30,6 +30,7 @@ export interface Color<This extends Color<This>> {
     /**
      * Calculates the Euclidean difference between the current color and the given color.
      *
+     * @returns The Euclidean distance between the colors, a non-negative number.
      * @see https://en.wikipedia.org/wiki/Color_difference#Euclidean
      */
     distance(other: This): number;

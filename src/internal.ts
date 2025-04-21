@@ -14,19 +14,4 @@ export const D_65_XN = 95.0489;
 export const D_65_YN = 100;
 export const D_65_ZN = 108.884;
 
-const normalizeHue = (hue: number) => (hue + 2 * Math.PI) % (2 * Math.PI);
-
-export const sharedDistanceImplementation = <T extends object>(a: T, b: T): number => {
-    let total = 0;
-    Object.entries(a).forEach(([key, value]) => key !== "_"
-        && (total += key === "h"
-            // @ts-ignore
-            ? (value as number) - (b[key] as number)
-            // @ts-ignore
-            * (value as number) - (b[key] as number)
-            // @ts-ignore
-            : Math.pow(normalizeHue(value as number) - normalizeHue(b[key] as number), 2)),
-    );
-
-    return Math.sqrt(total);
-}
+export const normalizeHue = (hue: number) => (hue + 2 * Math.PI) % (2 * Math.PI);
