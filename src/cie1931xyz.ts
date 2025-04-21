@@ -10,7 +10,7 @@ import {
 import {LinearRGB} from "./lrgb";
 import {RGBColorSpace} from "./rgb";
 import {Color} from "./index";
-import {Cie1931xyY} from "./cie1931xyy";
+import {CIE1931xyY} from "./cie1931xyy";
 
 const cielabF = (t: number) => t > 216 / 24389
     ? Math.cbrt(t)
@@ -168,8 +168,8 @@ export class CIE1931XYZ implements Color<CIE1931XYZ> {
      *
      * @see https://en.wikipedia.org/wiki/CIE_1931_color_space#CIE_xyY_color_space
      */
-    toCIE1931xyY(): Cie1931xyY {
-        return new Cie1931xyY(
+    toCIE1931xyY(): CIE1931xyY {
+        return new CIE1931xyY(
             this.x / (this.x + this.y + this.z),
             this.y,
             this.y / (this.x + this.y + this.z),

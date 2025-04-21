@@ -33,3 +33,12 @@ test("RGB -> HSV -> RGB", () => {
         expect(rgb2.distance(rgb)).toBeLessThanOrEqual(TOLERANCE);
     }
 });
+
+test("RGB -> HSV -> RGB", () => {
+    for(let i = 0; i < 100; i++) {
+        const hsv = HSV.random("sRGB");
+        const hsv2 = hsv.toRGB().toHSV();
+
+        expect(hsv2.distance(hsv)).toBeLessThanOrEqual(TOLERANCE);
+    }
+});

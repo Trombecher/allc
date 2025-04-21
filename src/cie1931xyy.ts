@@ -6,7 +6,7 @@ import {clamp01} from "./internal";
  *
  * @see https://en.wikipedia.org/wiki/CIE_1931_color_space#CIE_xyY_color_space
  */
-export class Cie1931xyY implements Color<Cie1931xyY> {
+export class CIE1931xyY implements Color<CIE1931xyY> {
     constructor(
         /**
          * The x component, range [0, 1].
@@ -23,15 +23,15 @@ export class Cie1931xyY implements Color<Cie1931xyY> {
     ) {
     }
 
-    clamp(): Cie1931xyY {
-        return new Cie1931xyY(
+    clamp(): CIE1931xyY {
+        return new CIE1931xyY(
             clamp01(this.x),
             clamp01(this.y),
             clamp01(this.Y)
         )
     }
 
-    distance(other: Cie1931xyY): number {
+    distance(other: CIE1931xyY): number {
         return Math.hypot(
             this.x - other.x,
             this.y - other.y,

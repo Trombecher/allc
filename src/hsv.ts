@@ -79,7 +79,14 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
         );
     }
 
-    // TODO: docs
+    /**
+     * Creates a random color in the specified color space.
+     *
+     * Note that this function does not create _perceptually uniform_ colors. For that purpose use Oklab.
+     *
+     * @param colorSpace The color space of the color.
+     * @returns A new random color.
+     */
     static random<S extends RGBColorSpace>(colorSpace: S): HSV<S> {
         return new HSV(
             Math.random() * Math.PI * 2,
