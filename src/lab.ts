@@ -7,7 +7,7 @@ import {
     Matrix3x3,
     matrixTimesVector,
 } from "./internal";
-import {Color, RGBColorSpace} from "./index";
+import {Color} from "./index";
 import {LCH} from "./lch";
 
 /**
@@ -129,36 +129,5 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
             D_65_YN * cielabReverseF((this.l + 16) / 116),
             D_65_ZN * cielabReverseF((this.l + 16) / 116 - this.b / 200),
         );
-    }
-
-    /**
-     * Calculates the maximum possible chroma value in the specified target color space
-     * for a specified lightness and hue.
-     */
-    static maxChromaIn(
-        targetColorSpace: RGBColorSpace,
-        lightness: number,
-        hue: number,
-        perceptual: PerceptualColorSpace,
-    ): number {
-        let min = 0, max = 1;
-
-        // Magic number
-        while((max - min) > 0.00001) {
-            const mid = (min + max) / 2;
-
-            if(new LCH(lightness, mid, hue, perceptual)
-                .toLAB()
-                .toCIE1931XYZ()
-                .toLinearRGB(targetColorSpace)
-                .toRGB()
-                .isBounded()) {
-                min = mid;
-            } else {
-                max = mid;
-            }
-        }
-
-        return min;
     }
 }

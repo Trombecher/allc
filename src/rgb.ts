@@ -221,17 +221,17 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
 
         if(hex.length <= 4) {
             return new RGB(
-                nanTo0(parseInt(hex[0]!)),
-                nanTo0(parseInt(hex[1]!)),
-                nanTo0(parseInt(hex[2]!)),
+                nanTo0(parseInt(hex[0]!, 16)) / 15,
+                nanTo0(parseInt(hex[1]!, 16)) / 15,
+                nanTo0(parseInt(hex[2]!, 16)) / 15,
                 colorSpace,
             );
         }
 
         return new RGB(
-            nanTo0(parseInt(hex.slice(0, 2), 16)),
-            nanTo0(parseInt(hex.slice(2, 4), 16)),
-            nanTo0(parseInt(hex.slice(4, 6), 16)),
+            nanTo0(parseInt(hex.slice(0, 2), 16)) / 255,
+            nanTo0(parseInt(hex.slice(2, 4), 16)) / 255,
+            nanTo0(parseInt(hex.slice(4, 6), 16)) / 255,
             colorSpace,
         );
     }

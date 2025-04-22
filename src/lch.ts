@@ -1,4 +1,4 @@
-import {Color} from "./index";
+import {Color, RGBColorSpace} from "./index";
 import {clamp01} from "./internal";
 import {LAB, PerceptualColorSpace} from "./lab";
 
@@ -74,5 +74,36 @@ export class LCH<S extends PerceptualColorSpace> implements Color<LCH<S>> {
             Math.random() * Math.PI * 2,
             colorSpace
         );
+    }
+
+    /**
+     * Calculates the maximum possible chroma value in the specified target color space
+     * for a specified lightness and hue.
+     */
+    static maxChromaIn(
+        targetColorSpace: RGBColorSpace,
+        lightness: number,
+        hue: number,
+        perceptual: PerceptualColorSpace,
+    ): number {
+        let min = 0, max = 1;
+
+        // Magic number
+        while((max - min) > 0.0001) {
+            const mid = (min + max) / 2;
+
+            if(new LCH(lightness, mid, hue, perceptual)
+                .toLAB()
+                .toCIE1931XYZ()
+                .toLinearRGB(targetColorSpace)
+                .toRGB()
+                .isBounded()) {
+                min = mid;
+            } else {
+                max = mid;
+            }
+        }
+
+        return min;
     }
 }
