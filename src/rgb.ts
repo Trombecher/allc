@@ -56,6 +56,12 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return 0 <= this.r && this.r <= 1
+            && 0 <= this.g && this.g <= 1
+            && 0 <= this.b && this.b <= 1;
+    }
+
     distance(other: RGB<S>) {
         return Math.hypot(
             other.r - this.r,
@@ -160,10 +166,10 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
      * @return {number} The integer representation of the color.
      */
     toInteger(withAlpha: number = 0): number {
-        return (clamp01(withAlpha) * 255) << 24
-            | (clamp01(this.r) * 255) << 16
-            | (clamp01(this.g) * 255) << 8
-            | (clamp01(this.g) * 255);
+        return Math.round(clamp01(withAlpha) * 255) << 24
+            | Math.round(clamp01(this.r) * 255) << 16
+            | Math.round(clamp01(this.g) * 255) << 8
+            | Math.round(clamp01(this.b) * 255);
     }
 
     /**

@@ -20,13 +20,18 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return 0 <= this.s && this.s <= 1
+            && 0 <= this.l && this.l <= 1;
+    }
+
     clamp(): HSL<S> {
         return new HSL(
             this.h,
             clamp01(this.s),
             clamp01(this.l),
             this._,
-        )
+        );
     }
 
     toCSS(withAlpha?: number): string {
@@ -41,7 +46,7 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
         return Math.hypot(
             thisR * Math.cos(this.h) - otherR * Math.cos(other.h),
             thisR * Math.sin(this.h) - otherR * Math.sin(other.h),
-            this.l - other.l
+            this.l - other.l,
         );
     }
 
@@ -80,7 +85,7 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
             this.h,
             value === 0 ? 0 : 2 * (1 - this.l / value),
             value,
-            this._
+            this._,
         );
     }
 
@@ -97,7 +102,7 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
             Math.random() * Math.PI * 2,
             Math.random(),
             Math.random(),
-            colorSpace
+            colorSpace,
         );
     }
 }

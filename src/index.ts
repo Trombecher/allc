@@ -34,4 +34,11 @@ export interface Color<This extends Color<This>> {
      * @see https://en.wikipedia.org/wiki/Color_difference#Euclidean
      */
     distance(other: This): number;
+
+    /**
+     * Determines if all channels are in their respective ranges.
+     *
+     * @returns `true` if the color is bounded/clamped, `false` otherwise.
+     */
+    isBounded(): boolean;
 }

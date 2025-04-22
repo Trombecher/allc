@@ -7,7 +7,7 @@ import {
     Matrix3x3,
     matrixTimesVector,
 } from "./internal";
-import {Color} from "./index";
+import {Color, RGBColorSpace} from "./index";
 import {LCH} from "./lch";
 
 /**
@@ -26,18 +26,18 @@ const cielabReverseF = (t: number) => t > 6 / 29
  * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.2104542553%2C0.7936177850%2C-0.0040720468%5D%2C%5B1.9779984951%2C-2.4285922050%2C0.4505937099%5D%2C%5B0.0259040371%2C0.7827717662%E2%80%8B%E2%80%8B%2C-0.8086757660%E2%80%8B%E2%80%8B%E2%80%8B%5D%5D&m=g
  */
 const M_OKLAB_TO_LMS_DASH: Matrix3x3 = [
-    +0.9999999984505198, +0.3963377921737679, +0.2158037580607588,
-    +1.0000000088817607, -0.10556134232365635, -0.06385417477170591,
-    +1.0000000546724108, -0.08948418209496575, -1.2914855378640917,
+    +0.999999998450520, +0.396337792173768, +0.215803758060759,
+    +1.000000008881761, -0.105561342323656, -0.063854174771706,
+    +1.000000054672411, -0.089484182094966, -1.291485537864092,
 ];
 
 /**
  * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.8189330101%2C0.3618667424%2C-0.1288597137%5D%2C%5B0.0329845436%2C0.9293118715%2C-0.0361456387%5D%2C%5B0.0482003018%2C0.2643662691%2C0.6338517070%5D%5D&m=g
  */
 const M_LMS_TO_CIE_1931_XYZ: Matrix3x3 = [
-    +1.2300027843910823, -0.5413066534768036, +0.2191868072453721,
-    -0.046540131268799995, +1.0793690655838948, +0.05209000135688532,
-    -0.0741228019687791, -0.40901937460024457, +1.5392627008008688,
+    +1.227013851103521, -0.557799980651822, +0.281256148966468,
+    -0.040580178423281, +1.112256869616830, -0.071676678665601,
+    -0.076381284505707, -0.421481978418013, +1.586163220440795,
 ];
 
 /**
@@ -67,12 +67,16 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return 0 <= this.l && this.l <= 1;
+    }
+
     distance(other: LAB<S>) {
         return Math.hypot(
             this.l - other.l,
             this.a - other.a,
             this.b - other.b,
-        )
+        );
     }
 
     clamp(): LAB<S> {
@@ -125,5 +129,36 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
             D_65_YN * cielabReverseF((this.l + 16) / 116),
             D_65_ZN * cielabReverseF((this.l + 16) / 116 - this.b / 200),
         );
+    }
+
+    /**
+     * Calculates the maximum possible chroma value in the specified target color space
+     * for a specified lightness and hue.
+     */
+    static maxChromaIn(
+        targetColorSpace: RGBColorSpace,
+        lightness: number,
+        hue: number,
+        perceptual: PerceptualColorSpace,
+    ): number {
+        let min = 0, max = 1;
+
+        // Magic number
+        while((max - min) > 0.00001) {
+            const mid = (min + max) / 2;
+
+            if(new LCH(lightness, mid, hue, perceptual)
+                .toLAB()
+                .toCIE1931XYZ()
+                .toLinearRGB(targetColorSpace)
+                .toRGB()
+                .isBounded()) {
+                min = mid;
+            } else {
+                max = mid;
+            }
+        }
+
+        return min;
     }
 }

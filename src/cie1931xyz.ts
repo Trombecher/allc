@@ -17,30 +17,32 @@ const cielabF = (t: number) => t > 216 / 24389
     : 841 / 108 * t + 4 / 29;
 
 /**
- * @see https://en.wikipedia.org/wiki/SRGB#Primaries
+ * Inverse of the sRGB primaries.
+ *
+ * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.4124%2C0.3576%2C0.1805%5D%2C%5B0.2126%2C0.7152%2C0.0722%5D%2C%5B0.0193%2C0.1192%2C0.9505%5D%5D&m=g
  */
 const M_CIE_1931_XYZ_TO_LINEAR_SRGB: Matrix3x3 = [
-    +3.2404542, -1.5371385, -0.4985314,
-    -0.9692660, +1.8760108, +0.0415560,
-    +0.0556434, -0.2040259, +1.0572252,
+    28154000 / 8687829, -13355000 / 8687829, -1444000 / 2895943,
+    -418089250 / 431495507, 1618760625 / 862991014, 17914625 / 431495507,
+    484000 / 8687829, -1772500 / 8687829, 3061000 / 2895943,
 ];
 
 /**
  * @see https://bottosson.github.io/posts/oklab/#converting-from-xyz-to-oklab
  */
 const M_CIE_1931_XYZ_TO_LMS: Matrix3x3 = [
-    +0.8189330101, +0.0329845436, +0.0482003018,
-    +0.3618667424, +0.9293118715, +0.2643662691,
-    -0.1288597137, +0.0361456387, +0.6338517070,
+    +0.8189330101, +0.3618667424 , -0.1288597137,
+    +0.0329845436, +0.9293118715, +0.0361456387,
+    +0.0482003018, +0.2643662691, +0.6338517070,
 ];
 
 /**
  * @see https://bottosson.github.io/posts/oklab/#converting-from-xyz-to-oklab
  */
 const M_LMS_DASH_TO_OKLAB: Matrix3x3 = [
-    +0.2104542553, +1.9779984951, +0.0259040371,
-    +0.7936177850, -2.4285922050, +0.7827717662,
-    -0.0040720468, +0.4505937099, -0.8086757660,
+    +0.2104542553, +0.7936177850, -0.0040720468,
+    +1.9779984951, -2.4285922050, +0.4505937099,
+    +0.0259040371, +0.7827717662, -0.8086757660,
 ];
 
 /**
@@ -58,7 +60,7 @@ const M_CIE_1931_XYZ_TO_LINEAR_DISPLAY_P3: Matrix3x3 = [
 const M_CIE_1931_XYZ_TO_LINEAR_ADOBE_RGB: Matrix3x3 = [
     +2.04159, -0.56501, -0.34473,
     -0.96924, +1.87597, +0.04156,
-    +0.01344, -0.11836, +1.01517
+    +0.01344, -0.11836, +1.01517,
 ];
 
 /**
@@ -72,17 +74,19 @@ export class CIE1931XYZ implements Color<CIE1931XYZ> {
          * The X component (mix of red and green).
          */
         public readonly x: number,
-
         /**
          * The Y component (luminance), range [0, 1].
          */
         public readonly y: number,
-
         /**
          * The Z component (quasi-blue).
          */
         public readonly z: number,
     ) {
+    }
+
+    isBounded(): boolean {
+        return 0 <= this.y && this.y <= 1;
     }
 
     distance(other: CIE1931XYZ) {
@@ -97,7 +101,7 @@ export class CIE1931XYZ implements Color<CIE1931XYZ> {
         return new CIE1931XYZ(
             this.x,
             clamp01(this.y),
-            this.y
+            this.y,
         );
     }
 

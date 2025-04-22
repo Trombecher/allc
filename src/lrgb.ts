@@ -69,6 +69,10 @@ export class LinearRGB<S extends RGBColorSpace> implements Color<LinearRGB<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return true;
+    }
+
     distance(other: LinearRGB<S>) {
         return Math.hypot(
             other.r - this.r,

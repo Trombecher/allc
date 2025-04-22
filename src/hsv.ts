@@ -20,6 +20,11 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return 0 <= this.s && this.s <= 1
+            && 0 <= this.v && this.v <= 1;
+    }
+
     toCSS(withAlpha?: number): string {
         return `hsv(${this.h}rad ${this.s} ${this.v}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }

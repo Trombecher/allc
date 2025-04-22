@@ -23,6 +23,12 @@ export class CIE1931xyY implements Color<CIE1931xyY> {
     ) {
     }
 
+    isBounded(): boolean {
+        return this.x >= 0 && this.x <= 1
+            && this.y >= 0 && this.y <= 1
+            && this.Y >= 0 && this.Y <= 1;
+    }
+
     clamp(): CIE1931xyY {
         return new CIE1931xyY(
             clamp01(this.x),

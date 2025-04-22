@@ -26,6 +26,10 @@ export class LCH<S extends PerceptualColorSpace> implements Color<LCH<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return 0 <= this.l && this.l <= 1 && 0 <= this.c;
+    }
+
     distance(other: LCH<S>) {
         // Convert to LAB and then calculate Euclidean distance.
         return Math.hypot(
@@ -59,6 +63,16 @@ export class LCH<S extends PerceptualColorSpace> implements Color<LCH<S>> {
             this.c * Math.cos(this.h),
             this.c * Math.sin(this.h),
             this._,
+        );
+    }
+
+    // TODO: docs
+    static random<S extends PerceptualColorSpace>(colorSpace: S): LCH<S> {
+        return new LCH(
+            Math.random(),
+            -Math.log(1 - Math.random()),
+            Math.random() * Math.PI * 2,
+            colorSpace
         );
     }
 }
