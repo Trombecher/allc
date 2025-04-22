@@ -35,9 +35,12 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
 
     distance(other: HSL<S>) {
         // Convert to 3D space and calculate Euclidean distance.
+        const thisR = this.s * (1 - Math.abs(2 * this.l - 1));
+        const otherR = other.s * (1 - Math.abs(2 * other.l - 1));
+
         return Math.hypot(
-            this.s * Math.cos(this.h) - other.s * Math.cos(other.h),
-            this.s * Math.sin(this.h) - other.s * Math.sin(other.h),
+            thisR * Math.cos(this.h) - otherR * Math.cos(other.h),
+            thisR * Math.sin(this.h) - otherR * Math.sin(other.h),
             this.l - other.l
         );
     }

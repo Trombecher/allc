@@ -27,8 +27,8 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     distance(other: HSV<S>) {
         // Convert to 3D space and calculate Euclidean distance.
         return Math.hypot(
-            this.s * Math.cos(this.h) - other.s * Math.cos(other.h),
-            this.s * Math.sin(this.h) - other.s * Math.sin(other.h),
+            this.s * this.v * Math.cos(this.h) - other.s * other.v * Math.cos(other.h),
+            this.s * this.v * Math.sin(this.h) - other.s * other.v * Math.sin(other.h),
             this.v - other.v
         )
     }
