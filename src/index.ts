@@ -1,4 +1,5 @@
 export * from "./cie1931xyz";
+export * from "./hsi";
 export * from "./hsl";
 export * from "./hsv";
 export * from "./lab";

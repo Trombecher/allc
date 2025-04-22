@@ -3,6 +3,7 @@ import {HSL} from "./hsl";
 import {LinearRGB} from "./lrgb";
 import {clamp01} from "./internal";
 import {Color} from "./index";
+import {HSI} from "./hsi";
 
 /**
  * A color space that has RGB as its default color model.
@@ -27,8 +28,11 @@ const LINEARIZE_MAP: Record<RGBColorSpace, (x: number) => number> = {
     "Adobe RGB": x => Math.pow(x, 256 / 563),
 };
 
+const SIN_60 = Math.cos(Math.PI / 3);
+
 /**
- * The RGB (Red, Green, Blue) color model. The valid channel range is [0, 1].
+ * A color in the RGB (red, green, blue) color model.
+ *
  * Applicable to the following color spaces:
  *
  * * sRGB
@@ -38,15 +42,15 @@ const LINEARIZE_MAP: Record<RGBColorSpace, (x: number) => number> = {
 export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     constructor(
         /**
-         * The red channel.
+         * The red channel, range [0, 1].
          */
         public readonly r: number,
         /**
-         * The green channel.
+         * The green channel, range [0, 1].
          */
         public readonly g: number,
         /**
-         * The blue channel.
+         * The blue channel, range [0, 1].
          */
         public readonly b: number,
         /**
@@ -75,16 +79,18 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     }
 
     /**
-     * Casts the current RGB instance to a different absolute color space.
+     * Casts the current color to a different color space.
      *
-     * @param newColorSpace The target absolute color space model to cast to.
-     * @returns A new RGB instance within the specified absolute color space.
+     * @param newColorSpace The target color space to cast to.
+     * @returns A new RGB instance in the specified color space.
      */
     cast<B extends RGBColorSpace>(newColorSpace: B): RGB<B> {
         return new RGB(this.r, this.g, this.b, newColorSpace);
     }
 
     clamp(): RGB<S> {
+        if(this.isBounded()) return this;
+
         return new RGB(
             clamp01(this.r),
             clamp01(this.g),
@@ -154,6 +160,25 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
             linearize(this.g),
             linearize(this.b),
             this._,
+        );
+    }
+
+    /**
+     * Converts this color to {@link HSI `HSI`}.
+     *
+     * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
+     */
+    toHSI(): HSI<S> {
+        const alpha = (2 * this.r - this.g - this.b) / 2;
+        const beta = SIN_60 * (this.g - this.b) / 2;
+        const h2 = Math.atan2(beta, alpha);
+        const i = (this.r + this.g + this.b) / 3;
+
+        return new HSI(
+            h2,
+            i === 0 ? 0 : 1 - Math.min(this.r, this.g, this.b) / i,
+            i,
+            this._
         );
     }
 

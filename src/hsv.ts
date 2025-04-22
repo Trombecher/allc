@@ -4,18 +4,28 @@ import {clamp01} from "./internal";
 import {Color} from "./index";
 
 /**
- * Represents a color in the HSV (Hue, Saturation, Value / Brightness) color model.
- *
- * The hue component `h` is in radians. The saturation and value components `s` and `v` are in the range [0, 1].
+ * A color in the HSV (hue, saturation, value / brightness) color model.
  *
  * @template S The underlying color space.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV
  */
 export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     constructor(
+        /**
+         * The hue component, in radians.
+         */
         public readonly h: number,
+        /**
+         * The saturation component, range [0, 1].
+         */
         public readonly s: number,
+        /**
+         * The value component, range [0, 1].
+         */
         public readonly v: number,
+        /**
+         * The color space.
+         */
         public readonly _: S,
     ) {
     }
@@ -39,6 +49,8 @@ export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     }
 
     clamp(): HSV<S> {
+        if(this.isBounded()) return this;
+
         return new HSV(
             clamp01(this.h),
             clamp01(this.s),

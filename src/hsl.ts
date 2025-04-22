@@ -4,18 +4,28 @@ import {Color} from "./index";
 import {clamp01} from "./internal";
 
 /**
- * Represents a color in the HSL (Hue, Saturation, Lightness) color model.
- *
- * The hue component `h` is in radians. The saturation and lightness components `s` and `l` are in the range [0, 1].
+ * A color in the HSL (hue, saturation, lightness) color model.
  *
  * @template S The underlying color space.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV
  */
 export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
     constructor(
+        /**
+         * The hue component, in radians.
+         */
         public readonly h: number,
+        /**
+         * The saturation component, range [0, 1].
+         */
         public readonly s: number,
+        /**
+         * The lightness component, range [0, 1].
+         */
         public readonly l: number,
+        /**
+         * The color space.
+         */
         public readonly _: S,
     ) {
     }
@@ -26,6 +36,9 @@ export class HSL<S extends RGBColorSpace> implements Color<HSL<S>> {
     }
 
     clamp(): HSL<S> {
+        // No need for a copy if it is already bounded.
+        if(this.isBounded()) return this;
+
         return new HSL(
             this.h,
             clamp01(this.s),
