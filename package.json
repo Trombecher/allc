@@ -9,18 +9,23 @@
         "test": "vitest --no-watch"
     },
     "keywords": [
-        "color",
-        "colors",
-        "conversion",
-        "rgb",
-        "rgba",
-        "hsl",
-        "hsla",
-        "hsv",
-        "hsva",
-        "cie 1931 xyz",
-        "oklab",
-        "oklch"
+        "Color",
+        "Colors",
+        "Color Space",
+        "Color Model",
+        "Conversion",
+        "RGB",
+        "RGBA",
+        "HSL",
+        "HSLA",
+        "HSV",
+        "HSVA",
+        "CIE 1931 XYZ",
+        "CIE 1931 xyY",
+        "Oklab",
+        "Oklch",
+        "CIELAB",
+        "CIELCH"
     ],
     "exports": {
         ".": {
@@ -32,13 +37,15 @@
     "author": "Tobias Hillemanns",
     "license": "MIT",
     "devDependencies": {
-        "vitest": "^3.1.1",
-        "typescript": "^5.8.3"
+        "culori": "^4.0.1",
+        "typescript": "^5.8.3",
+        "vitest": "^3.1.1"
     },
     "files": [
         "src",
         "dist",
         "README.md",
-        "LICENSE"
+        "LICENSE",
+        "conversions.excalidraw.svg"
     ]
 }

@@ -1,0 +1,1 @@
+export const TOLERANCE = 0.000001;

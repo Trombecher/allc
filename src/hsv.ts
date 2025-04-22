@@ -1,6 +1,7 @@
 import {RGBColorSpace, RGB} from "./rgb";
 import {HSL} from "./hsl";
 import {clamp01} from "./internal";
+import {Color} from "./index";
 
 /**
  * Represents a color in the HSV (Hue, Saturation, Value / Brightness) color model.
@@ -10,7 +11,7 @@ import {clamp01} from "./internal";
  * @template S The underlying color space.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV
  */
-export class HSV<S extends RGBColorSpace> {
+export class HSV<S extends RGBColorSpace> implements Color<HSV<S>> {
     constructor(
         public readonly h: number,
         public readonly s: number,
@@ -19,11 +20,24 @@ export class HSV<S extends RGBColorSpace> {
     ) {
     }
 
-    /**
-     * Clamps all components to [0, 1].
-     *
-     * @returns A new HSV instance with the components clamped to the range [0, 1].
-     */
+    isBounded(): boolean {
+        return 0 <= this.s && this.s <= 1
+            && 0 <= this.v && this.v <= 1;
+    }
+
+    toCSS(withAlpha?: number): string {
+        return `hsv(${this.h}rad ${this.s} ${this.v}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+    }
+
+    distance(other: HSV<S>) {
+        // Convert to 3D space and calculate Euclidean distance.
+        return Math.hypot(
+            this.s * this.v * Math.cos(this.h) - other.s * other.v * Math.cos(other.h),
+            this.s * this.v * Math.sin(this.h) - other.s * other.v * Math.sin(other.h),
+            this.v - other.v
+        )
+    }
+
     clamp(): HSV<S> {
         return new HSV(
             clamp01(this.h),
@@ -42,7 +56,7 @@ export class HSV<S extends RGBColorSpace> {
     toRGB(): RGB<S> {
         const f = (n: number) => {
             const k = (n + this.h * 3 / Math.PI) % 6;
-            return this.v - this.v * this.s + Math.max(0, Math.min(k, 4 - k, 1));
+            return this.v - this.v * this.s * Math.max(0, Math.min(k, 4 - k, 1));
         };
 
         return new RGB(
@@ -67,6 +81,23 @@ export class HSV<S extends RGBColorSpace> {
             (l === 0 || l === 1) ? 0 : (this.v - l) / Math.min(l, 1 - l),
             l,
             this._,
+        );
+    }
+
+    /**
+     * Creates a random color in the specified color space.
+     *
+     * Note that this function does not create _perceptually uniform_ colors. For that purpose use Oklab.
+     *
+     * @param colorSpace The color space of the color.
+     * @returns A new random color.
+     */
+    static random<S extends RGBColorSpace>(colorSpace: S): HSV<S> {
+        return new HSV(
+            Math.random() * Math.PI * 2,
+            Math.random(),
+            Math.random(),
+            colorSpace
         );
     }
 }

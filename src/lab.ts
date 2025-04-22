@@ -1,6 +1,14 @@
 import {CIE1931XYZ} from "./cie1931xyz";
-import {clamp01, D_65_XN, D_65_YN, D_65_ZN, Matrix3x3, matrixTimesVector} from "./internal";
-import {Color} from "./common";
+import {
+    clamp01,
+    D_65_XN,
+    D_65_YN,
+    D_65_ZN,
+    Matrix3x3,
+    matrixTimesVector,
+} from "./internal";
+import {Color} from "./index";
+import {LCH} from "./lch";
 
 /**
  * Oklab or CIELAB.
@@ -14,18 +22,22 @@ const cielabReverseF = (t: number) => t > 6 / 29
     ? Math.pow(t, 3)
     : 3 * (29 / 6) * (29 / 6) + (t - 4 / 29);
 
-// TODO: docs
-const M_OKLAB_TO_LMS_DASH: Matrix3x3 = [ // TODO: check values
-    +0.4122214708, +0.5363325363, +0.0514459929,
-    +0.2119034982, +0.6806995451, +0.1073969566,
-    +0.0883024619, +0.2817188376, +0.6299787005,
+/**
+ * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.2104542553%2C0.7936177850%2C-0.0040720468%5D%2C%5B1.9779984951%2C-2.4285922050%2C0.4505937099%5D%2C%5B0.0259040371%2C0.7827717662%E2%80%8B%E2%80%8B%2C-0.8086757660%E2%80%8B%E2%80%8B%E2%80%8B%5D%5D&m=g
+ */
+const M_OKLAB_TO_LMS_DASH: Matrix3x3 = [
+    +0.999999998450520, +0.396337792173768, +0.215803758060759,
+    +1.000000008881761, -0.105561342323656, -0.063854174771706,
+    +1.000000054672411, -0.089484182094966, -1.291485537864092,
 ];
 
-// TODO: docs
-const M_LMS_TO_CIE_1931_XYZ: Matrix3x3 = [ // TODO: check values
-    +0.955576671, -0.0230393101, +0.0631636364,
-    +0.0282895228, +1.009941694, -0.0210077094,
-    -0.0146146987, -0.0240030322, +1.019297077,
+/**
+ * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.8189330101%2C0.3618667424%2C-0.1288597137%5D%2C%5B0.0329845436%2C0.9293118715%2C-0.0361456387%5D%2C%5B0.0482003018%2C0.2643662691%2C0.6338517070%5D%5D&m=g
+ */
+const M_LMS_TO_CIE_1931_XYZ: Matrix3x3 = [
+    +1.227013851103521, -0.557799980651822, +0.281256148966468,
+    -0.040580178423281, +1.112256869616830, -0.071676678665601,
+    -0.076381284505707, -0.421481978418013, +1.586163220440795,
 ];
 
 /**
@@ -52,14 +64,27 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
          * The color space.
          */
         public readonly _: S,
-    ) {}
+    ) {
+    }
+
+    isBounded(): boolean {
+        return 0 <= this.l && this.l <= 1;
+    }
+
+    distance(other: LAB<S>) {
+        return Math.hypot(
+            this.l - other.l,
+            this.a - other.a,
+            this.b - other.b,
+        );
+    }
 
     clamp(): LAB<S> {
         return new LAB(
             clamp01(this.l),
             this.a,
             this.b,
-            this._
+            this._,
         );
     }
 
@@ -67,17 +92,28 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
         return `${this._ === "Ok" ? "ok" : ""}lab(${this.l} ${this.a} ${this.b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }
 
-    // TODO: docs
+    /**
+     * Converts the color to {@link LCH `LCH`}.
+     * The conversion is the same for both Oklab and CIELAB.
+     *
+     * @see https://bottosson.github.io/posts/oklab/#the-oklab-color-space
+     */
     toLCH(): LCH<S> {
         return new LCH(
             this.l,
             Math.hypot(this.a, this.b),
             Math.atan2(this.b, this.a),
-            this._
+            this._,
         );
     }
 
-    // TODO: docs
+    /**
+     * Converts the current color to {@link CIE1931XYZ `CIE1931XYZ`}.
+     * The conversion is different for Oklab and CIELAB.
+     *
+     * * For Oklab the matrices were inverted: https://bottosson.github.io/posts/oklab/#converting-from-xyz-to-oklab
+     * * For CIELAB: https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIELAB_to_CIEXYZ
+     */
     toCIE1931XYZ(): CIE1931XYZ {
         if(this._ === "Ok") {
             const lms = matrixTimesVector(M_OKLAB_TO_LMS_DASH, [this.l, this.a, this.b]);
@@ -92,53 +128,6 @@ export class LAB<S extends PerceptualColorSpace> implements Color<LAB<S>> {
             D_65_XN * cielabReverseF((this.l + 16) / 116 + this.a / 500),
             D_65_YN * cielabReverseF((this.l + 16) / 116),
             D_65_ZN * cielabReverseF((this.l + 16) / 116 - this.b / 200),
-        );
-    }
-}
-
-/**
- * The cylindrical representation of a LAB color.
- */
-export class LCH<S extends PerceptualColorSpace> implements Color<LCH<S>> {
-    constructor(
-        /**
-         * The (perceived) lightness component, range [0, 1]. This is unchanged compared to LAB.
-         */
-        public readonly l: number,
-        /**
-         * The chroma component, minimum 0, maximum unbounded but usually 0.4.
-         */
-        public readonly c: number,
-        /**
-         * The hue component, in radians.
-         */
-        public readonly h: number,
-        /**
-         * The color space.
-         */
-        public readonly _: S,
-    ) {}
-
-    clamp(): LCH<S> {
-        return new LCH(
-            clamp01(this.l),
-            Math.max(0, this.c),
-            this.h,
-            this._
-        );
-    }
-
-    toCSS(withAlpha?: number): string {
-        return `${this._ === "Ok" ? "ok" : ""}lch(${this.l} ${this.c} ${this.h}rad${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
-    }
-
-    // TODO: docs
-    toLAB(): LAB<S> {
-        return new LAB(
-            this.l,
-            this.c * Math.cos(this.h),
-            this.c * Math.sin(this.h),
-            this._
         );
     }
 }

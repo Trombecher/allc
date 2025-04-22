@@ -1,7 +1,7 @@
 import {clamp01, Matrix3x3, matrixTimesVector, Vector3} from "./internal";
 import {CIE1931XYZ} from "./cie1931xyz";
 import {RGBColorSpace, RGB} from "./rgb";
-import {Color} from "./common";
+import {Color} from "./index";
 
 /**
  * @see https://en.wikipedia.org/wiki/SRGB#Transfer_function_(%22gamma%22)
@@ -27,10 +27,13 @@ const M_LINEAR_SRGB_TO_CIE_1931_XYZ: Matrix3x3 = [
     0.0193, 0.1192, 0.9505,
 ];
 
+/**
+ * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.680%2C0.320%2C0%5D%2C%5B0.256%2C0.690%2C0.045%5D%2C%5B0.150%2C0.060%2C0.790%5D%5D&m=g
+ */
 const M_LINEAR_DISPLAY_P3_TO_CIE_1931_XYZ: Matrix3x3 = [
-    0, 0, 0,
-    0, 0, 0,
-    0, 0, 0, // TODO
+    1500 / 847, -79000 / 95711, 4500 / 95711,
+    -4325 / 6776, 167875 / 95711, -19125 / 191422,
+    -975 / 3388, 2250 / 95711, 121025 / 95711,
 ];
 
 /**
@@ -66,12 +69,24 @@ export class LinearRGB<S extends RGBColorSpace> implements Color<LinearRGB<S>> {
     ) {
     }
 
+    isBounded(): boolean {
+        return true;
+    }
+
+    distance(other: LinearRGB<S>) {
+        return Math.hypot(
+            other.r - this.r,
+            other.g - this.g,
+            other.b - this.b,
+        )
+    }
+
     clamp(): LinearRGB<S> {
         return new LinearRGB(
             clamp01(this.r),
             clamp01(this.g),
             clamp01(this.b),
-            this._
+            this._,
         );
     }
 
@@ -97,12 +112,19 @@ export class LinearRGB<S extends RGBColorSpace> implements Color<LinearRGB<S>> {
                 return new CIE1931XYZ(...matrixTimesVector(M_LINEAR_SRGB_TO_CIE_1931_XYZ, v));
             case "Display P3":
                 return new CIE1931XYZ(...matrixTimesVector(M_LINEAR_DISPLAY_P3_TO_CIE_1931_XYZ, v));
-            case "Adobe RGB":
+            default: // Adobe RGB
                 return new CIE1931XYZ(...matrixTimesVector(M_LINEAR_ADOBE_RGB_TO_CIE_1931_XYZ, v));
         }
     }
 
-    // TODO: docs
+    /**
+     * Converts this color to {@link RGB `RGB`} by applying gamma correction to all channels.
+     * The gamma correction is dependent on the color space.
+     *
+     * * For sRGB: https://en.wikipedia.org/wiki/SRGB#Transfer_function_(%22gamma%22)
+     * * Display P3: https://en.wikipedia.org/wiki/SRGB#Transfer_function_(%22gamma%22)
+     * * Adobe RGB: https://en.wikipedia.org/wiki/Adobe_RGB_color_space#Transfer_function_(%22gamma%22)
+     */
     toRGB(): RGB<S> {
         const unlinerize = UNLINEARIZE_MAP[this._];
 

@@ -2,7 +2,7 @@ import {HSV} from "./hsv";
 import {HSL} from "./hsl";
 import {LinearRGB} from "./lrgb";
 import {clamp01} from "./internal";
-import {Color} from "./common";
+import {Color} from "./index";
 
 /**
  * A color space that has RGB as its default color model.
@@ -56,8 +56,22 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
     ) {
     }
 
-    toCSS(_withAlpha?: number): string {
-        throw new Error("Method not implemented."); // TODO
+    isBounded(): boolean {
+        return 0 <= this.r && this.r <= 1
+            && 0 <= this.g && this.g <= 1
+            && 0 <= this.b && this.b <= 1;
+    }
+
+    distance(other: RGB<S>) {
+        return Math.hypot(
+            other.r - this.r,
+            other.g - this.g,
+            other.b - this.b,
+        );
+    }
+
+    toCSS(withAlpha?: number): string {
+        return `rgb(${this.r * 255} ${this.g * 255} ${this.b * 255}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
     }
 
     /**
@@ -91,14 +105,7 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
         const chroma = max - min;
 
         const lightness = (max + min) / 2;
-
-        const hue = chroma === 0
-            ? 0
-            : max === this.r
-                ? Math.PI / 3 * (((this.g - this.b) / chroma) % 6)
-                : max === this.g
-                    ? Math.PI / 3 * (2 + (this.b - this.r) / chroma)
-                    : Math.PI / 3 * (4 + (this.r - this.g) / chroma);
+        const hue = calcHue(this, chroma, max);
 
         const saturation = (lightness === 0 || lightness === 1)
             ? 0
@@ -123,8 +130,8 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
         const min = Math.min(this.r, this.g, this.b);
         const chroma = value - min;
 
-        const hue = chroma === 0 ? 0 : Math.PI / 3 * chroma / (1 - Math.abs(2 * value - 1));
-        const saturation = chroma === 0 ? 0 : chroma / value;
+        const hue = calcHue(this, chroma, value);
+        const saturation = value === 0 ? 0 : chroma / value;
 
         return new HSV(
             hue,
@@ -159,10 +166,10 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
      * @return {number} The integer representation of the color.
      */
     toInteger(withAlpha: number = 0): number {
-        return (clamp01(withAlpha) * 255) << 24
-            | (clamp01(this.r) * 255) << 16
-            | (clamp01(this.g) * 255) << 8
-            | (clamp01(this.g) * 255);
+        return Math.round(clamp01(withAlpha) * 255) << 24
+            | Math.round(clamp01(this.r) * 255) << 16
+            | Math.round(clamp01(this.g) * 255) << 8
+            | Math.round(clamp01(this.b) * 255);
     }
 
     /**
@@ -214,20 +221,43 @@ export class RGB<S extends RGBColorSpace> implements Color<RGB<S>> {
 
         if(hex.length <= 4) {
             return new RGB(
-                nanTo0(parseInt(hex[0]!)),
-                nanTo0(parseInt(hex[1]!)),
-                nanTo0(parseInt(hex[2]!)),
+                nanTo0(parseInt(hex[0]!, 16)) / 15,
+                nanTo0(parseInt(hex[1]!, 16)) / 15,
+                nanTo0(parseInt(hex[2]!, 16)) / 15,
                 colorSpace,
             );
         }
 
         return new RGB(
-            nanTo0(parseInt(hex.slice(0, 2), 16)),
-            nanTo0(parseInt(hex.slice(2, 4), 16)),
-            nanTo0(parseInt(hex.slice(4, 6), 16)),
+            nanTo0(parseInt(hex.slice(0, 2), 16)) / 255,
+            nanTo0(parseInt(hex.slice(2, 4), 16)) / 255,
+            nanTo0(parseInt(hex.slice(4, 6), 16)) / 255,
             colorSpace,
         );
+    }
+
+    /**
+     * Creates a random color in the specified color space.
+     *
+     * Note that this function does not create _perceptually uniform_ colors. For that purpose use Oklab.
+     *
+     * @param colorSpace The color space of the color.
+     * @returns A new random color.
+     */
+    static random<S extends RGBColorSpace>(colorSpace: S): RGB<S> {
+        return new RGB(
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            colorSpace
+        )
     }
 }
 
 const nanTo0 = (x: number) => isNaN(x) ? 0 : x;
+const calcHue = (rgb: RGB<RGBColorSpace>, chroma: number, max: number) => {
+    if(chroma === 0) return 0;
+    if(max === rgb.r) return Math.PI / 3 * (((rgb.g - rgb.b) / chroma) % 6);
+    if(max === rgb.g) return Math.PI / 3 * (2 + (rgb.b - rgb.r) / chroma);
+    return Math.PI / 3 * (4 + (rgb.r - rgb.g) / chroma);
+}
