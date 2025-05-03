@@ -15,3 +15,5 @@ export const D_65_YN = 100;
 export const D_65_ZN = 108.884;
 
 export const normalizeHue = (hue: number) => (hue + 2 * Math.PI) % (2 * Math.PI);
+
+// Aliases

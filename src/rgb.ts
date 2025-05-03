@@ -28,7 +28,7 @@ const LINEARIZE_MAP: Record<RGBColorSpace, (x: number) => number> = {
     "Adobe RGB": x => Math.pow(x, 256 / 563),
 };
 
-const SIN_60 = Math.cos(Math.PI / 3);
+const SIN_60 = Math.sin(Math.PI / 3);
 
 /**
  * A color in the RGB (red, green, blue) color model.

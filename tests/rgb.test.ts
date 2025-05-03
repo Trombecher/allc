@@ -2,8 +2,8 @@ import {RGB} from "../src";
 import {expect, test} from "vitest";
 
 const HEX_SAMPLES: [string, RGB<"sRGB">, string][] = [
-    ["#000000", new RGB(0, 0, 0, "sRGB"), "000000"],
-    ["#FFF", new RGB(1, 1, 1, "sRGB"), "ffffff"],
+    ["#000", new RGB(0, 0, 0, "sRGB"), "000000"],
+    ["#fff", new RGB(1, 1, 1, "sRGB"), "ffffff"],
     ["#0fff8f", new RGB(15 / 255, 1, 143 / 255, "sRGB"), "0fff8f"],
     ["F00001", new RGB(0xF0 / 255, 0, 1 / 255, "sRGB"), "f00001"],
     ["0F0", new RGB(0, 1, 0, "sRGB"), "00ff00"],
@@ -30,4 +30,15 @@ test(`RGB<"sRGB"> <-> Integer (Samples)`, () => {
     })
 });
 
-// TODO: random tests
+test(`RANDOM: RGB<"sRGB"> -> Integer -> RGB<"sRGB">`, () => {
+    for(let i = 0; i < 100; i++) {
+        const rgb = RGB.random("sRGB");
+
+        expect(RGB.fromInteger(rgb.toInteger(), "sRGB")).toEqual(new RGB(
+            Math.round(rgb.r * 255) / 255,
+            Math.round(rgb.g * 255) / 255,
+            Math.round(rgb.b * 255) / 255,
+            "sRGB"
+        ));
+    }
+})

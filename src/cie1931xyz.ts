@@ -175,8 +175,8 @@ export class CIE1931XYZ implements Color<CIE1931XYZ> {
     toCIE1931xyY(): CIE1931xyY {
         return new CIE1931xyY(
             this.x / (this.x + this.y + this.z),
-            this.y,
             this.y / (this.x + this.y + this.z),
+            this.y,
         );
     }
 }

@@ -61,4 +61,20 @@ export class CIE1931xyY implements Color<CIE1931xyY> {
             (1 - this.x - this.y) * this.Y / this.y
         );
     }
+
+    /**
+     * Creates a random color in the specified color space.
+     *
+     * Note that this function does not create _perceptually uniform_ colors, nor does it guarantee that the generated color is perceivable.
+     * For that purpose use Oklab.
+     *
+     * @returns A new random color.
+     */
+    static random(): CIE1931xyY {
+        return new CIE1931xyY(
+            Math.random(),
+            Math.random(),
+            Math.random(),
+        );
+    }
 }

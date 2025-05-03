@@ -135,4 +135,21 @@ export class LinearRGB<S extends RGBColorSpace> implements Color<LinearRGB<S>> {
             this._,
         );
     }
+
+    /**
+     * Creates a random color in the specified color space.
+     *
+     * Note that this function does not create _perceptually uniform_ colors. For that purpose use Oklab.
+     *
+     * @param colorSpace The color space of the color.
+     * @returns A new random color.
+     */
+    static random<S extends RGBColorSpace>(colorSpace: S): LinearRGB<S> {
+        return new LinearRGB(
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            colorSpace
+        )
+    }
 }
