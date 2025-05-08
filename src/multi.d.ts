@@ -3,63 +3,40 @@ import type {PerceptualColorSpace, RGBColorSpace} from "./index";
 export declare class Color {
     private constructor();
 
-    // CIE1931XYZ
-
-    static fromCIE1931XYZ(X: number, Y: number, Z: number): Color;
-
-    static fromCIE1931xyY(x: number, y: number, Y: number): Color;
-
-    /**
-     * Constructs a new color from the given RGB components and color space.
-     */
-    static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color;
-
-    static fromHex(hex: string, colorSpace: RGBColorSpace): Color;
-
-    // CIE1931xyY
-
-    static fromInt(int: number, colorSpace: RGBColorSpace): Color;
-
-    static fromHSV(h: number, s: number, v: number, colorSpace: RGBColorSpace): Color;
-
-    static fromHSL(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color;
-
-    // RGB
-
-    static fromHSI(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color;
-
-    static fromLAB(l: number, a: number, b: number, colorSpace: PerceptualColorSpace): Color;
-
-    static fromLCH(l: number, c: number, h: number, colorSpace: PerceptualColorSpace): Color;
+    // CIE 1931 XYZ
 
     X(): number;
-
-    // Serialization
 
     Y(): number;
 
     Z(): number;
 
+    static fromCIE1931XYZ(x: number, y: number, z: number): Color;
+
+    // CIE 1931 xyY
+
     x(): number;
 
     y(): number;
 
-    // HSL / HSV / HSI
+    static fromCIE1931xyY(x: number, y: number, Y: number): Color;
+
+    // RGB
 
     /**
-     * The RGB red component of the color.
+     * The red component of the color in RGB.
      * @param colorSpace The color space to use.
      */
     r(colorSpace: RGBColorSpace): number;
 
     /**
-     * The RGB green component of the color.
+     * The green component of the color in RGB.
      * @param colorSpace The color space to use.
      */
     g(colorSpace: RGBColorSpace): number;
 
     /**
-     * The RGB blue component of the color.
+     * The blue component of the color in RGB.
      * @param colorSpace The color space to use.
      */
     b(colorSpace: RGBColorSpace): number;
@@ -68,56 +45,97 @@ export declare class Color {
 
     int(colorSpace: RGBColorSpace, alpha: number): number;
 
+    /**
+     * Constructs a new color from the given RGB components and color space.
+     */
+    static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color;
+
+    static fromHex(hex: string, colorSpace: RGBColorSpace): Color;
+
+    static fromInt(int: number, colorSpace: RGBColorSpace): Color;
+
+    // Cylindrical
+
     h6(colorSpace: RGBColorSpace): number;
 
-    v(colorSpace: RGBColorSpace): number;
+    h2(colorSpace: RGBColorSpace): number;
+
+    sl(colorSpace: RGBColorSpace): number;
+
+    sv(colorSpace: RGBColorSpace): number;
+
+    si(colorSpace: RGBColorSpace): number;
 
     li(colorSpace: RGBColorSpace): number;
 
-    // Linear RGB
-
-    s(colorSpace: RGBColorSpace): number;
+    v(colorSpace: RGBColorSpace): number;
 
     i(colorSpace: RGBColorSpace): number;
 
+    static fromHSV(h: number, s: number, v: number, colorSpace: RGBColorSpace): Color;
+
+    static fromHSL(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color;
+
+    static fromHSI(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color;
+
+    // Linear RGB
+
+    /**
+     * The red component of the color in linear RGB.
+     * @param colorSpace The color space to use.
+     */
     lr(colorSpace: RGBColorSpace): number;
+
+    /**
+     * The green component of the color in linear RGB.
+     * @param colorSpace The color space to use.
+     */
+    lg(colorSpace: RGBColorSpace): number;
+
+    /**
+     * The blue component of the color in linear RGB.
+     * @param colorSpace The color space to use.
+     */
+    lb(colorSpace: RGBColorSpace): number;
+
+    static fromLinearRGB(lr: number, lg: number, lb: number, colorSpace: RGBColorSpace): Color;
 
     // LAB / LCH
 
-    lg(colorSpace: RGBColorSpace): number;
-
-    lb(colorSpace: RGBColorSpace): number;
-
     /**
-     * The _luminance_ component of the color in the LAB/LCH color model.
+     * The shared luminance component of the color in the LAB/LCH color model.
      * @param colorSpace The color space to use.
      */
     lu(colorSpace: PerceptualColorSpace): number;
 
     /**
-     * The _a_ component of the color in the LAB color model.
+     * The a component of the color in the LAB color model.
      * @param colorSpace The color space to use.
      */
     a(colorSpace: PerceptualColorSpace): number;
 
     /**
-     * The _b_ component of the color in the LAB color model.
+     * The b component of the color in the LAB color model.
      * @param colorSpace The color space to use
      */
     b(colorSpace: PerceptualColorSpace): number;
 
     /**
-     * The _chromaticity_ component of the color in the LCH color model.
+     * The chromaticity component of the color in the LCH color model.
      * @param colorSpace The color space to use.
      */
     c(colorSpace: PerceptualColorSpace): number;
 
     /**
-     * The _hue_ component of the color in the LCH color model.
-     * It is called _h4_ because it has four primaries. Range: unbounded, in radians.
+     * The hue component of the color in the LCH color model.
+     * It is called h4 because it has four primaries. Range: unbounded, in radians.
      * @param colorSpace The color space to use.
      */
     h4(colorSpace: PerceptualColorSpace): number;
+
+    static fromLAB(l: number, a: number, b: number, colorSpace: PerceptualColorSpace): Color;
+
+    static fromLCH(l: number, c: number, h: number, colorSpace: PerceptualColorSpace): Color;
 
     // Common
 

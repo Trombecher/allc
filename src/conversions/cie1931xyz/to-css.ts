@@ -14,4 +14,4 @@ export const toCSSFromCIE1931XYZ = (
     y: number,
     z: number,
     withAlpha?: number,
-) => `xyz(${x} ${y} ${z}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+) => `color(xyz-d65 ${x} ${y} ${z}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;

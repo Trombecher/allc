@@ -1,9 +1,9 @@
 import {
-    fromCIE1931XYZToLMSL,
-    fromCIE1931XYZToLMSM,
-    fromCIE1931XYZToLMSS,
-    fromLMSDashToOklabL
-} from "./conversions/index.js";
+    toLMSDashComponentFromLMSComponent,
+    toLMSLFromCIE1931XYZ,
+    toLMSMFromCIE1931XYZ, toLMSSFromCIE1931XYZ,
+    toOklabLFromLMSDash
+} from "./conversions/index";
 
 const SOURCE_SRGB = 0;
 const SOURCE_ADOBE_RGB = 1;
@@ -227,10 +227,10 @@ export class Color {
 
                 // TODO: maybe cache LMS
 
-                this._internal_Ok_l = fromLMSDashToOklabL(
-                    Math.cbrt(fromCIE1931XYZToLMSL(x, y, z)),
-                    Math.cbrt(fromCIE1931XYZToLMSM(x, y, z)),
-                    Math.cbrt(fromCIE1931XYZToLMSS(x, y, z)),
+                this._internal_Ok_l = toOklabLFromLMSDash(
+                    toLMSDashComponentFromLMSComponent(toLMSLFromCIE1931XYZ(x, y, z)),
+                    toLMSDashComponentFromLMSComponent(toLMSMFromCIE1931XYZ(x, y, z)),
+                    toLMSDashComponentFromLMSComponent(toLMSSFromCIE1931XYZ(x, y, z)),
                 );
             }
 
