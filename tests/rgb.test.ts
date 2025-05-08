@@ -1,5 +1,5 @@
-import {RGB} from "../src";
 import {expect, test} from "vitest";
+import {RGB} from "../src";
 
 const HEX_SAMPLES: [string, RGB<"sRGB">, string][] = [
     ["#000000", new RGB(0, 0, 0, "sRGB"), "000000"],
@@ -14,7 +14,7 @@ test(`RGB<"sRGB"> <-> Hex (Samples)`, () => {
         expect(RGB.fromHex(hex, "sRGB")).toEqual(rgb);
         expect(rgb.toHex()).toEqual(normHex);
         // TODO: alpha
-    })
+    });
 });
 
 const INTEGER_SAMPLES: [number, RGB<"sRGB">, number][] = [
@@ -27,7 +27,7 @@ test(`RGB<"sRGB"> <-> Integer (Samples)`, () => {
         expect(RGB.fromInteger(int, "sRGB")).toEqual(rgb);
         expect(rgb.toInteger()).toEqual(normInt);
         // TODO: alpha
-    })
+    });
 });
 
 // TODO: random tests
