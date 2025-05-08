@@ -1,45 +1,5 @@
-export * from "./cie1931xyz";
-export * from "./hsi";
-export * from "./hsl";
-export * from "./hsv";
-export * from "./lab";
-export * from "./lch";
-export * from "./lrgb";
-export * from "./rgb";
+export * from "./multi";
+export * from "./conversions";
 
-/**
- * Interface to standardize documentation for color models and spaces.
- *
- * @template This This is the current class.
- */
-export interface Color<This extends Color<This>> {
-    /**
-     * Clamps all components to their respective ranges (depending on the color model).
-     *
-     * @returns A new instance of the current color with the components clamped.
-     */
-    clamp(): This;
-
-    /**
-     * Converts the current color to CSS.
-     *
-     * @param withAlpha If omitted, the alpha channel will be omitted.
-     * @returns A CSS string representing the color.
-     */
-    toCSS(withAlpha?: number): string;
-
-    /**
-     * Calculates the Euclidean difference between the current color and the given color.
-     *
-     * @returns The Euclidean distance between the colors, a non-negative number.
-     * @see https://en.wikipedia.org/wiki/Color_difference#Euclidean
-     */
-    distance(other: This): number;
-
-    /**
-     * Determines if all channels are in their respective ranges.
-     *
-     * @returns `true` if the color is bounded/clamped, `false` otherwise.
-     */
-    isBounded(): boolean;
-}
+export type RGBColorSpace = "sRGB" | "AdobeRGB" | "Display P3";
+export type PerceptualColorSpace = "Ok" | "CIE";
