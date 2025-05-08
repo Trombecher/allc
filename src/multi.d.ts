@@ -50,9 +50,9 @@ export declare class Color {
      */
     static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color;
 
-    static fromHex(hex: string, colorSpace: RGBColorSpace): Color;
+    static fromHexString(hex: string, colorSpace: RGBColorSpace): Color;
 
-    static fromInt(int: number, colorSpace: RGBColorSpace): Color;
+    static fromInteger(int: number, colorSpace: RGBColorSpace): Color;
 
     // Cylindrical
 

@@ -38,7 +38,7 @@
         "noPropertyAccessFromIndexSignature": true,
         // Libs
         "skipDefaultLibCheck": true,
-        "skipLibCheck": false
+        "skipLibCheck": true
     },
     "include": [
         "src"

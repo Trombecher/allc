@@ -62,6 +62,11 @@ This is it. allc does not have more features.
 
 If you would like to implement one of these features, feel free to submit a PR :)
 
+## Build This Package
+
+To build this package, you will need [Bun](https://bun.sh/). Then run `bun run build`. This will generate
+the package output in `./dist`.
+
 ## License
 
 This repository is MIT-licensed. You can find a copy of the license [here](./LICENSE).

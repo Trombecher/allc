@@ -1,7 +1,8 @@
 import {
     toLMSDashComponentFromLMSComponent,
     toLMSLFromCIE1931XYZ,
-    toLMSMFromCIE1931XYZ, toLMSSFromCIE1931XYZ,
+    toLMSMFromCIE1931XYZ,
+    toLMSSFromCIE1931XYZ,
     toOklabLFromLMSDash
 } from "./conversions/index";
 
