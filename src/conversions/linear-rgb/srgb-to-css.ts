@@ -12,7 +12,7 @@
  *
  * @returns The CSS representation of the color.
  */
-export const fromLinearSRGBToCSS = (
+export const toCSSFromLinearSRGB = (
     r: number,
     g: number,
     b: number,

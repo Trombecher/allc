@@ -35,7 +35,7 @@ export const toSharedHueFromRGB = (
  * @return The lightness component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSLLightnessFromRGB = (
+export const toHSLLFromRGB = (
     r: number,
     g: number,
     b: number,
@@ -55,7 +55,7 @@ export const toHSLLightnessFromRGB = (
  * @return The saturation component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSLSaturationFromRGB = (
+export const toHSLSFromRGB = (
     r: number,
     g: number,
     b: number,
@@ -80,7 +80,7 @@ export const toHSLSaturationFromRGB = (
  * @returns The saturation component of HSV, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSVSaturationFromRGB = (
+export const toHSVSFromRGB = (
     r: number,
     g: number,
     b: number,
@@ -102,7 +102,7 @@ export const toHSVSaturationFromRGB = (
  * @returns The value component of HSV, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSVValueFromRGB = (
+export const toHSVVFromRGB = (
     r: number,
     g: number,
     b: number,
@@ -118,7 +118,7 @@ export const toHSVValueFromRGB = (
  * @returns The hue component of HSI, in radians.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
  */
-export const toHSIHueFromRGB = (
+export const toHSIHFromRGB = (
     r: number,
     g: number,
     b: number,
@@ -138,7 +138,7 @@ export const toHSIHueFromRGB = (
  * @returns The saturation component of HSI, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
  */
-export const toHSISaturationFromRGB = (
+export const toHSISFromRGB = (
     r: number,
     g: number,
     b: number,
@@ -157,7 +157,7 @@ export const toHSISaturationFromRGB = (
  * @returns The intensity component of HSI, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
  */
-export const toHSIIntensityFromRGB = (
+export const toHSIIFromRGB = (
     r: number,
     g: number,
     b: number,

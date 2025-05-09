@@ -4,7 +4,7 @@
     "": {
       "name": "allc",
       "devDependencies": {
-        "@types/bun": "latest",
+        "@types/bun": "^1.2.12",
         "culori": "^4.0.1",
         "typescript": "^5.8.3",
         "vitest": "^3.1.3",
