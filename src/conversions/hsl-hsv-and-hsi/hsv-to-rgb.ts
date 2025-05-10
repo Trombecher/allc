@@ -1,11 +1,4 @@
 /**
- * Converts the current color to {@link RGB `RGB`}.
- *
- * @returns An instance of the RGB class representing the color in RGB format.
- * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB_alternative
- */
-
-/**
  * Helper function for converting HSV to RGB.
  *
  * @param h The hue component of HSV, in radians.

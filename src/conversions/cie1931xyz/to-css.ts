@@ -1,5 +1,5 @@
 /**
- * Converts the given CIE 1931 XYZ color to CSS.
+ * Calculates the CSS representation of the given CIE 1931 XYZ color.
  * **The alpha component will be clamped to [0, 1] before processing.**
  *
  * @param x The X component of CIE 1931 XYZ.

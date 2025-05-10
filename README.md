@@ -18,7 +18,7 @@ bun i allc
 
 * CIE 1931 XYZ
 * CIE 1931 xyY
-* RGB / HSL / HSV / HSI
+* RGB / HSL / HSV / HSI / Linear RGB
     * sRGB
     * Display P3
     * AdobeRGB
@@ -36,6 +36,7 @@ bun i allc
 * **This package is tree-shakable.** The `Color` class is a convenience, you can use the raw conversion functions.
 * **This package is (runtime) dependency-free.** There are still some dev-dependencies used in the compilation (e.g.,
   TypeScript).
+* **This package is written solely in TypeScript.**
 
 ## General Structure / Overview
 

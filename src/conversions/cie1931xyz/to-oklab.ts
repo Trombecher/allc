@@ -1,5 +1,5 @@
 /**
- * Converts an LMS component to an LMS' component.
+ * Calculates an LMS' component from an LMS component.
  * This function is relevant for the conversion between
  * Oklab and CIE 1931 XYZ.
  *
