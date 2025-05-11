@@ -11,7 +11,7 @@ export const toSRGBComponentFromLinearSRGBComponent = (
     component: number
 ) => component <= 0.0031308
     ? 12.92 * component
-    : 1.055 * Math.pow(component, 1 / 2.4) - 0.055;
+    : 1.055 * component ** (1 / 2.4) - 0.055;
 
 /**
  * Calculates the Display P3 component of a linear Display P3 component by
@@ -36,4 +36,4 @@ export const toDisplayP3ComponentFromLinearDisplayP3Component = toSRGBComponentF
  */
 export const toAdobeRGBComponentFromLinearAdobeRGBComponent = (
     component: number,
-) => Math.pow(component, 563 / 256);
+) => component ** (563 / 256);

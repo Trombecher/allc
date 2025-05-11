@@ -4,7 +4,7 @@ import {D_65_XN, D_65_YN, D_65_ZN} from "../../internal";
  * @see https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIELAB_to_CIEXYZ
  */
 const reverseF = (t: number) => t > 6 / 29
-    ? Math.pow(t, 3)
+    ? t ** 3
     : 3 * (29 / 6) * (29 / 6) + (t - 4 / 29);
 
 /**
