@@ -238,14 +238,16 @@ export class Color {
     }
 
     /**
-     * Calculates the hex string representation of the color in RGB.
-     * The components will be clamped to the range [0, 1] before processing,
-     * including the alpha component.
+     * Calculates the hex string representation in the format `"RRGGBB"` of the color in RGB.
+     * **Every component, including alpha, will be clamped to the range [0, 1] before processing.**
+     * If an alpha value is specified, the format will be `"RRGGBBAA"`.
+     *
+     * Uses {@link toHexStringFromRGB `toHexStringFromRGB(...)`} internally.
      *
      * @param colorSpace The color space to use.
      * @param alpha - An optional alpha component, range [0, 1].
      *
-     * @return The hexadecimal representation of the color.
+     * @returns The hexadecimal representation of the color.
      */
     hex(colorSpace: RGBColorSpace, alpha?: number): string {
         return toHexStringFromRGB(
@@ -257,11 +259,17 @@ export class Color {
     }
 
     /**
-     * TODO
-     * @param colorSpace
-     * @param alpha
+     * Calculates the integer representation in the format `0xAARRGGBB` of the color in RGB.
+     * **Every component, including alpha, will be clamped to the range [0, 1] before processing.**
+     *
+     * Uses {@link toIntegerFromRGB `toIntegerFromRGB(...)`} internally.
+     *
+     * @param colorSpace The RGB color space to use.
+     * @param alpha The alpha value to use, range [0, 1], defaults to 0.
+     *
+     * @returns The integer representation of the color.
      */
-    int(colorSpace: RGBColorSpace, alpha: number): number {
+    int(colorSpace: RGBColorSpace, alpha: number = 0): number {
         return toIntegerFromRGB(
             this.r(colorSpace),
             this.g(colorSpace),
@@ -272,7 +280,13 @@ export class Color {
 
     /**
      * Creates a new color from the given RGB components and color space.
-     * TODO
+     *
+     * @param r The red component of RGB, typically in the range [0, 1].
+     * @param g The green component of RGB, typically in the range [0, 1].
+     * @param b The blue component of RGB, typically in the range [0, 1].
+     * @param colorSpace The RGB color space to use.
+     *
+     * @returns The new color.
      */
     static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color {
         const toLinear = MAP_RGB_TO_LINEAR[colorSpace];
@@ -280,9 +294,20 @@ export class Color {
     }
 
     /**
-     * TODO
-     * @param hex
-     * @param colorSpace
+     * Creates a new color from the given hex string representation.
+     * The string can be in either of the formats listed below:
+     *
+     * * `"RGB"`
+     * * `"#RGB"`
+     * * `"RRGGBB"`
+     * * `"#RRGGBB"`
+     *
+     * Ignores any following characters. Defaults to 0 if the string/component is invalid.
+     *
+     * @param hex The hex string.
+     * @param colorSpace The RGB color space to use.
+     *
+     * @returns A new color.
      */
     static fromHexString(hex: string, colorSpace: RGBColorSpace): Color {
         return Color.fromRGB(
@@ -294,9 +319,13 @@ export class Color {
     }
 
     /**
-     * TODO
-     * @param integer
-     * @param colorSpace
+     * Creates a new color from the given integer representation in the format `0xRRGGBB`.
+     * **All other bits will be ignored, including the alpha component.**
+     *
+     * @param integer The integer representation.
+     * @param colorSpace The RGB color space to use.
+     *
+     * @returns A new color.
      */
     static fromInteger(integer: number, colorSpace: RGBColorSpace): Color {
         return Color.fromRGB(
@@ -626,8 +655,14 @@ export class Color {
 
     /**
      * Calculates the CSS representation of the color.
+     *
+     * Uses {@link toCSSFromCIE1931XYZ `toCSSFromCIE1931XYZ(...)`} internally.
+     *
+     * @param alpha The alpha component, optional, range [0, 1].
+     *
+     * @returns The CSS representation of the color.
      */
-    css(): string {
-        return toCSSFromCIE1931XYZ(this._X, this._Y, this._Z);
+    css(alpha?: number): string {
+        return toCSSFromCIE1931XYZ(this._X, this._Y, this._Z, alpha);
     }
 }

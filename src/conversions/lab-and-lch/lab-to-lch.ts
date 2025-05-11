@@ -1,6 +1,8 @@
 /**
  * Calculates the chroma component of LCH from LAB.
- * The lightness component is omitted because it is unnecessary for the computation.
+ * The luminance component of LCH is omitted because it is unnecessary for the computation.
+ *
+ * This function is color space invariant.
  *
  * @param a The a component of LAB, unbounded.
  * @param b The b component of LAB, unbounded.
@@ -15,7 +17,9 @@ export const toLCHCFromLAB = (
 
 /**
  * Calculates the hue component of LCH from LAB.
- * The lightness component is omitted because it is unnecessary for the computation.
+ * The luminance component of LCH is omitted because it is unnecessary for the computation.
+ *
+ * This function is color space invariant.
  *
  * @param a The a component of LAB, unbounded.
  * @param b The b component of LAB, unbounded.

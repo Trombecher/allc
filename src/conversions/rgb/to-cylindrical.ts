@@ -32,7 +32,7 @@ export const toSharedHueFromRGB = (
  * @param g The green component of RGB, typically in the range [0, 1].
  * @param b The blue component of RGB, typically in the range [0, 1].
  *
- * @return The lightness component of HSL, typically in the range [0, 1].
+ * @returns The lightness component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
 export const toHSLLFromRGB = (
@@ -52,7 +52,7 @@ export const toHSLLFromRGB = (
  * @param g The green component of RGB, typically in the range [0, 1].
  * @param b The blue component of RGB, typically in the range [0, 1].
  *
- * @return The saturation component of HSL, typically in the range [0, 1].
+ * @returns The saturation component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
 export const toHSLSFromRGB = (

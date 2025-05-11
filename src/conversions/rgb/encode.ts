@@ -9,7 +9,8 @@ import {clamp01} from "../../internal";
  * @param g - The green component, range [0, 1].
  * @param b - The blue component, range [0, 1].
  * @param withAlpha - An optional alpha component, range [0, 1], defaults to 0.
- * @return The integer representation of the color.
+ *
+ * @returns The integer representation of the color.
  */
 export const toIntegerFromRGB = (
     r: number,
@@ -30,7 +31,8 @@ export const toIntegerFromRGB = (
  * @param g - The green component, range [0, 1].
  * @param b - The blue component, range [0, 1].
  * @param withAlpha - An optional alpha component, range [0, 1].
- * @return The hexadecimal representation of the color.
+ *
+ * @returns The hexadecimal representation of the color.
  */
 export const toHexStringFromRGB = (
     r: number,

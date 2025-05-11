@@ -36,7 +36,7 @@ bun i allc
 * **This package is tree-shakable.** The `Color` class is a convenience, you can use the raw conversion functions.
 * **This package is (runtime) dependency-free.** There are still some dev-dependencies used in the compilation (e.g.,
   TypeScript).
-* **This package is written solely in TypeScript.**
+* **This package is written solely in TypeScript and uses no `// @ts-ignore`.**
 
 ## General Structure / Overview
 
@@ -53,7 +53,7 @@ you can access.
 
 This is it. allc does not have more features.
 
-## Planned Features
+## Planned Support
 
 * ProPhoto support
 * Rec. 2020 support
@@ -63,10 +63,10 @@ This is it. allc does not have more features.
 
 If you would like to implement one of these features, feel free to submit a PR :)
 
-## Build This Package
+## Building This Package
 
-To build this package, you will need [Bun](https://bun.sh/). Then run `bun run build`. This will generate
-the package output in `./dist`.
+To build this package, run `bun run build` or use your favourite JavaScript runtime. It essentially just executes
+`tsc`. The output files will be in the `./dist` directory.
 
 ## License
 
