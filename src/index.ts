@@ -1,5 +1,6 @@
 export * from "./conversions";
 export * from "./multi";
+export * from "./distances";
 
 /**
  * A color space that is applicable to RGB-like color models. These are:
