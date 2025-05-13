@@ -1,11 +1,9 @@
 import {expect, test} from "vitest";
 import {Color} from "../src";
-import {TOLERANCE} from "./common";
-
-const N = 100;
+import {SAMPLE_COUNT} from "./common";
 
 test("sRGB HSV <-> Oklch", () => {
-    for(let i = 0; i < N; i++) {
+    for(let i = 0; i < SAMPLE_COUNT; i++) {
         const h = Math.random();
         const s = Math.random();
         const v = Math.random();
@@ -30,6 +28,6 @@ test("sRGB HSV <-> Oklch", () => {
             newColor.v("sRGB") - v
         );
 
-        expect(d).toBeLessThan(TOLERANCE);
+        expect(d).toBeLessThan(0.0000011);
     }
 })

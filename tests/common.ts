@@ -1,14 +1,16 @@
 import {expect} from "vitest";
 import {Color} from "../src";
 
-export const TOLERANCE = 0.000001;
-export const SAMPLE_COUNT = 100;
-
-type EnforceColor<T> = T extends Color<infer C> ? T extends C ? T : never : never;
+export const TOLERANCE = 0.000_000_01;
+export const SAMPLE_COUNT = 100_000;
 
 expect.extend({
-    toBeAboutEqualTo<C extends Color<C>>(received: C, expected: C) {
-        const d = received.distance(expected);
+    toBeAboutEqualTo(received: Color, expected: Color) {
+        const d = Math.hypot(
+            received.X() - expected.X(),
+            received.Y() - expected.Y(),
+            received.Z() - expected.Z(),
+        );
 
         return {
             pass: d < TOLERANCE,
@@ -20,6 +22,6 @@ expect.extend({
 
 declare module "vitest" {
     interface Assertion<T> {
-        toBeAboutEqualTo(expected: EnforceColor<T>): void;
+        toBeAboutEqualTo(expected: T extends Color ? Color : never): void;
     }
 }
