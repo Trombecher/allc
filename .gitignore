@@ -24,5 +24,3 @@ dist-ssr
 *.sw?
 
 pnpm-lock.yaml
-
-**/generated-*
