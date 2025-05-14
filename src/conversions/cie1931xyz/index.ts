@@ -1,4 +1,4 @@
-export * from "./to-cie1931xyy";
+export * from "./to-cie-1931-xyy";
 export * from "./to-cielab";
 export * from "./to-css";
 export * from "./to-linear-adobe-rgb";

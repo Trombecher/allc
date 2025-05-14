@@ -2,6 +2,6 @@ export * from "./cie1931xyz";
 export * from "./hsl-hsv-and-hsi";
 export * from "./lab-and-lch";
 export * from "./rgb";
-export * from "./cie1931xyy";
+export * from "./cie-1931-xyy";
 export * from "./decode";
 export * from "./linear-rgb";

@@ -15,7 +15,7 @@ import {
     toDisplayP3ComponentFromLinearDisplayP3Component,
     toSRGBComponentFromLinearSRGBComponent,
 } from "../linear-rgb";
-import {toCIE1931XYZXFromCIELAB, toCIE1931XYZYFromCIELAB, toCIE1931XYZZFromCIELAB} from "./cielab-to-cie1931xyz";
+import {toCIE1931XYZXFromCIELAB, toCIE1931XYZYFromCIELAB, toCIE1931XYZZFromCIELAB} from "./cielab-to-cie-1931-xyz";
 import {toLABAFromLCH, toLABBFromLCH} from "./lch-to-lab";
 import {
     toCIE1931XYZXFromLMS,
@@ -25,7 +25,7 @@ import {
     toLMSDashLFromOklab,
     toLMSDashMFromOklab,
     toLMSDashSFromOklab,
-} from "./oklab-to-cie1931xyz";
+} from "./oklab-to-cie-1931-xyz";
 
 export const maxChromaIn = (
     targetColorSpace: RGBColorSpace,
