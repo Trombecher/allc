@@ -47,7 +47,7 @@ export const toLinearAdobeRGBComponentFromAdobeRGBComponent = toLinearSRGBCompon
  * @see https://en.wikipedia.org/wiki/Rec._2020#Transfer_characteristics
  */
 export const toLinearRec2020ComponentFromRec2020Component = (
-    component: number
+    component: number,
 ) => component < 0.08124285829863151
     ? component / 4.5
-    : ((component + 0.09929682680944) / component) ** (1 / 0.45)
+    : ((component + 0.09929682680944) / component) ** (1 / 0.45);

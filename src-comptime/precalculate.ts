@@ -1,7 +1,7 @@
 import {writeFile} from "fs/promises";
 import Matrix, {inverse} from "ml-matrix";
-import {toCIE1931XYZXFromCIE1931xyY, toCIE1931XYZZFromCIE1931xyY} from "./src/conversions/cie-1931-xyy";
-import {CIE_ILLUMINANT_D65_2d_x, CIE_ILLUMINANT_D65_2d_y} from "./src/illuminants";
+import {toCIE1931XYZXFromCIE1931xyY, toCIE1931XYZZFromCIE1931xyY} from "../src/conversions/cie-1931-xyy";
+import {CIE_ILLUMINANT_D65_2d_x, CIE_ILLUMINANT_D65_2d_y} from "../src/illuminants";
 import {
     PRIMARY_ADOBE_RGB_BLUE_x,
     PRIMARY_ADOBE_RGB_BLUE_y,
@@ -14,7 +14,9 @@ import {
     PRIMARY_DISPLAY_P3_GREEN_x,
     PRIMARY_DISPLAY_P3_GREEN_y,
     PRIMARY_DISPLAY_P3_RED_x,
-    PRIMARY_DISPLAY_P3_RED_y, PRIMARY_PROPHOTO_RGB_BLUE_x, PRIMARY_PROPHOTO_RGB_BLUE_y,
+    PRIMARY_DISPLAY_P3_RED_y,
+    PRIMARY_PROPHOTO_RGB_BLUE_x,
+    PRIMARY_PROPHOTO_RGB_BLUE_y,
     PRIMARY_PROPHOTO_RGB_GREEN_x,
     PRIMARY_PROPHOTO_RGB_GREEN_y,
     PRIMARY_PROPHOTO_RGB_RED_x,
@@ -31,7 +33,7 @@ import {
     PRIMARY_SRGB_GREEN_y,
     PRIMARY_SRGB_RED_x,
     PRIMARY_SRGB_RED_y,
-} from "./src/primaries";
+} from "../src/primaries";
 
 const constants = new Map<string, any>();
 

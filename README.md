@@ -18,13 +18,15 @@ bun i allc
 
 * CIE 1931 XYZ
 * CIE 1931 xyY
-* RGB / HSL / HSV / HSI / Linear RGB
+* Linear RGB / RGB / HSL / HSV / HSI / Y'UV / YDbDr
     * sRGB
     * Display P3
-    * AdobeRGB
+    * Adobe RGB
+    * ProPhoto RGB
+    * Rec. 2020
 * LAB / LCH
-    * Ok
-    * CIE
+    * Oklab
+    * CIELAB
 
 ## Guarantees (!)
 
@@ -65,7 +67,7 @@ If you would like to implement one of these features, feel free to submit a PR :
 
 ## Building This Package
 
-To build this package, run `bun run gen` and then `bun run build` or use your favourite JavaScript runtime.
+To build this package, `bun run build` or use your favourite JavaScript runtime.
 The output files will be in the `./dist` directory.
 
 ## License

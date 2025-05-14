@@ -8,7 +8,7 @@
     "scripts": {
         "test": "vitest --no-watch",
         "build": "tsc",
-        "gen": "bun precalculate.ts"
+        "gen": "bun src-comptime/precalculate.ts"
     },
     "keywords": [
         "Color",
