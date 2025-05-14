@@ -65,7 +65,7 @@ export const maxChromaIn = (
             green = toSRGBComponentFromLinearSRGBComponent(toLinearSRGBGFromCIE1931XYZ(x, y, z));
             blue = toSRGBComponentFromLinearSRGBComponent(toLinearSRGBBFromCIE1931XYZ(x, y, z));
         } else if(targetColorSpace === "Display P3") {
-            red = toDisplayP3ComponentFromLinearDisplayP3Component(toLinearDisplayP3RFromCIE1931XYZ(x, y));
+            red = toDisplayP3ComponentFromLinearDisplayP3Component(toLinearDisplayP3RFromCIE1931XYZ(x, y, z));
             green = toDisplayP3ComponentFromLinearDisplayP3Component(toLinearDisplayP3GFromCIE1931XYZ(x, y, z));
             blue = toDisplayP3ComponentFromLinearDisplayP3Component(toLinearDisplayP3BFromCIE1931XYZ(x, y, z));
         } else {

@@ -7,7 +7,8 @@
 * color-space: https://github.com/colorjs/color-space
 * Bruce Lindbloom: http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html
 * Wikipedia (sRGB): https://en.wikipedia.org/wiki/SRGB#Primaries
-* Wikipedia (Standard Illuminants): https://en.wikipedia.org/wiki/Standard_illuminant#White_points_of_standard_illuminants
+* Wikipedia (Standard
+  Illuminants): https://en.wikipedia.org/wiki/Standard_illuminant#White_points_of_standard_illuminants
 * Viereck: https://viereck.ch/hue-xy-rgb/ColorSpace.js
 * Matrixmaker: https://drafts.csswg.org/css-color-4/matrixmaker.html
 * CSS 4 GitHub issue: https://github.com/w3c/csswg-drafts/issues/5922
@@ -127,7 +128,6 @@ Equivalent to
 0.222488403, 0.716873169, 0.060607910,
 0.013916016, 0.097076416, 0.714096069,
 
-
 === D65 Linear Wide -> CIE 1931 XYZ matrix from: https://viereck.ch/hue-xy-rgb/ColorSpace.js
 0.7164, 0.1010, 0.1468,
 0.2587, 0.7247, 0.0166,
@@ -138,15 +138,16 @@ Equivalent to
 0.2974, 0.6273, 0.0753,
 0.0270, 0.0707, 0.9911
 
-=== D65 Linear Adobe RGB -> CIE 1931 XYZ matrix from https://en.wikipedia.org/wiki/Adobe_RGB_color_space#Reference_viewing_conditions
+=== D65 Linear Adobe RGB -> CIE 1931 XYZ matrix
+from https://en.wikipedia.org/wiki/Adobe_RGB_color_space#Reference_viewing_conditions
 0.57667, 0.18556, 0.18823
 0.29734, 0.62736, 0.07529
 0.02703, 0.07069, 0.99134
 
 === D65 Linear Display P3 -> CIE 1931 XYZ matrix from: https://drafts.csswg.org/css-color-4/#color-conversion-code
-608311 / 1250200, 189793 / 714400,  198249 / 1000160,
-35783 /  156275, 247089 / 357200,  198249 / 2500400,
-0 /       1,  32229 / 714400, 5220557 / 5000800,
+608311 / 1250200, 189793 / 714400, 198249 / 1000160,
+35783 / 156275, 247089 / 357200, 198249 / 2500400,
+0 / 1, 32229 / 714400, 5220557 / 5000800,
 
 Equivalent to
 

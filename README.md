@@ -65,8 +65,8 @@ If you would like to implement one of these features, feel free to submit a PR :
 
 ## Building This Package
 
-To build this package, run `bun run build` or use your favourite JavaScript runtime. It essentially just executes
-`tsc`. The output files will be in the `./dist` directory.
+To build this package, run `bun run gen` and then `bun run build` or use your favourite JavaScript runtime.
+The output files will be in the `./dist` directory.
 
 ## License
 
