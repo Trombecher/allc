@@ -1,5 +1,7 @@
 # Constants
 
+This is an attempt to document the various values and matrices used for color conversion by libraries and websites. Most of them are inaccurate.
+
 ## Sources
 
 * Culori: https://github.com/Evercoder/culori
