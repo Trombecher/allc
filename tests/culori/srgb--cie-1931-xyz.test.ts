@@ -1,6 +1,6 @@
-import * as allc from "../../src";
 import * as culori from "culori";
 import {expect, test} from "vitest";
+import * as allc from "../../src";
 import {clamp01} from "../../src/internal";
 import {SAMPLE_COUNT} from "../common";
 

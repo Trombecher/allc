@@ -4,11 +4,11 @@ The following constants stem from: https://www.emathhelp.net/calculators/linear-
 
 /**
  * Calculates the X component of CIE 1931 XYZ from linear Display P3.
- * 
+ *
  * @param r The red component of linear Display P3, typically in the range [0, 1].
  * @param g The green component of linear Display P3, typically in the range [0, 1].
  * @param b The blue component of linear Display P3, typically in the range [0, 1].
- * 
+ *
  * @returns The X component of CIE 1931 XYZ.
  * @see https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.680%2C0.320%2C0%5D%2C%5B0.256%2C0.690%2C0.045%5D%2C%5B0.150%2C0.060%2C0.790%5D%5D&m=g
  */

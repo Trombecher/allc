@@ -15,9 +15,9 @@ expect.extend({
         return {
             pass: d < TOLERANCE,
             message: () =>
-                `expected color ${JSON.stringify(received)} to be close to ${JSON.stringify(expected)}, but distance was ${d}`
+                `expected color ${JSON.stringify(received)} to be close to ${JSON.stringify(expected)}, but distance was ${d}`,
         };
-    }
+    },
 });
 
 declare module "vitest" {

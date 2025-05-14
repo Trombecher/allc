@@ -1,10 +1,10 @@
 /**
  * Calculates the X component of CIE 1931 XYZ from linear Adobe RGB.
- * 
+ *
  * @param r The red component of linear Adobe RGB, typically in the range [0, 1].
  * @param g The green component of linear Adobe RGB, typically in the range [0, 1].
  * @param b The blue component of linear Adobe RGB, typically in the range [0, 1].
- * 
+ *
  * @returns The X component of CIE 1931 XYZ.
  * @see https://en.wikipedia.org/wiki/Adobe_RGB_color_space#Reference_viewing_conditions
  */

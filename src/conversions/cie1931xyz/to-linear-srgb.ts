@@ -1,6 +1,14 @@
-/*
-Constants taken from https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator/?i=%5B%5B0.4124%2C0.3576%2C0.1805%5D%2C%5B0.2126%2C0.7152%2C0.0722%5D%2C%5B0.0193%2C0.1192%2C0.9505%5D%5D&m=g
-*/
+import {
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_0_0,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_0_1,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_0_2,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_1_0,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_1_1,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_1_2,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_0,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_1,
+    MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_2,
+} from "../generated-constants";
 
 /**
  * Calculates the red component of linear sRGB from CIE 1931 XYZ.
@@ -16,9 +24,9 @@ export const toLinearSRGBRFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * 28154000 / 8687829
-    + y * -13355000 / 8687829
-    + z * -1444000 / 2895943;
+) => x * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_0_2;
 
 /**
  * Calculates the green component of linear sRGB from CIE 1931 XYZ.
@@ -34,9 +42,9 @@ export const toLinearSRGBGFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * -418089250 / 431495507
-    + y * 1618760625 / 862991014
-    + z * 17914625 / 431495507;
+) => x * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_1_2;
 
 /**
  * Calculates the blue component of linear sRGB from CIE 1931 XYZ.
@@ -52,6 +60,6 @@ export const toLinearSRGBBFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * 484000 / 8687829
-    + y * -1772500 / 8687829
-    + z * 3061000 / 2895943;
+) => x * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_2;

@@ -9,6 +9,3 @@ export const BT_709_2_SRGB_GREEN_Y = 1; // 0.7152
 export const BT_709_2_SRGB_BLUE_x = 0.15;
 export const BT_709_2_SRGB_BLUE_y = 0.06;
 export const BT_709_2_SRGB_BLUE_Y = 1; // 0.0722
-
-export const IEC_D65_x = 0.3127;
-export const IEC_D65_y = 0.3290;

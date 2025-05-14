@@ -1,9 +1,6 @@
 import * as culori from "culori";
 import {expect, test} from "vitest";
-import {
-    toLinearSRGBComponentFromSRGBComponent,
-    toSRGBComponentFromLinearSRGBComponent,
-} from "../../src";
+import {toLinearSRGBComponentFromSRGBComponent, toSRGBComponentFromLinearSRGBComponent} from "../../src";
 import {SAMPLE_COUNT, TOLERANCE} from "../common";
 
 test("Linear sRGB -> sRGB", () => {

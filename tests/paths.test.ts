@@ -12,22 +12,22 @@ test("sRGB HSV <-> Oklch", () => {
             h,
             s,
             v,
-            "sRGB"
+            "sRGB",
         );
 
         const newColor = Color.fromLCH(
             randomColor.pl("Ok"),
             randomColor.pc("Ok"),
             randomColor.ph("Ok"),
-            "Ok"
+            "Ok",
         );
 
         const d = Math.hypot(
             newColor.h("sRGB") - h,
             newColor.sv("sRGB") - s,
-            newColor.v("sRGB") - v
+            newColor.v("sRGB") - v,
         );
 
         expect(d).toBeLessThan(0.0000011);
     }
-})
+});

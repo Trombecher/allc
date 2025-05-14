@@ -146,6 +146,222 @@ export class Color {
     // CIE 1931 XYZ
 
     /**
+     * Creates a new color from the given CIE 1931 XYZ components.
+     *
+     * @param X The X component of CIE 1931 XYZ.
+     * @param Y The Y component of CIE 1931 XYZ.
+     * @param Z The Z component of CIE 1931 XYZ.
+     *
+     * @returns The new color.
+     */
+    static fromCIE1931XYZ(X: number, Y: number, Z: number): Color {
+        return new Color(X, Y, Z);
+    }
+
+    /**
+     * Creates a new color from the given CIE 1931 xyY components.
+     *
+     * @param x The x component of CIE 1931 xyY, range [0, 1].
+     * @param y The y component of CIE 1931 xyY, range [0, 1].
+     * @param Y The Y component of CIE 1931 xyY, range [0, 1].
+     *
+     * @returns The new color.
+     */
+    static fromCIE1931xyY(x: number, y: number, Y: number): Color {
+        const X = toCIE1931XYZXFromCIE1931xyY(x, y, Y),
+            Z = toCIE1931XYZZFromCIE1931xyY(x, y, Y);
+
+        return new Color(X, Y, Z);
+    }
+
+    /**
+     * Creates a new color from the given RGB components and color space.
+     *
+     * @param r The red component of RGB, typically in the range [0, 1].
+     * @param g The green component of RGB, typically in the range [0, 1].
+     * @param b The blue component of RGB, typically in the range [0, 1].
+     * @param colorSpace The RGB color space to use.
+     *
+     * @returns The new color.
+     */
+    static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color {
+        const toLinear = MAP_RGB_TO_LINEAR[colorSpace];
+        return Color.fromLinearRGB(toLinear(r), toLinear(g), toLinear(b), colorSpace);
+    }
+
+    /**
+     * Creates a new color from the given hex string representation.
+     * The string can be in either of the formats listed below:
+     *
+     * * `"RGB"`
+     * * `"#RGB"`
+     * * `"RRGGBB"`
+     * * `"#RRGGBB"`
+     *
+     * Ignores any following characters. Defaults to 0 if the string/component is invalid.
+     *
+     * @param hex The hex string.
+     * @param colorSpace The RGB color space to use.
+     *
+     * @returns A new color.
+     */
+    static fromHexString(hex: string, colorSpace: RGBColorSpace): Color {
+        return Color.fromRGB(
+            toRGBRFromHexString(hex),
+            toRGBGFromHexString(hex),
+            toRGBBFromHexString(hex),
+            colorSpace,
+        );
+    }
+
+    // CIE 1931 xyY
+
+    /**
+     * Creates a new color from the given integer representation in the format `0xRRGGBB`.
+     * **All other bits will be ignored, including the alpha component.**
+     *
+     * @param integer The integer representation.
+     * @param colorSpace The RGB color space to use.
+     *
+     * @returns A new color.
+     */
+    static fromInteger(integer: number, colorSpace: RGBColorSpace): Color {
+        return Color.fromRGB(
+            toRGBRFromInteger(integer),
+            toRGBGFromInteger(integer),
+            toRGBBFromInteger(integer),
+            colorSpace,
+        );
+    }
+
+    /**
+     * Creates a new color from the given HSV components.
+     *
+     * @param h The hue component of HSV, unbounded, in radians.
+     * @param s The saturation component of HSV, range [0, 1].
+     * @param v The value component of HSV, range [0, 1].
+     * @param colorSpace The color space to use.
+     *
+     * @returns The new color.
+     */
+    static fromHSV(h: number, s: number, v: number, colorSpace: RGBColorSpace): Color {
+        return Color.fromRGB(
+            toRGBRFromHSV(h, s, v),
+            toRGBGFromHSV(h, s, v),
+            toRGBBFromHSV(h, s, v),
+            colorSpace,
+        );
+    }
+
+    /**
+     * Creates a new color from the given HSL components.
+     *
+     * @param h The hue component of HSL, unbounded, in radians.
+     * @param s The saturation component of HSL, range [0, 1].
+     * @param l The value component of HSL, range [0, 1].
+     * @param colorSpace The color space to use.
+     *
+     * @returns The new color.
+     */
+    static fromHSL(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color {
+        return Color.fromRGB(
+            toRGBRFromHSL(h, s, l),
+            toRGBGFromHSL(h, s, l),
+            toRGBBFromHSL(h, s, l),
+            colorSpace,
+        );
+    }
+
+    // RGB
+
+    /**
+     * Creates a new color from the given HSI components.
+     *
+     * @param h The hue component of HSI, unbounded, in radians.
+     * @param s The saturation component of HSI, range [0, 1].
+     * @param i The value component of HSI, range [0, 1].
+     * @param colorSpace The color space to use.
+     *
+     * @returns The new color.
+     */
+    static fromHSI(h: number, s: number, i: number, colorSpace: RGBColorSpace): Color {
+        return Color.fromRGB(
+            toRGBRFromHSI(h, s, i),
+            toRGBGFromHSI(h, s, i),
+            toRGBBFromHSI(h, s, i),
+            colorSpace,
+        );
+    }
+
+    /**
+     * Creates a new color from the given linear RGB components.
+     *
+     * @param lr The red component of linear RGB, range [0, 1].
+     * @param lg The green component of linear RGB, range [0, 1].
+     * @param lb The blue component of linear RGB, range [0, 1].
+     * @param colorSpace The color space to use.
+     *
+     * @return The new color.
+     */
+    static fromLinearRGB(lr: number, lg: number, lb: number, colorSpace: RGBColorSpace): Color {
+        const [tr, tg, tb] = MAP_LINEAR_TO_CIE_1931_XYZ[colorSpace];
+        return new Color(
+            tr(lr, lg, lb),
+            tg(lr, lg, lb),
+            tb(lr, lg, lb),
+        );
+    }
+
+    /**
+     * Creates a new color from the given LAB components.
+     *
+     * @param l The luminance component of LAB, range [0, 1].
+     * @param a The a component of LAB, unbounded.
+     * @param b The b component of LAB, unbounded.
+     * @param colorSpace The color space to use.
+     *
+     * @return The new color.
+     */
+    static fromLAB(l: number, a: number, b: number, colorSpace: PerceptualColorSpace): Color {
+        if(colorSpace === "Ok") {
+            const _l = toLMSComponentFromLMSDashComponent(toLMSDashLFromOklab(l, a, b));
+            const _m = toLMSComponentFromLMSDashComponent(toLMSDashMFromOklab(l, a, b));
+            const _s = toLMSComponentFromLMSDashComponent(toLMSDashSFromOklab(l, a, b));
+
+            return new Color(
+                toCIE1931XYZXFromLMS(_l, _m, _s),
+                toCIE1931XYZYFromLMS(_l, _m, _s),
+                toCIE1931XYZZFromLMS(_l, _m, _s),
+            );
+        }
+
+        return new Color(
+            toCIE1931XYZXFromCIELAB(l, a),
+            toCIE1931XYZYFromCIELAB(l),
+            toCIE1931XYZZFromCIELAB(l, b),
+        );
+    }
+
+    /**
+     * Creates a new color from the given LCH components.
+     *
+     * @param l The luminance component of LCH, range [0, 1].
+     * @param c The chromaticity component of LCH, unbounded.
+     * @param h The hue component of LCH, unbounded, in radians.
+     * @param colorSpace The color space to use.
+     *
+     * @returns The new color.
+     */
+    static fromLCH(l: number, c: number, h: number, colorSpace: PerceptualColorSpace): Color {
+        return Color.fromLAB(
+            l,
+            toLABAFromLCH(c, h),
+            toLABBFromLCH(c, h),
+            colorSpace,
+        );
+    }
+
+    /**
      * Calculates the X component of the color in the CIE 1931 XYZ color space.
      */
     X(): number {
@@ -167,26 +383,13 @@ export class Color {
     }
 
     /**
-     * Creates a new color from the given CIE 1931 XYZ components.
-     *
-     * @param X The X component of CIE 1931 XYZ.
-     * @param Y The Y component of CIE 1931 XYZ.
-     * @param Z The Z component of CIE 1931 XYZ.
-     *
-     * @returns The new color.
-     */
-    static fromCIE1931XYZ(X: number, Y: number, Z: number): Color {
-        return new Color(X, Y, Z);
-    }
-
-    // CIE 1931 xyY
-
-    /**
      * Calculates the x component of the color in the CIE 1931 xyY color space.
      */
     x(): number {
         return toCIE1931xyYxFromCIE1931XYZ(this._X, this._Y, this._Z);
     }
+
+    // Cylindrical
 
     /**
      * Calculates the y component of the color in the CIE 1931 xyY color space.
@@ -194,24 +397,6 @@ export class Color {
     y(): number {
         return toCIE1931xyYyFromCIE1931XYZ(this._X, this._Y, this._Z);
     }
-
-    /**
-     * Creates a new color from the given CIE 1931 xyY components.
-     *
-     * @param x The x component of CIE 1931 xyY, range [0, 1].
-     * @param y The y component of CIE 1931 xyY, range [0, 1].
-     * @param Y The Y component of CIE 1931 xyY, range [0, 1].
-     *
-     * @returns The new color.
-     */
-    static fromCIE1931xyY(x: number, y: number, Y: number): Color {
-        const X = toCIE1931XYZXFromCIE1931xyY(x, y, Y),
-            Z = toCIE1931XYZZFromCIE1931xyY(x, y, Y);
-
-        return new Color(X, Y, Z);
-    }
-
-    // RGB
 
     /**
      * Calculates the red component of the color in the RGB color model.
@@ -279,66 +464,6 @@ export class Color {
     }
 
     /**
-     * Creates a new color from the given RGB components and color space.
-     *
-     * @param r The red component of RGB, typically in the range [0, 1].
-     * @param g The green component of RGB, typically in the range [0, 1].
-     * @param b The blue component of RGB, typically in the range [0, 1].
-     * @param colorSpace The RGB color space to use.
-     *
-     * @returns The new color.
-     */
-    static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color {
-        const toLinear = MAP_RGB_TO_LINEAR[colorSpace];
-        return Color.fromLinearRGB(toLinear(r), toLinear(g), toLinear(b), colorSpace);
-    }
-
-    /**
-     * Creates a new color from the given hex string representation.
-     * The string can be in either of the formats listed below:
-     *
-     * * `"RGB"`
-     * * `"#RGB"`
-     * * `"RRGGBB"`
-     * * `"#RRGGBB"`
-     *
-     * Ignores any following characters. Defaults to 0 if the string/component is invalid.
-     *
-     * @param hex The hex string.
-     * @param colorSpace The RGB color space to use.
-     *
-     * @returns A new color.
-     */
-    static fromHexString(hex: string, colorSpace: RGBColorSpace): Color {
-        return Color.fromRGB(
-            toRGBRFromHexString(hex),
-            toRGBGFromHexString(hex),
-            toRGBBFromHexString(hex),
-            colorSpace,
-        );
-    }
-
-    /**
-     * Creates a new color from the given integer representation in the format `0xRRGGBB`.
-     * **All other bits will be ignored, including the alpha component.**
-     *
-     * @param integer The integer representation.
-     * @param colorSpace The RGB color space to use.
-     *
-     * @returns A new color.
-     */
-    static fromInteger(integer: number, colorSpace: RGBColorSpace): Color {
-        return Color.fromRGB(
-            toRGBRFromInteger(integer),
-            toRGBGFromInteger(integer),
-            toRGBBFromInteger(integer),
-            colorSpace,
-        );
-    }
-
-    // Cylindrical
-
-    /**
      * Calculates the shared hue component of the current color in the HSL/HSV color model.
      * @param colorSpace The color space to use.
      */
@@ -398,6 +523,8 @@ export class Color {
         );
     }
 
+    // Linear RGB
+
     /**
      * Calculates the lightness component of the color in the HSL color model.
      * @param colorSpace The color space to use.
@@ -435,71 +562,14 @@ export class Color {
     }
 
     /**
-     * Creates a new color from the given HSV components.
-     *
-     * @param h The hue component of HSV, unbounded, in radians.
-     * @param s The saturation component of HSV, range [0, 1].
-     * @param v The value component of HSV, range [0, 1].
-     * @param colorSpace The color space to use.
-     *
-     * @returns The new color.
-     */
-    static fromHSV(h: number, s: number, v: number, colorSpace: RGBColorSpace): Color {
-        return Color.fromRGB(
-            toRGBRFromHSV(h, s, v),
-            toRGBGFromHSV(h, s, v),
-            toRGBBFromHSV(h, s, v),
-            colorSpace,
-        );
-    }
-
-    /**
-     * Creates a new color from the given HSL components.
-     *
-     * @param h The hue component of HSL, unbounded, in radians.
-     * @param s The saturation component of HSL, range [0, 1].
-     * @param l The value component of HSL, range [0, 1].
-     * @param colorSpace The color space to use.
-     *
-     * @returns The new color.
-     */
-    static fromHSL(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color {
-        return Color.fromRGB(
-            toRGBRFromHSL(h, s, l),
-            toRGBGFromHSL(h, s, l),
-            toRGBBFromHSL(h, s, l),
-            colorSpace,
-        );
-    }
-
-    /**
-     * Creates a new color from the given HSI components.
-     *
-     * @param h The hue component of HSI, unbounded, in radians.
-     * @param s The saturation component of HSI, range [0, 1].
-     * @param i The value component of HSI, range [0, 1].
-     * @param colorSpace The color space to use.
-     *
-     * @returns The new color.
-     */
-    static fromHSI(h: number, s: number, i: number, colorSpace: RGBColorSpace): Color {
-        return Color.fromRGB(
-            toRGBRFromHSI(h, s, i),
-            toRGBGFromHSI(h, s, i),
-            toRGBBFromHSI(h, s, i),
-            colorSpace,
-        );
-    }
-
-    // Linear RGB
-
-    /**
      * Calculates the red component of the color in linear RGB.
      * @param colorSpace The color space to use.
      */
     lr(colorSpace: RGBColorSpace): number {
         return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_R[colorSpace](this._X, this._Y, this._Z);
     }
+
+    // LAB / LCH
 
     /**
      * Calculates the green component of the color in linear RGB.
@@ -516,27 +586,6 @@ export class Color {
     lb(colorSpace: RGBColorSpace): number {
         return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_B[colorSpace](this._X, this._Y, this._Z);
     }
-
-    /**
-     * Creates a new color from the given linear RGB components.
-     *
-     * @param lr The red component of linear RGB, range [0, 1].
-     * @param lg The green component of linear RGB, range [0, 1].
-     * @param lb The blue component of linear RGB, range [0, 1].
-     * @param colorSpace The color space to use.
-     *
-     * @return The new color.
-     */
-    static fromLinearRGB(lr: number, lg: number, lb: number, colorSpace: RGBColorSpace): Color {
-        const [tr, tg, tb] = MAP_LINEAR_TO_CIE_1931_XYZ[colorSpace];
-        return new Color(
-            tr(lr, lg, lb),
-            tg(lr, lg, lb),
-            tb(lr, lg, lb),
-        );
-    }
-
-    // LAB / LCH
 
     /**
      * Calculates the shared luminance component of the color in the LAB/LCH color model.
@@ -600,55 +649,6 @@ export class Color {
      */
     ph(colorSpace: PerceptualColorSpace): number {
         return toLCHHFromLAB(this.pa(colorSpace), this.pb(colorSpace));
-    }
-
-    /**
-     * Creates a new color from the given LAB components.
-     *
-     * @param l The luminance component of LAB, range [0, 1].
-     * @param a The a component of LAB, unbounded.
-     * @param b The b component of LAB, unbounded.
-     * @param colorSpace The color space to use.
-     *
-     * @return The new color.
-     */
-    static fromLAB(l: number, a: number, b: number, colorSpace: PerceptualColorSpace): Color {
-        if(colorSpace === "Ok") {
-            const _l = toLMSComponentFromLMSDashComponent(toLMSDashLFromOklab(l, a, b));
-            const _m = toLMSComponentFromLMSDashComponent(toLMSDashMFromOklab(l, a, b));
-            const _s = toLMSComponentFromLMSDashComponent(toLMSDashSFromOklab(l, a, b));
-
-            return new Color(
-                toCIE1931XYZXFromLMS(_l, _m, _s),
-                toCIE1931XYZYFromLMS(_l, _m, _s),
-                toCIE1931XYZZFromLMS(_l, _m, _s),
-            );
-        }
-
-        return new Color(
-            toCIE1931XYZXFromCIELAB(l, a),
-            toCIE1931XYZYFromCIELAB(l),
-            toCIE1931XYZZFromCIELAB(l, b),
-        );
-    }
-
-    /**
-     * Creates a new color from the given LCH components.
-     *
-     * @param l The luminance component of LCH, range [0, 1].
-     * @param c The chromaticity component of LCH, unbounded.
-     * @param h The hue component of LCH, unbounded, in radians.
-     * @param colorSpace The color space to use.
-     *
-     * @returns The new color.
-     */
-    static fromLCH(l: number, c: number, h: number, colorSpace: PerceptualColorSpace): Color {
-        return Color.fromLAB(
-            l,
-            toLABAFromLCH(c, h),
-            toLABBFromLCH(c, h),
-            colorSpace,
-        );
     }
 
     // Common

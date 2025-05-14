@@ -1,4 +1,6 @@
+import {writeFile} from "fs/promises";
 import Matrix, {inverse} from "ml-matrix";
+
 import {
     BT_709_2_SRGB_BLUE_x,
     BT_709_2_SRGB_BLUE_Y,
@@ -8,80 +10,96 @@ import {
     BT_709_2_SRGB_GREEN_y,
     BT_709_2_SRGB_RED_x,
     BT_709_2_SRGB_RED_Y,
-    BT_709_2_SRGB_RED_y, IEC_D65_x, IEC_D65_y,
-    ILLUMINANT_D65_KELVIN,
-    illuminantDKelvinToRealKelvin,
-    illuminantDxFromRealKelvin,
-    illuminantDyFromX,
+    BT_709_2_SRGB_RED_y,
+    CIE_ILLUMINANT_D65_2d_x,
+    CIE_ILLUMINANT_D65_2d_y,
     toCIE1931XYZXFromCIE1931xyY,
     toCIE1931XYZZFromCIE1931xyY,
 } from "./src";
 
-const useIEC = true;
+const constants = new Map<string, any>();
 
-const d65x = useIEC ? IEC_D65_x : illuminantDxFromRealKelvin(illuminantDKelvinToRealKelvin(ILLUMINANT_D65_KELVIN));
-const d65y = useIEC ? IEC_D65_y : illuminantDyFromX(d65x);
+const addSquareMatrix = (id: string, matrix: number[]) => {
+    id = id.toUpperCase();
 
-const d65Y = 1;
-const d65X = toCIE1931XYZXFromCIE1931xyY(d65x, d65y, d65Y);
-const d65Z = toCIE1931XYZZFromCIE1931xyY(d65x, d65y, d65Y);
+    const n = Math.sqrt(matrix.length);
 
-const sRGBRedX = toCIE1931XYZXFromCIE1931xyY(
-    BT_709_2_SRGB_RED_x,
-    BT_709_2_SRGB_RED_y,
-    BT_709_2_SRGB_RED_Y,
-);
-const sRGBRedY = BT_709_2_SRGB_RED_Y;
-const sRGBRedZ = toCIE1931XYZZFromCIE1931xyY(
-    BT_709_2_SRGB_RED_x,
-    BT_709_2_SRGB_RED_y,
-    BT_709_2_SRGB_RED_Y,
-);
+    for(let row = 0; row < n; row++) {
+        for(let col = 0; col < n; col++) {
+            constants.set(`MATRIX_${id}_${row}_${col}`, matrix[row * n + col]);
+        }
+    }
+};
 
-const sRGBGreenX = toCIE1931XYZXFromCIE1931xyY(
-    BT_709_2_SRGB_GREEN_x,
-    BT_709_2_SRGB_GREEN_y,
-    BT_709_2_SRGB_GREEN_Y,
-);
-const sRGBGreenY = BT_709_2_SRGB_GREEN_Y;
-const sRGBGreenZ = toCIE1931XYZZFromCIE1931xyY(
-    BT_709_2_SRGB_GREEN_x,
-    BT_709_2_SRGB_GREEN_y,
-    BT_709_2_SRGB_GREEN_Y,
-);
+const calculateSRGBToCIE1931XYZMatrix = () => {
+    const illuminantCIEx = CIE_ILLUMINANT_D65_2d_x;
+    const illuminantCIEy = CIE_ILLUMINANT_D65_2d_y;
 
-const sRGBBlueX = toCIE1931XYZXFromCIE1931xyY(
-    BT_709_2_SRGB_BLUE_x,
-    BT_709_2_SRGB_BLUE_y,
-    BT_709_2_SRGB_BLUE_Y,
-);
-const sRGBBlueY = BT_709_2_SRGB_BLUE_Y;
-const sRGBBlueZ = toCIE1931XYZZFromCIE1931xyY(
-    BT_709_2_SRGB_BLUE_x,
-    BT_709_2_SRGB_BLUE_y,
-    BT_709_2_SRGB_BLUE_Y,
-);
+    const illuminantY = 1;
+    const illuminantX = toCIE1931XYZXFromCIE1931xyY(illuminantCIEx, illuminantCIEy, illuminantY);
+    const illuminantZ = toCIE1931XYZZFromCIE1931xyY(illuminantCIEx, illuminantCIEy, illuminantY);
 
-const primaries = new Matrix([
-    [sRGBRedX, sRGBRedY, sRGBRedZ],
-    [sRGBGreenX, sRGBGreenY, sRGBGreenZ],
-    [sRGBBlueX, sRGBBlueY, sRGBBlueZ],
-]).transpose();
+    const sRGBRedX = toCIE1931XYZXFromCIE1931xyY(
+        BT_709_2_SRGB_RED_x,
+        BT_709_2_SRGB_RED_y,
+        BT_709_2_SRGB_RED_Y,
+    );
+    const sRGBRedY = BT_709_2_SRGB_RED_Y;
+    const sRGBRedZ = toCIE1931XYZZFromCIE1931xyY(
+        BT_709_2_SRGB_RED_x,
+        BT_709_2_SRGB_RED_y,
+        BT_709_2_SRGB_RED_Y,
+    );
 
-const primariesInverse = inverse(primaries);
+    const sRGBGreenX = toCIE1931XYZXFromCIE1931xyY(
+        BT_709_2_SRGB_GREEN_x,
+        BT_709_2_SRGB_GREEN_y,
+        BT_709_2_SRGB_GREEN_Y,
+    );
+    const sRGBGreenY = BT_709_2_SRGB_GREEN_Y;
+    const sRGBGreenZ = toCIE1931XYZZFromCIE1931xyY(
+        BT_709_2_SRGB_GREEN_x,
+        BT_709_2_SRGB_GREEN_y,
+        BT_709_2_SRGB_GREEN_Y,
+    );
 
-const scaling = primariesInverse.mmul(new Matrix([
-    [d65X],
-    [d65Y],
-    [d65Z],
-]));
+    const sRGBBlueX = toCIE1931XYZXFromCIE1931xyY(
+        BT_709_2_SRGB_BLUE_x,
+        BT_709_2_SRGB_BLUE_y,
+        BT_709_2_SRGB_BLUE_Y,
+    );
+    const sRGBBlueY = BT_709_2_SRGB_BLUE_Y;
+    const sRGBBlueZ = toCIE1931XYZZFromCIE1931xyY(
+        BT_709_2_SRGB_BLUE_x,
+        BT_709_2_SRGB_BLUE_y,
+        BT_709_2_SRGB_BLUE_Y,
+    );
 
-const finalMatrix = primaries.mmul(new Matrix([
-    [scaling.get(0, 0), 0, 0],
-    [0, scaling.get(1, 0), 0],
-    [0, 0, scaling.get(2, 0)],
-]));
+    const primaries = new Matrix([
+        [sRGBRedX, sRGBRedY, sRGBRedZ],
+        [sRGBGreenX, sRGBGreenY, sRGBGreenZ],
+        [sRGBBlueX, sRGBBlueY, sRGBBlueZ],
+    ]).transpose();
 
-console.log(finalMatrix.getRow(0));
-console.log(finalMatrix.getRow(1));
-console.log(finalMatrix.getRow(2));
+    const primariesInverse = inverse(primaries);
+
+    const scaling = primariesInverse.mmul(new Matrix([
+        [illuminantX],
+        [illuminantY],
+        [illuminantZ],
+    ]));
+
+    return primaries.mmul(new Matrix([
+        [scaling.get(0, 0), 0, 0],
+        [0, scaling.get(1, 0), 0],
+        [0, 0, scaling.get(2, 0)],
+    ]));
+};
+
+addSquareMatrix("CIE_1931_XYZ_FROM_LINEAR_SRGB", calculateSRGBToCIE1931XYZMatrix().to1DArray());
+addSquareMatrix("LINEAR_SRGB_FROM_CIE_1931_XYZ", inverse(calculateSRGBToCIE1931XYZMatrix()).to1DArray());
+
+await writeFile("./src/conversions/constants.ts", "// This file was automatically generated by precalculate.ts in the root of the repo." + constants
+    .entries()
+    .map(([id, value]) => `export const ${id} = ${JSON.stringify(value)};`)
+    .reduce((a, b) => `${a}\n${b}`, ""));
