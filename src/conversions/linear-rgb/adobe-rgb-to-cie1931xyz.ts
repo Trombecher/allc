@@ -1,3 +1,15 @@
+import {
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_0_0,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_0_1,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_0_2,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_1_0,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_1_1,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_1_2,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_2_0,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_2_1,
+    MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_2_2,
+} from "../generated-constants";
+
 /**
  * Calculates the X component of CIE 1931 XYZ from linear Adobe RGB.
  *
@@ -12,7 +24,9 @@ export const toCIE1931XYZXFromLinearAdobeRGB = (
     r: number,
     g: number,
     b: number,
-) => r * 0.57667 + g * 0.18556 + b * 0.18823;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear Adobe RGB.
@@ -28,7 +42,9 @@ export const toCIE1931XYZYFromLinearAdobeRGB = (
     r: number,
     g: number,
     b: number,
-) => r * 0.29734 + g * 0.62736 + b * 0.07529;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear Adobe RGB.
@@ -44,4 +60,6 @@ export const toCIE1931XYZZFromLinearAdobeRGB = (
     r: number,
     g: number,
     b: number,
-) => r * 0.02703 + g * 0.07069 + b * 0.99134;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB_2_2;

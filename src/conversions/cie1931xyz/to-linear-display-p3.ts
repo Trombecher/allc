@@ -1,13 +1,20 @@
-/*
-Constants taken from https://www.color.org/chardata/rgb/DisplayP3.xalter.
-*/
+import {
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_0,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_1,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_2,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_0,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_1,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_2,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_0,
+    MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_1, MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_2,
+} from "../generated-constants";
 
 /**
  * Calculates the red component of linear Display P3 from CIE 1931 XYZ.
- * The Z component is omitted because it is unnecessary for the conversion.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
+ * @param z The Z component of CIE 1931 XYZ.
  *
  * @returns The red component of linear Display P3.
  * @see https://www.color.org/chardata/rgb/DisplayP3.xalter
@@ -15,7 +22,10 @@ Constants taken from https://www.color.org/chardata/rgb/DisplayP3.xalter.
 export const toLinearDisplayP3RFromCIE1931XYZ = (
     x: number,
     y: number,
-) => x * 0.68 + y * 0.32;
+    z: number
+) => x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_2;
 
 /**
  * Calculates the green component of linear Display P3 from CIE 1931 XYZ.
@@ -31,7 +41,9 @@ export const toLinearDisplayP3GFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * 0.265 + y * 0.69 + z * 0.045;
+) => x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_2;
 
 /**
  * Calculates the blue component of linear Display P3 from CIE 1931 XYZ.
@@ -47,4 +59,6 @@ export const toLinearDisplayP3BFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * 0.15 + y * 0.06 + z * 0.79;
+) => x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_2;

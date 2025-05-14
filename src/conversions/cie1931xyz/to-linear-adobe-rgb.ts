@@ -1,6 +1,14 @@
-/*
-The following constants stem from: https://en.wikipedia.org/wiki/Adobe_RGB_color_space#Reference_viewing_conditions
-*/
+import {
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_0_0,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_0_1,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_0_2,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_1_0,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_1_1,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_1_2,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_2_0,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_2_1,
+    MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_2_2,
+} from "../generated-constants";
 
 /**
  * Calculates the red component of linear Adobe RGB from CIE 1931 XYZ.
@@ -16,7 +24,9 @@ export const toLinearAdobeRGBRFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * 2.04159 + y * -0.56501 + z * -0.34473;
+) => x * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_0_2;
 
 /**
  * Calculates the green component of linear Adobe RGB from CIE 1931 XYZ.
@@ -32,7 +42,9 @@ export const toLinearAdobeRGBGFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * -0.96924 + y * 1.87597 + z * 0.04156;
+) => x * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_1_2;
 
 /**
  * Calculates the blue component of linear Adobe RGB from CIE 1931 XYZ.
@@ -48,4 +60,6 @@ export const toLinearAdobeRGBBFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) => x * 0.01344 + y * -0.11836 + z * 1.01517;
+) => x * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ_2_2;
