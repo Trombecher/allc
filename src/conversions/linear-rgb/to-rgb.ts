@@ -29,12 +29,12 @@ export const toDisplayP3ComponentFromLinearDisplayP3Component = toSRGBComponentF
 /**
  * Calculates the Adobe RGB component of a linear Adobe RGB component by
  * applying the inverse Adobe RGB transfer function.
+ * This function is identical to
+ * {@link toSRGBComponentFromLinearSRGBComponent `toSRGBComponentFromLinearSRGBComponent(...)`}.
  *
  * @param component The linear Adobe RGB component (r, g, or b), typically in the range [0, 1].
  *
  * @return The Adobe RGB component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/Adobe_RGB_color_space#ICC_PCS_color_image_encoding
  */
-export const toAdobeRGBComponentFromLinearAdobeRGBComponent = (
-    component: number,
-) => component ** (563 / 256);
+export const toAdobeRGBComponentFromLinearAdobeRGBComponent = toSRGBComponentFromLinearSRGBComponent;

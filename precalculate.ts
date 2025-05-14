@@ -1,9 +1,8 @@
 import {writeFile} from "fs/promises";
 import Matrix, {inverse} from "ml-matrix";
-
+import {CIE_ILLUMINANT_D65_2d_x, CIE_ILLUMINANT_D65_2d_y} from "./src/illuminants";
+import {toCIE1931XYZXFromCIE1931xyY, toCIE1931XYZZFromCIE1931xyY} from "./src/conversions/cie1931xyy";
 import {
-    CIE_ILLUMINANT_D65_2d_x,
-    CIE_ILLUMINANT_D65_2d_y,
     PRIMARY_ADOBE_RGB_BLUE_x,
     PRIMARY_ADOBE_RGB_BLUE_Y,
     PRIMARY_ADOBE_RGB_BLUE_y,
@@ -31,9 +30,7 @@ import {
     PRIMARY_SRGB_RED_x,
     PRIMARY_SRGB_RED_Y,
     PRIMARY_SRGB_RED_y,
-    toCIE1931XYZXFromCIE1931xyY,
-    toCIE1931XYZZFromCIE1931xyY,
-} from "./src";
+} from "./src/primaries";
 
 const constants = new Map<string, any>();
 
