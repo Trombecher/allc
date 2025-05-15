@@ -7,3 +7,4 @@ export * from "./decode";
 export * from "./linear-rgb";
 export * from "./generated-constants";
 export * from "./yuv";
+export * from "./ydbdr";

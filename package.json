@@ -35,6 +35,22 @@
         ".": {
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
+        },
+        "./conversions": {
+            "types": "./dist/conversions/index.d.ts",
+            "default": "./dist/conversions/index.js"
+        },
+        "./distances": {
+            "types": "./dist/distances.d.ts",
+            "default": "./dist/distances.js"
+        },
+        "./primaries": {
+            "types": "./dist/primaries.d.ts",
+            "default": "./dist/primaries.js"
+        },
+        "./illuminants": {
+            "types": "./dist/illuminants.d.ts",
+            "default": "./dist/illuminants.js"
         }
     },
     "type": "module",

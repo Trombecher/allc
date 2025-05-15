@@ -1,6 +1,4 @@
 import {
-    PerceptualColorSpace,
-    RGBColorSpace,
     toAdobeRGBComponentFromLinearAdobeRGBComponent,
     toCIE1931xyYxFromCIE1931XYZ,
     toCIE1931xyYyFromCIE1931XYZ,
@@ -78,7 +76,8 @@ import {
     toRGBRFromInteger,
     toSharedHueFromRGB,
     toSRGBComponentFromLinearSRGBComponent,
-} from "./index";
+} from "./conversions";
+import type {PerceptualColorSpace, RGBColorSpace} from "./index";
 
 const MAP_LINEAR_TO_RGB = {
     sRGB: toSRGBComponentFromLinearSRGBComponent,
@@ -132,8 +131,17 @@ const MAP_LINEAR_TO_CIE_1931_XYZ = {
  * Represents a color. You can create colors from various color models and spaces.
  *
  * Instances of this class are immutable.
- * On instantiation, the color is converted to CIE 1931 XYZ internally
- * and properties are calculated from that.
+ * On instantiation, the color is converted to CIE 1931 XYZ internally,
+ * and properties are calculated from that on access (lazily).
+ *
+ * ## Example
+ *
+ * ```ts
+ * const srgbRed = Color.fromRGB(1, 0, 0, "sRGB");
+ *
+ * // Logs the RGB values of the Display P3 representation.
+ * console.log(srgbRed.r("Display P3"), srgbRed.g("Display P3"), srgbRed.b("Display P3"));
+ * ```
  */
 export class Color {
     private constructor(
