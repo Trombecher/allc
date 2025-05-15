@@ -19,6 +19,7 @@
   * [Package API Structure Overview](#package-api-structure-overview)
     * [`allc`](#allc)
     * [`allc/conversions`](#allcconversions)
+    * [`allc/matrices`](#allcmatrices)
     * [`allc/distances`](#allcdistances)
     * [`allc/primaries`](#allcprimaries)
     * [`allc/illuminants`](#allcilluminants)
@@ -28,7 +29,7 @@
 ## Installation
 
 ```shell
-bun i Allc
+bun i allc
 ```
 
 ...or use your favourite package manager.
@@ -107,28 +108,41 @@ This is the main package entry. It contains the `Color` class and color space ty
 
 This entry contains color conversion functions in the format `to<TARGET><COMPONENT>From<SOURCE>` with
 
-* `<TARGET>` being either
-  * `LinearSRGB`,
-  * `LinearAdobeRGB`,
-  * `LinearDisplayP3`
-  * `LinearRec2020`
-  * `LinearProPhotoRGB`
-  * `CIE1931XYZ`,
-  * `CIE1931xyY`,
-  * `HSL`
-  * `HSV`
-  * `HSI`
-  * `RGB`
-  * `LAB`
-  * `LCH`
-  * `CIELAB`
-  * `Oklab`
-  * `LMS`
-  * `LMSDash`
+* `<TARGET>` being the target (there are many options, docs TODO, let your IDE help you for now);
+* `<COMPONENT>` being the target component (like `R`, `Y`, or `L`), depending on the target; and
+* `<SOURCE>` being the source (there are many options, docs TODO, let your IDE help you for now).
 
-// TODO: add more docs here
+> [!TIP]
+> Many color spaces can be converted to and from CIE 1931 XYZ.
+
+> [!TIP]
+> To convert from CIE 1931 XYZ to Oklab and vice versa, you have to do the following:
+>
+> 1. Convert from the source to LMS (or LMS' respectively)
+> 2. Apply the component transfer function
+> 3. Convert from LMS' (or LMS respectively) to the target
 
 ---
+
+This entry also contains component transfer functions in the format `to<TARGET>ComponentFrom<SOURCE>Component`.
+These functions are component invariant.
+
+> [!TIP]
+> To convert from and to linear RGB, you have to use a component transfer function.
+
+---
+
+This entry also contains conversion functions in the format `to<TARGET>From<SOURCE>`.
+But these are only a few.
+
+### `allc/matrices`
+
+This entry contains matrix values for color space/model conversion in the format `MATRIX_<TARGET>_FROM_<SOURCE>_<ROW_INDEX>_<COLUMN_INDEX>` with
+
+* `<TARGET>` being the target,
+* `<SOURCE>` being the source,
+* `<ROW_INDEX>` being the matrix row index for the value (0, 1, or 2), and
+* `<COLUMN_INDEX>` being the matrix column index for the value (0, 1, or 2).
 
 ### `allc/distances`
 
@@ -142,15 +156,15 @@ This entry contains constants for RGB primaries of [all supported RGB color spac
 the format `PRIMARY_<SPACE>_<COMPONENT>_<X_OR_Y>` with
 
 * `<SPACE>` being either
-  * `SRGB` (sRGB),
-  * `ADOBE_RGB` (Adobe RGB),
-  * `DISPLAY_P3` (Display P3),
-  * `REC_2020` (Rec. 2020), or
-  * `PROPHOTO_RGB` (ProPhoto RGB);
+    * `SRGB` (sRGB),
+    * `ADOBE_RGB` (Adobe RGB),
+    * `DISPLAY_P3` (Display P3),
+    * `REC_2020` (Rec. 2020), or
+    * `PROPHOTO_RGB` (ProPhoto RGB);
 * `CHANNEL` being either
-  * `RED`,
-  * `GREEN`, or
-  * `BLUE`; and
+    * `RED`,
+    * `GREEN`, or
+    * `BLUE`; and
 * `X_OR_Y` being either `x` or `y`, the CIE 1931 xy parameters. `Y` is not provided, you can calculate that by
   converting red, green, or blue in the RGB color space to CIE 1931 XYZ.
 
@@ -164,28 +178,28 @@ This entry contains constants for CIE standard illuminants. Every standard illum
 with
 
 * `<TYPE>` being either
-  * `A`,
-  * `B`,
-  * `C`,
-  * `D50`,
-  * `D55`,
-  * `D65`,
-  * `D75`,
-  * `D93`,
-  * `E`,
-  * `F<1..=12>`,
-  * `FL3_<1..=15>`,
-  * `HP<1..=5>`,
-  * `LED_B<1..=5>`,
-  * `LED_BH1`,
-  * `RED_RGB1`,
-  * `LED_V1`,
-  * `LED_V2`,
-  * `ID50`, or
-  * `ID65`;
+    * `A`,
+    * `B`,
+    * `C`,
+    * `D50`,
+    * `D55`,
+    * `D65`,
+    * `D75`,
+    * `D93`,
+    * `E`,
+    * `F<1..=12>`,
+    * `FL3_<1..=15>`,
+    * `HP<1..=5>`,
+    * `LED_B<1..=5>`,
+    * `LED_BH1`,
+    * `RED_RGB1`,
+    * `LED_V1`,
+    * `LED_V2`,
+    * `ID50`, or
+    * `ID65`;
 * `<DEGREES>` being either
-  * `2d` (CIE 2° standard observer) or
-  * `10d` (CIE 2° standard observer) (some illuminants have no 10° standard observer values); and
+    * `2d` (CIE 2° standard observer) or
+    * `10d` (CIE 10° standard observer) (some illuminants have no 10° standard observer values); and
 * `<X_OR_Y>` being either `x` or `y`, the CIE 1931 xyY values (every illuminant has Y=1).
 
 CIE _defines_ the CCT, (real) kelvin values, for each illuminant, and Allc uses them ALTHOUGH they are only
