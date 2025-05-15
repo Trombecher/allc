@@ -40,19 +40,17 @@ bun i allc
 * CIE 1931 xyY
 * Linear RGB / RGB / HSL / HSV / HSI / Y'UV SDTV / Y'UV HDTV / YDbDr / YIQ 1953 / YIQ FCC
     * sRGB
-    * DCI P3*
-    * DCI P3 "D60 sim"*
+    * DCI P3 (uses CIE Illuminant D63)
+    * DCI P3 "D60 sim" (uses CIE Illuminant D60)
     * Display P3
     * Adobe RGB
-    * ProPhoto RGB
+    * ProPhoto RGB (uses CIE Illuminant D50)
     * Rec. 2020
-    * NTSC (1953)
+    * NTSC (1953) (uses CIE Illuminant C)
     * SMPTE C (1987)
 * LAB / LCH
     * Oklab
     * CIELAB
-
-*this color space has a D63 illuminant
 
 ## Guarantees (!)
 
