@@ -49,9 +49,9 @@ export const maxChromaIn = (
                 lmsM = toLMSComponentFromLMSDashComponent(toLMSDashMFromOklab(luminance, a, b)),
                 lmsS = toLMSComponentFromLMSDashComponent(toLMSDashSFromOklab(luminance, a, b));
 
-            x = toCIE1931XYZZFromLMS(lmsL, lmsM, lmsS);
+            x = toCIE1931XYZXFromLMS(lmsL, lmsM, lmsS);
             y = toCIE1931XYZYFromLMS(lmsL, lmsM, lmsS);
-            z = toCIE1931XYZXFromLMS(lmsL, lmsM, lmsS);
+            z = toCIE1931XYZZFromLMS(lmsL, lmsM, lmsS);
         } else {
             x = toCIE1931XYZXFromCIELAB(luminance, a);
             y = toCIE1931XYZYFromCIELAB(luminance);
