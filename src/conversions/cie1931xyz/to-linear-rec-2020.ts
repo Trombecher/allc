@@ -8,7 +8,7 @@ import {
     MATRIX_LINEAR_REC_2020_FROM_CIE_1931_XYZ_2_0,
     MATRIX_LINEAR_REC_2020_FROM_CIE_1931_XYZ_2_1,
     MATRIX_LINEAR_REC_2020_FROM_CIE_1931_XYZ_2_2,
-} from "../generated-constants";
+} from "../../matrices";
 
 /**
  * Calculates the red component of linear Rec. 2020 from CIE 1931 XYZ.

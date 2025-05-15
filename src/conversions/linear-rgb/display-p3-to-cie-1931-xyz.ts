@@ -8,7 +8,7 @@ import {
     MATRIX_CIE_1931_XYZ_FROM_LINEAR_DISPLAY_P3_2_0,
     MATRIX_CIE_1931_XYZ_FROM_LINEAR_DISPLAY_P3_2_1,
     MATRIX_CIE_1931_XYZ_FROM_LINEAR_DISPLAY_P3_2_2,
-} from "../generated-constants";
+} from "../../matrices";
 
 /**
  * Calculates the X component of CIE 1931 XYZ from linear Display P3.

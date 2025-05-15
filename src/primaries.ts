@@ -37,3 +37,19 @@ export const PRIMARY_PROPHOTO_RGB_GREEN_x = 0.159597;
 export const PRIMARY_PROPHOTO_RGB_GREEN_y = 0.840403;
 export const PRIMARY_PROPHOTO_RGB_BLUE_x = 0.036598;
 export const PRIMARY_PROPHOTO_RGB_BLUE_y = 0.000105;
+
+// Taken from https://en.wikipedia.org/wiki/NTSC#Colorimetry.
+export const PRIMARY_NTSC_RED_x = 0.67;
+export const PRIMARY_NTSC_RED_y = 0.33;
+export const PRIMARY_NTSC_GREEN_x = 0.21;
+export const PRIMARY_NTSC_GREEN_y = 0.71;
+export const PRIMARY_NTSC_BLUE_x = 0.14;
+export const PRIMARY_NTSC_BLUE_y = 0.08;
+
+// Taken from https://en.wikipedia.org/wiki/NTSC#Colorimetry.
+export const PRIMARY_SMPTE_C_RED_x = 0.63;
+export const PRIMARY_SMPTE_C_RED_y = 0.34;
+export const PRIMARY_SMPTE_C_GREEN_x = 0.31;
+export const PRIMARY_SMPTE_C_GREEN_y = 0.595;
+export const PRIMARY_SMPTE_C_BLUE_x = 0.155;
+export const PRIMARY_SMPTE_C_BLUE_y = 0.07;

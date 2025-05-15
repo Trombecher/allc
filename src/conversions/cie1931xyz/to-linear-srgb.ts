@@ -8,7 +8,7 @@ import {
     MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_0,
     MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_1,
     MATRIX_LINEAR_SRGB_FROM_CIE_1931_XYZ_2_2,
-} from "../generated-constants";
+} from "../../matrices";
 
 /**
  * Calculates the red component of linear sRGB from CIE 1931 XYZ.

@@ -8,7 +8,7 @@ import {
     MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_0,
     MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_1,
     MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_2,
-} from "../generated-constants";
+} from "../../matrices";
 
 /**
  * Calculates the red component of linear Display P3 from CIE 1931 XYZ.

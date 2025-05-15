@@ -51,6 +51,10 @@
         "./illuminants": {
             "types": "./dist/illuminants.d.ts",
             "default": "./dist/illuminants.js"
+        },
+        "./matrices": {
+            "types": "./dist/matrices/index.d.ts",
+            "default": "./dist/matrices/matrices.js"
         }
     },
     "type": "module",

@@ -1,45 +1,13 @@
 import {writeFile} from "fs/promises";
 import Matrix, {inverse} from "ml-matrix";
 import {toCIE1931XYZXFromCIE1931xyY, toCIE1931XYZZFromCIE1931xyY} from "../src/conversions/cie-1931-xyy";
-import {CIE_ILLUMINANT_D65_2d_x, CIE_ILLUMINANT_D65_2d_y} from "../src/illuminants";
-import {
-    PRIMARY_ADOBE_RGB_BLUE_x,
-    PRIMARY_ADOBE_RGB_BLUE_y,
-    PRIMARY_ADOBE_RGB_GREEN_x,
-    PRIMARY_ADOBE_RGB_GREEN_y,
-    PRIMARY_ADOBE_RGB_RED_x,
-    PRIMARY_ADOBE_RGB_RED_y,
-    PRIMARY_DISPLAY_P3_BLUE_x,
-    PRIMARY_DISPLAY_P3_BLUE_y,
-    PRIMARY_DISPLAY_P3_GREEN_x,
-    PRIMARY_DISPLAY_P3_GREEN_y,
-    PRIMARY_DISPLAY_P3_RED_x,
-    PRIMARY_DISPLAY_P3_RED_y,
-    PRIMARY_PROPHOTO_RGB_BLUE_x,
-    PRIMARY_PROPHOTO_RGB_BLUE_y,
-    PRIMARY_PROPHOTO_RGB_GREEN_x,
-    PRIMARY_PROPHOTO_RGB_GREEN_y,
-    PRIMARY_PROPHOTO_RGB_RED_x,
-    PRIMARY_PROPHOTO_RGB_RED_y,
-    PRIMARY_REC_2020_BLUE_x,
-    PRIMARY_REC_2020_BLUE_y,
-    PRIMARY_REC_2020_GREEN_x,
-    PRIMARY_REC_2020_GREEN_y,
-    PRIMARY_REC_2020_RED_x,
-    PRIMARY_REC_2020_RED_y,
-    PRIMARY_SRGB_BLUE_x,
-    PRIMARY_SRGB_BLUE_y,
-    PRIMARY_SRGB_GREEN_x,
-    PRIMARY_SRGB_GREEN_y,
-    PRIMARY_SRGB_RED_x,
-    PRIMARY_SRGB_RED_y,
-} from "../src/primaries";
+import * as illuminants from "../src/illuminants";
+import * as primaries from "../src/primaries";
+import * as extractedMatrices from "../src/matrices/extracted";
 
 const constants = new Map<string, any>();
 
 const addSquareMatrix = (id: string, matrix: number[]) => {
-    id = id.toUpperCase();
-
     const n = Math.sqrt(matrix.length);
 
     for(let row = 0; row < n; row++) {
@@ -49,20 +17,19 @@ const addSquareMatrix = (id: string, matrix: number[]) => {
     }
 };
 
-const calculateD65LinearRGBToCIE1931XYZMatrix = (
+const calculateLinearRGBToCIE1931XYZMatrix = (
     red_x: number,
     red_y: number,
     green_x: number,
     green_y: number,
     blue_x: number,
     blue_y: number,
+    illuminantx: number,
+    illuminanty: number,
 ) => {
-    const illuminantCIEx = CIE_ILLUMINANT_D65_2d_x;
-    const illuminantCIEy = CIE_ILLUMINANT_D65_2d_y;
-
     const illuminantY = 1;
-    const illuminantX = toCIE1931XYZXFromCIE1931xyY(illuminantCIEx, illuminantCIEy, illuminantY);
-    const illuminantZ = toCIE1931XYZZFromCIE1931xyY(illuminantCIEx, illuminantCIEy, illuminantY);
+    const illuminantX = toCIE1931XYZXFromCIE1931xyY(illuminantx, illuminanty, illuminantY);
+    const illuminantZ = toCIE1931XYZZFromCIE1931xyY(illuminantx, illuminanty, illuminantY);
 
     const red_X = toCIE1931XYZXFromCIE1931xyY(
         red_x,
@@ -118,68 +85,74 @@ const calculateD65LinearRGBToCIE1931XYZMatrix = (
     ]));
 };
 
-const linearSRGBToCIE1931XYZMatrix = calculateD65LinearRGBToCIE1931XYZMatrix(
-    PRIMARY_SRGB_RED_x,
-    PRIMARY_SRGB_RED_y,
-    PRIMARY_SRGB_GREEN_x,
-    PRIMARY_SRGB_GREEN_y,
-    PRIMARY_SRGB_BLUE_x,
-    PRIMARY_SRGB_BLUE_y,
-);
+const addRGBColorSpace = (
+    name: string,
+    illuminant: string
+) => {
+    const linearRGBToCIE1931XYZMatrix = calculateLinearRGBToCIE1931XYZMatrix(
+        // @ts-ignore
+        primaries[`PRIMARY_${name}_RED_x`],
+        // @ts-ignore
+        primaries[`PRIMARY_${name}_RED_y`],
+        // @ts-ignore
+        primaries[`PRIMARY_${name}_GREEN_x`],
+        // @ts-ignore
+        primaries[`PRIMARY_${name}_GREEN_y`],
+        // @ts-ignore
+        primaries[`PRIMARY_${name}_BLUE_x`],
+        // @ts-ignore
+        primaries[`PRIMARY_${name}_BLUE_y`],
+        // @ts-ignore
+        illuminants[`CIE_ILLUMINANT_${illuminant}_x`],
+        // @ts-ignore
+        illuminants[`CIE_ILLUMINANT_${illuminant}_x`],
+    );
 
-addSquareMatrix("CIE_1931_XYZ_FROM_LINEAR_SRGB", linearSRGBToCIE1931XYZMatrix.to1DArray());
-addSquareMatrix("LINEAR_SRGB_FROM_CIE_1931_XYZ", inverse(linearSRGBToCIE1931XYZMatrix).to1DArray());
+    addSquareMatrix(`CIE_1931_XYZ_FROM_LINEAR_${name}`, linearRGBToCIE1931XYZMatrix.to1DArray());
+    addSquareMatrix(`LINEAR_${name}_FROM_CIE_1931_XYZ`, inverse(linearRGBToCIE1931XYZMatrix).to1DArray());
+}
 
-const linearAdobeRGBToCIE1931XYZMatrix = calculateD65LinearRGBToCIE1931XYZMatrix(
-    PRIMARY_ADOBE_RGB_RED_x,
-    PRIMARY_ADOBE_RGB_RED_y,
-    PRIMARY_ADOBE_RGB_GREEN_x,
-    PRIMARY_ADOBE_RGB_GREEN_y,
-    PRIMARY_ADOBE_RGB_BLUE_x,
-    PRIMARY_ADOBE_RGB_BLUE_y,
-);
+const addInverseMatrix = (
+    to: string,
+    from: string,
+) => {
+    const mat = Matrix.from1DArray(3, 3, [
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_0_0`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_0_1`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_0_2`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_1_0`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_1_1`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_1_2`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_2_0`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_2_1`],
+        // @ts-ignore
+        extractedMatrices[`MATRIX_${to}_FROM_${from}_2_2`],
+    ]);
 
-addSquareMatrix("CIE_1931_XYZ_FROM_LINEAR_ADOBE_RGB", linearAdobeRGBToCIE1931XYZMatrix.to1DArray());
-addSquareMatrix("LINEAR_ADOBE_RGB_FROM_CIE_1931_XYZ", inverse(linearAdobeRGBToCIE1931XYZMatrix).to1DArray());
+    addSquareMatrix(`${from}_FROM_${to}`, inverse(mat).to1DArray());
+}
 
-const matrixToCIE1931XYZFromLinearDisplayP3 = calculateD65LinearRGBToCIE1931XYZMatrix(
-    PRIMARY_DISPLAY_P3_RED_x,
-    PRIMARY_DISPLAY_P3_RED_y,
-    PRIMARY_DISPLAY_P3_GREEN_x,
-    PRIMARY_DISPLAY_P3_GREEN_y,
-    PRIMARY_DISPLAY_P3_BLUE_x,
-    PRIMARY_DISPLAY_P3_BLUE_y,
-);
+addRGBColorSpace("SRGB", "D65_2d");
+addRGBColorSpace("ADOBE_RGB", "D65_2d");
+addRGBColorSpace("DISPLAY_P3", "D65_2d");
+addRGBColorSpace("REC_2020", "D65_2d");
+addRGBColorSpace("PROPHOTO_RGB", "D65_2d");
+addRGBColorSpace("NTSC", "C_2d");
+addRGBColorSpace("SMPTE_C", "D65_2d");
 
-addSquareMatrix("CIE_1931_XYZ_FROM_LINEAR_DISPLAY_P3", matrixToCIE1931XYZFromLinearDisplayP3.to1DArray());
-addSquareMatrix("LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ", inverse(matrixToCIE1931XYZFromLinearDisplayP3).to1DArray());
+addInverseMatrix("YIQ_FCC", "RGB");
+addInverseMatrix("YIQ_1953", "RGB");
+addInverseMatrix("YDbDr", "RGB");
 
-const matrixToCIE1931XYZFromRec2020 = calculateD65LinearRGBToCIE1931XYZMatrix(
-    PRIMARY_REC_2020_RED_x,
-    PRIMARY_REC_2020_RED_y,
-    PRIMARY_REC_2020_GREEN_x,
-    PRIMARY_REC_2020_GREEN_y,
-    PRIMARY_REC_2020_BLUE_x,
-    PRIMARY_REC_2020_BLUE_y,
-);
-
-addSquareMatrix("CIE_1931_XYZ_FROM_LINEAR_REC_2020", matrixToCIE1931XYZFromRec2020.to1DArray());
-addSquareMatrix("LINEAR_REC_2020_FROM_CIE_1931_XYZ", inverse(matrixToCIE1931XYZFromRec2020).to1DArray());
-
-const matrixToCIE1931XYZFromProPhotoRGB = calculateD65LinearRGBToCIE1931XYZMatrix(
-    PRIMARY_PROPHOTO_RGB_RED_x,
-    PRIMARY_PROPHOTO_RGB_RED_y,
-    PRIMARY_PROPHOTO_RGB_GREEN_x,
-    PRIMARY_PROPHOTO_RGB_GREEN_y,
-    PRIMARY_PROPHOTO_RGB_BLUE_x,
-    PRIMARY_PROPHOTO_RGB_BLUE_y,
-);
-
-addSquareMatrix("CIE_1931_XYZ_FROM_LINEAR_PROPHOTO_RGB", matrixToCIE1931XYZFromProPhotoRGB.to1DArray());
-addSquareMatrix("LINEAR_PROPHOTO_RGB_FROM_CIE_1931_XYZ", inverse(matrixToCIE1931XYZFromProPhotoRGB).to1DArray());
-
-
-await writeFile("./src/conversions/generated-constants.ts", "// This file was automatically generated by precalculate.ts in the root of the repo." + constants
+await writeFile("./src/matrices/generated.ts", "// This file was automatically generated by precalculate.ts in the root of the repo." + constants
     .entries()
     .map(([id, value]) => `export const ${id} = ${JSON.stringify(value)};`)
     .reduce((a, b) => `${a}\n${b}`, ""));
