@@ -9,7 +9,7 @@ import {
     toLinearSRGBBFromCIE1931XYZ,
     toLinearSRGBGFromCIE1931XYZ,
     toLinearSRGBRFromCIE1931XYZ,
-} from "../cie1931xyz";
+} from "../cie-1931-xyz";
 import {
     toAdobeRGBComponentFromLinearAdobeRGBComponent,
     toDisplayP3ComponentFromLinearDisplayP3Component,

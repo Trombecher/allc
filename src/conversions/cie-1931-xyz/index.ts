@@ -7,3 +7,5 @@ export * from "./to-linear-srgb";
 export * from "./to-linear-rec-2020";
 export * from "./to-linear-prophoto-rgb";
 export * from "./to-oklab";
+export * from "./to-linear-ntsc";
+export * from "./to-linear-smpte-c";
