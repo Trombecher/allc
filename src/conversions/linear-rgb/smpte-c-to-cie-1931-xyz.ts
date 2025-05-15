@@ -12,11 +12,11 @@ import {
 } from "../../matrices";
 
 /**
- * Calculates the X component of CIE 1931 XYZ from linear SMPTE C.
+ * Calculates the X component of CIE 1931 XYZ from linear SMPTE C (1987).
  *
- * @param r The red component of linear SMPTE C, typically in the range [0, 1].
- * @param g The green component of linear SMPTE C, typically in the range [0, 1].
- * @param b The blue component of linear SMPTE C, typically in the range [0, 1].
+ * @param r The red component of linear SMPTE C (1987), typically in the range [0, 1].
+ * @param g The green component of linear SMPTE C (1987), typically in the range [0, 1].
+ * @param b The blue component of linear SMPTE C (1987), typically in the range [0, 1].
  *
  * @returns The X component of CIE 1931 XYZ.
  */
@@ -29,11 +29,11 @@ export const toCIE1931XYZXFromLinearSMPTEC = (
     + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_2;
 
 /**
- * Calculates the Y component of CIE 1931 XYZ from linear SMPTE C.
+ * Calculates the Y component of CIE 1931 XYZ from linear SMPTE C (1987).
  *
- * @param r The red component of linear SMPTE C, typically in the range [0, 1].
- * @param g The green component of linear SMPTE C, typically in the range [0, 1].
- * @param b The blue component of linear SMPTE C, typically in the range [0, 1].
+ * @param r The red component of linear SMPTE C (1987), typically in the range [0, 1].
+ * @param g The green component of linear SMPTE C (1987), typically in the range [0, 1].
+ * @param b The blue component of linear SMPTE C (1987), typically in the range [0, 1].
  *
  * @returns The Y component of CIE 1931 XYZ.
  */
@@ -46,11 +46,11 @@ export const toCIE1931XYZYFromLinearSMPTEC = (
     + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_2;
 
 /**
- * Calculates the Z component of CIE 1931 XYZ from linear SMPTE C.
+ * Calculates the Z component of CIE 1931 XYZ from linear SMPTE C (1987).
  *
- * @param r The red component of linear SMPTE C, typically in the range [0, 1].
- * @param g The green component of linear SMPTE C, typically in the range [0, 1].
- * @param b The blue component of linear SMPTE C, typically in the range [0, 1].
+ * @param r The red component of linear SMPTE C (1987), typically in the range [0, 1].
+ * @param g The green component of linear SMPTE C (1987), typically in the range [0, 1].
+ * @param b The blue component of linear SMPTE C (1987), typically in the range [0, 1].
  *
  * @returns The Z component of CIE 1931 XYZ.
  */

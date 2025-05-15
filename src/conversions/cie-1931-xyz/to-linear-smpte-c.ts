@@ -12,13 +12,13 @@ import {
 } from "../../matrices";
 
 /**
- * Calculates the red component of linear SMPTE C from CIE 1931 XYZ.
+ * Calculates the red component of linear SMPTE C (1987) from CIE 1931 XYZ.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The red component of linear SMPTE C.
+ * @returns The red component of linear SMPTE C (1987).
  */
 export const toLinearSMPTECRFromCIE1931XYZ = (
     x: number,
@@ -29,13 +29,13 @@ export const toLinearSMPTECRFromCIE1931XYZ = (
     + z * MATRIX_LINEAR_SMPTE_C_FROM_CIE_1931_XYZ_0_2;
 
 /**
- * Calculates the green component of linear SMPTE C from CIE 1931 XYZ.
+ * Calculates the green component of linear SMPTE C (1987) from CIE 1931 XYZ.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The green component of linear SMPTE C.
+ * @returns The green component of linear SMPTE C (1987).
  */
 export const toLinearSMPTECGFromCIE1931XYZ = (
     x: number,
@@ -46,13 +46,13 @@ export const toLinearSMPTECGFromCIE1931XYZ = (
     + z * MATRIX_LINEAR_SMPTE_C_FROM_CIE_1931_XYZ_1_2;
 
 /**
- * Calculates the blue component of linear SMPTE C from CIE 1931 XYZ.
+ * Calculates the blue component of linear SMPTE C (1987) from CIE 1931 XYZ.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The blue component of linear SMPTE C.
+ * @returns The blue component of linear SMPTE C (1987).
  */
 export const toLinearSMPTECBFromCIE1931XYZ = (
     x: number,

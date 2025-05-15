@@ -12,11 +12,11 @@ import {
 } from "../../matrices";
 
 /**
- * Calculates the X component of CIE 1931 XYZ from linear NTSC.
+ * Calculates the X component of CIE 1931 XYZ from linear NTSC (1953).
  *
- * @param r The red component of linear NTSC, typically in the range [0, 1].
- * @param g The green component of linear NTSC, typically in the range [0, 1].
- * @param b The blue component of linear NTSC, typically in the range [0, 1].
+ * @param r The red component of linear NTSC (1953), typically in the range [0, 1].
+ * @param g The green component of linear NTSC (1953), typically in the range [0, 1].
+ * @param b The blue component of linear NTSC (1953), typically in the range [0, 1].
  *
  * @returns The X component of CIE 1931 XYZ.
  */
@@ -29,11 +29,11 @@ export const toCIE1931XYZXFromLinearNTSC = (
     + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_2;
 
 /**
- * Calculates the Y component of CIE 1931 XYZ from linear NTSC.
+ * Calculates the Y component of CIE 1931 XYZ from linear NTSC (1953).
  *
- * @param r The red component of linear NTSC, typically in the range [0, 1].
- * @param g The green component of linear NTSC, typically in the range [0, 1].
- * @param b The blue component of linear NTSC, typically in the range [0, 1].
+ * @param r The red component of linear NTSC (1953), typically in the range [0, 1].
+ * @param g The green component of linear NTSC (1953), typically in the range [0, 1].
+ * @param b The blue component of linear NTSC (1953), typically in the range [0, 1].
  *
  * @returns The Y component of CIE 1931 XYZ.
  */
@@ -46,11 +46,11 @@ export const toCIE1931XYZYFromLinearNTSC = (
     + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_2;
 
 /**
- * Calculates the Z component of CIE 1931 XYZ from linear NTSC.
+ * Calculates the Z component of CIE 1931 XYZ from linear NTSC (1953).
  *
- * @param r The red component of linear NTSC, typically in the range [0, 1].
- * @param g The green component of linear NTSC, typically in the range [0, 1].
- * @param b The blue component of linear NTSC, typically in the range [0, 1].
+ * @param r The red component of linear NTSC (1953), typically in the range [0, 1].
+ * @param g The green component of linear NTSC (1953), typically in the range [0, 1].
+ * @param b The blue component of linear NTSC (1953), typically in the range [0, 1].
  *
  * @returns The Z component of CIE 1931 XYZ.
  */

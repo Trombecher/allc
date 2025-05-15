@@ -12,13 +12,13 @@ import {
 } from "../../matrices";
 
 /**
- * Calculates the red component of linear NTSC from CIE 1931 XYZ.
+ * Calculates the red component of linear NTSC (1953) from CIE 1931 XYZ.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The red component of linear NTSC.
+ * @returns The red component of linear NTSC (1953).
  */
 export const toLinearNTSCRFromCIE1931XYZ = (
     x: number,
@@ -29,13 +29,13 @@ export const toLinearNTSCRFromCIE1931XYZ = (
     + z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_2;
 
 /**
- * Calculates the green component of linear NTSC from CIE 1931 XYZ.
+ * Calculates the green component of linear NTSC (1953) from CIE 1931 XYZ.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The green component of linear NTSC.
+ * @returns The green component of linear NTSC (1953).
  */
 export const toLinearNTSCGFromCIE1931XYZ = (
     x: number,
@@ -46,13 +46,13 @@ export const toLinearNTSCGFromCIE1931XYZ = (
     + z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_2;
 
 /**
- * Calculates the blue component of linear NTSC from CIE 1931 XYZ.
+ * Calculates the blue component of linear NTSC (1953) from CIE 1931 XYZ.
  *
  * @param x The X component of CIE 1931 XYZ.
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The blue component of linear NTSC.
+ * @returns The blue component of linear NTSC (1953).
  */
 export const toLinearNTSCBFromCIE1931XYZ = (
     x: number,

@@ -251,6 +251,7 @@ export const toLinear${pascalcase}BFromCIE1931XYZ = (
 
 const addRGBColorSpace = async(
     illuminant: string,
+    primariesId: string,
     uppercase: string,
     text: string,
     pascalcase: string,
@@ -258,21 +259,21 @@ const addRGBColorSpace = async(
 ) => {
     const linearRGBToCIE1931XYZMatrix = calculateLinearRGBToCIE1931XYZMatrix(
         // @ts-ignore
-        primaries[`PRIMARY_${uppercase}_RED_x`],
+        primaries[`PRIMARY_${primariesId}_RED_x`],
         // @ts-ignore
-        primaries[`PRIMARY_${uppercase}_RED_y`],
+        primaries[`PRIMARY_${primariesId}_RED_y`],
         // @ts-ignore
-        primaries[`PRIMARY_${uppercase}_GREEN_x`],
+        primaries[`PRIMARY_${primariesId}_GREEN_x`],
         // @ts-ignore
-        primaries[`PRIMARY_${uppercase}_GREEN_y`],
+        primaries[`PRIMARY_${primariesId}_GREEN_y`],
         // @ts-ignore
-        primaries[`PRIMARY_${uppercase}_BLUE_x`],
+        primaries[`PRIMARY_${primariesId}_BLUE_x`],
         // @ts-ignore
-        primaries[`PRIMARY_${uppercase}_BLUE_y`],
+        primaries[`PRIMARY_${primariesId}_BLUE_y`],
         // @ts-ignore
-        illuminants[`CIE_ILLUMINANT_${illuminant}_x`],
+        illuminants[`${illuminant}_x`],
         // @ts-ignore
-        illuminants[`CIE_ILLUMINANT_${illuminant}_x`],
+        illuminants[`${illuminant}_x`],
     );
 
     addSquareMatrix(`CIE_1931_XYZ_FROM_LINEAR_${uppercase}`, linearRGBToCIE1931XYZMatrix.to1DArray());
@@ -293,13 +294,15 @@ const addRGBColorSpace = async(
 // --------------------------------------------------------
 
 await Promise.all([
-    addRGBColorSpace("D65_2d", "SRGB", "sRGB", "SRGB", "srgb"),
-    addRGBColorSpace("D65_2d", "ADOBE_RGB", "Adobe RGB", "AdobeRGB", "adobe-rgb"),
-    addRGBColorSpace("D65_2d", "DISPLAY_P3", "Display P3", "DisplayP3", "display-p3"),
-    addRGBColorSpace("D65_2d", "REC_2020", "Rec. 2020", "Rec2020", "rec-2020"),
-    addRGBColorSpace("D65_2d", "PROPHOTO_RGB", "ProPhoto RGB", "ProPhotoRGB", "prophoto-rgb"),
-    addRGBColorSpace("C_2d", "NTSC", "NTSC", "NTSC", "ntsc"),
-    addRGBColorSpace("D65_2d", "SMPTE_C", "SMPTE C", "SMPTEC", "smpte-c"),
+    addRGBColorSpace("CIE_ILLUMINANT_D65_2d", "SRGB", "SRGB", "sRGB", "SRGB", "srgb"),
+    addRGBColorSpace("CIE_ILLUMINANT_D65_2d", "ADOBE_RGB", "ADOBE_RGB", "Adobe RGB", "AdobeRGB", "adobe-rgb"),
+    addRGBColorSpace("ILLUMINANT_D63_2d", "DCI_P3", "DCI_P3", "DCI-P3", "DCIP3", "dci-p3"),
+    addRGBColorSpace("CIE_ILLUMINANT_D60_2d", "DCI_P3", "DCI_P3_D60", "DCI-P3 \"D60 sim\"", "DCIP3D60", "dci-p3-d60"),
+    addRGBColorSpace("CIE_ILLUMINANT_D65_2d", "DCI_P3", "DISPLAY_P3", "Display P3", "DisplayP3", "display-p3"),
+    addRGBColorSpace("CIE_ILLUMINANT_D65_2d", "REC_2020", "REC_2020", "Rec. 2020", "Rec2020", "rec-2020"),
+    addRGBColorSpace("CIE_ILLUMINANT_D50_2d", "PROPHOTO_RGB", "PROPHOTO_RGB", "ProPhoto RGB", "ProPhotoRGB", "prophoto-rgb"),
+    addRGBColorSpace("CIE_ILLUMINANT_C_2d", "NTSC", "NTSC", "NTSC (1953)", "NTSC", "ntsc"),
+    addRGBColorSpace("CIE_ILLUMINANT_D65_2d", "SMPTE_C", "SMPTE_C", "SMPTE C (1987)", "SMPTEC", "smpte-c"),
 ]);
 
 addInverseMatrix("YIQ_FCC", "RGB");

@@ -36,12 +36,12 @@ bun i allc
 
 ## Spaces and Models
 
-(All colors have the standard illuminant D65.)
-
 * CIE 1931 XYZ
 * CIE 1931 xyY
 * Linear RGB / RGB / HSL / HSV / HSI / Y'UV SDTV / Y'UV HDTV / YDbDr / YIQ 1953 / YIQ FCC
     * sRGB
+    * DCI P3*
+    * DCI P3 "D60 sim"*
     * Display P3
     * Adobe RGB
     * ProPhoto RGB
@@ -51,6 +51,8 @@ bun i allc
 * LAB / LCH
     * Oklab
     * CIELAB
+
+*this color space has a D63 illuminant
 
 ## Guarantees (!)
 
