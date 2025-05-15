@@ -54,7 +54,7 @@
         },
         "./matrices": {
             "types": "./dist/matrices/index.d.ts",
-            "default": "./dist/matrices/matrices.js"
+            "default": "./dist/matrices/index.js"
         }
     },
     "type": "module",
