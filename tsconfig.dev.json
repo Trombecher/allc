@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.tmp/dev.tsbuildinfo",
+        "allowImportingTsExtensions": false,
+        "noEmit": true,
+        "target": "esnext",
+        "lib": [
+            "ESNext"
+        ],
+        "module": "esnext",
+        "moduleDetection": "auto",
+        "moduleResolution": "bundler",
+        // Type checking
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        // Libs
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "composite": true
+    },
+    "include": [
+        "tests",
+        "scripts",
+        "src"
+    ]
+}

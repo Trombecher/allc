@@ -1,4 +1,4 @@
-import { clamp01 } from "../../internal";
+import {clamp01} from "../../internal";
 
 /**
  * Calculates the specified RGB color components to an integer representation of the format `0xAARRGGBB`.
@@ -17,12 +17,16 @@ export const toIntegerFromRGB = (
     g: number,
     b: number,
     withAlpha: number = 0,
-) => Math.round(clamp01(withAlpha) * 255) << 24
-| Math.round(clamp01(r) * 255) << 16
-| Math.round(clamp01(g) * 255) << 8
-    | Math.round(clamp01(b) * 255);
+) =>
+    (Math.round(clamp01(withAlpha) * 255) << 24) |
+    (Math.round(clamp01(r) * 255) << 16) |
+    (Math.round(clamp01(g) * 255) << 8) |
+    Math.round(clamp01(b) * 255);
 
-const channelToHex = (channel: number) => Math.round(clamp01(channel) * 255).toString(16).padStart(2, "0");
+const channelToHex = (channel: number) =>
+    Math.round(clamp01(channel) * 255)
+        .toString(16)
+        .padStart(2, "0");
 
 /**
  * Calculates the hexadecimal representation of the specified RGB color in the format `"RRGGBB"`.
@@ -41,4 +45,5 @@ export const toHexStringFromRGB = (
     g: number,
     b: number,
     withAlpha?: number,
-) => `${channelToHex(r)}${channelToHex(g)}${channelToHex(b)}${withAlpha === undefined ? "" : channelToHex(withAlpha)}`;
+) =>
+    `${channelToHex(r)}${channelToHex(g)}${channelToHex(b)}${withAlpha === undefined ? "" : channelToHex(withAlpha)}`;

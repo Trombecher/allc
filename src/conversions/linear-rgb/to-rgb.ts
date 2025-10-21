@@ -9,11 +9,10 @@ import {clamp01} from "../../internal";
  * @returns The sRGB component, range [0, 1].
  * @see https://en.wikipedia.org/wiki/SRGB#Transfer_function_(%22gamma%22)
  */
-export const toSRGBComponentFromLinearSRGBComponent = (
-    component: number,
-) => component <= 0.0031308
-    ? 12.92 * component
-    : 1.055 * component ** (1 / 2.4) - 0.055;
+export const toSRGBComponentFromLinearSRGBComponent = (component: number) =>
+    component <= 0.0031308
+        ? 12.92 * component
+        : 1.055 * component ** (1 / 2.4) - 0.055;
 
 /**
  * Calculates a Display P3 component from a linear Display P3 component by
@@ -26,7 +25,8 @@ export const toSRGBComponentFromLinearSRGBComponent = (
  * @returns The Display P3 component, range [0, 1].
  * @see https://en.wikipedia.org/wiki/SRGB#Transfer_function_(%22gamma%22)
  */
-export const toDisplayP3ComponentFromLinearDisplayP3Component = toSRGBComponentFromLinearSRGBComponent;
+export const toDisplayP3ComponentFromLinearDisplayP3Component =
+    toSRGBComponentFromLinearSRGBComponent;
 
 /**
  * Calculates an Adobe RGB component from a linear Adobe RGB component by
@@ -39,7 +39,7 @@ export const toDisplayP3ComponentFromLinearDisplayP3Component = toSRGBComponentF
  */
 export const toAdobeRGBComponentFromLinearAdobeRGBComponent = (
     component: number,
-) =>  component ** (256 / 563);
+) => component ** (256 / 563);
 
 /**
  * Calculates a Rec. 2020 component from a linear Rec. 2020 component
@@ -52,9 +52,10 @@ export const toAdobeRGBComponentFromLinearAdobeRGBComponent = (
  */
 export const toRec2020ComponentFromLinearRec2020Component = (
     component: number,
-) => component < 0.018053968510807
-    ? 4.5 * component
-    : 1.09929682680944 * component ** 0.45 - 0.09929682680944008;
+) =>
+    component < 0.018053968510807
+        ? 4.5 * component
+        : 1.09929682680944 * component ** 0.45 - 0.09929682680944008;
 
 /**
  * Calculates a DCI-P3 component from a linear DCI-P3 component
@@ -65,9 +66,8 @@ export const toRec2020ComponentFromLinearRec2020Component = (
  * @returns The DCI-P3 component, range [0, 1].
  * @see https://en.wikipedia.org/wiki/DCI-P3#DCI_P3
  */
-export const toDCIP3ComponentFromLinearDCIP3Component = (
-    component: number,
-) => component ** (1 / 2.6);
+export const toDCIP3ComponentFromLinearDCIP3Component = (component: number) =>
+    component ** (1 / 2.6);
 
 /**
  * Calculates a DCI-P3 "D60 sim" component from a linear DCI-P3 "D60 sim" component
@@ -80,7 +80,8 @@ export const toDCIP3ComponentFromLinearDCIP3Component = (
  * @returns The DCI-P3 "D60 sim" component, range [0, 1].
  * @see https://en.wikipedia.org/wiki/DCI-P3#DCI_P3
  */
-export const toDCIP3D60ComponentFromLinearDCIP3D60Component = toDCIP3ComponentFromLinearDCIP3Component;
+export const toDCIP3D60ComponentFromLinearDCIP3D60Component =
+    toDCIP3ComponentFromLinearDCIP3Component;
 
 /**
  * Calculates a ProPhoto RGB component from a linear ProPhoto RGB Component
@@ -93,9 +94,7 @@ export const toDCIP3D60ComponentFromLinearDCIP3D60Component = toDCIP3ComponentFr
  */
 export const toProPhotoRGBComponentFromLinearProPhotoRGBComponent = (
     component: number,
-) => clamp01(component < 1 / 512
-    ? 16 * component
-    : component ** (1 / 1.8));
+) => clamp01(component < 1 / 512 ? 16 * component : component ** (1 / 1.8));
 
 /**
  * Calculates a NTSC (1953) component from a linear NTSC (1953) component
@@ -105,9 +104,8 @@ export const toProPhotoRGBComponentFromLinearProPhotoRGBComponent = (
  *
  * @returns The NTSC (1953) component, range [0, 1].
  */
-export const toNTSCComponentFromLinearNTSCComponent = (
-    component: number,
-) => component ** (1 / 2.2);
+export const toNTSCComponentFromLinearNTSCComponent = (component: number) =>
+    component ** (1 / 2.2);
 
 /**
  * Calculates a SMPTE C (1987) component from a linear SMPTE C (1987) component
@@ -119,4 +117,5 @@ export const toNTSCComponentFromLinearNTSCComponent = (
  *
  * @returns The SMPTE C (1987) component, range [0, 1].
  */
-export const toSMPTECComponentFromLinearSMPTECComponent = toRec2020ComponentFromLinearRec2020Component;
+export const toSMPTECComponentFromLinearSMPTECComponent =
+    toRec2020ComponentFromLinearRec2020Component;

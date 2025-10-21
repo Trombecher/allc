@@ -1,14 +1,14 @@
 {
     "name": "allc",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "A small typescript package for color conversion.",
     "repository": "https://github.com/Trombecher/allc",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "test": "vitest --no-watch",
-        "build": "tsc",
-        "gen": "bun src-comptime/precalculate.ts"
+        "test": "vitest --no-watch --testTimeout 0",
+        "build": "tsc -b",
+        "gen": "bun scripts/precalculate.ts"
     },
     "keywords": [
         "Color",
@@ -61,6 +61,7 @@
     "author": "Tobias Hillemanns",
     "license": "MIT",
     "devDependencies": {
+        "@biomejs/biome": "2.2.6",
         "@types/culori": "^4.0.1",
         "culori": "^4.0.2",
         "ml-matrix": "^6.12.1",

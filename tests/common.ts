@@ -1,5 +1,5 @@
 import {expect} from "vitest";
-import {Color} from "../src";
+import type {Color} from "../src";
 
 export const TOLERANCE = 0.000_000_01;
 export const SAMPLE_COUNT = 100_000;

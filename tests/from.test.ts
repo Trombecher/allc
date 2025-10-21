@@ -3,9 +3,9 @@ import {Color} from "../src";
 import "./common";
 
 type Sample = {
-    sRGB: Color,
-    oklab: Color,
-}
+    sRGB: Color;
+    oklab: Color;
+};
 
 const SAMPLES: readonly Sample[] = [
     {
@@ -15,7 +15,7 @@ const SAMPLES: readonly Sample[] = [
 ] as const;
 
 test("Color.from*", () => {
-    for(const {sRGB, oklab} of SAMPLES) {
+    for (const {sRGB, oklab} of SAMPLES) {
         expect(sRGB).toBeAboutEqualTo(oklab);
     }
 });

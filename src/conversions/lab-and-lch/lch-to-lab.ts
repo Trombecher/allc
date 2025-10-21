@@ -10,10 +10,7 @@
  * @returns The a component of LCH.
  * @see https://bottosson.github.io/posts/oklab/#the-oklab-color-space
  */
-export const toLABAFromLCH = (
-    c: number,
-    h: number,
-) => c * Math.cos(h);
+export const toLABAFromLCH = (c: number, h: number) => c * Math.cos(h);
 
 /**
  * Calculates the b component of LAB from LCH.
@@ -27,7 +24,4 @@ export const toLABAFromLCH = (
  * @returns The b component of LCH.
  * @see https://bottosson.github.io/posts/oklab/#the-oklab-color-space
  */
-export const toLABBFromLCH = (
-    c: number,
-    h: number,
-) => c * Math.sin(h);
+export const toLABBFromLCH = (c: number, h: number) => c * Math.sin(h);

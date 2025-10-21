@@ -3,17 +3,12 @@ import {Color} from "../src";
 import {SAMPLE_COUNT} from "./common";
 
 test("sRGB HSV <-> Oklch", () => {
-    for(let i = 0; i < SAMPLE_COUNT; i++) {
+    for (let i = 0; i < SAMPLE_COUNT; i++) {
         const h = Math.random();
         const s = Math.random();
         const v = Math.random();
 
-        const randomColor = Color.fromHSV(
-            h,
-            s,
-            v,
-            "sRGB",
-        );
+        const randomColor = Color.fromHSV(h, s, v, "sRGB");
 
         const newColor = Color.fromLCH(
             randomColor.pl("Ok"),

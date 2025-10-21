@@ -1,5 +1,5 @@
-export * from "./sdtv-to-rgb";
 export * from "./hdtv-to-rgb";
+export * from "./sdtv-to-rgb";
 
 // Taken from https://en.wikipedia.org/wiki/Y%E2%80%B2UV#SDTV_with_BT.470.
 

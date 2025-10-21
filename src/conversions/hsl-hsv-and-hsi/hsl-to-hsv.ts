@@ -8,10 +8,8 @@
  * @returns The value component of HSV, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_HSV
  */
-export const toHSVValueFromHSL = (
-    s: number,
-    l: number,
-) => l + s * Math.min(l, 1 - l);
+export const toHSVValueFromHSL = (s: number, l: number) =>
+    l + s * Math.min(l, 1 - l);
 
 /**
  * Calculates the saturation component of HSV from HSL.
@@ -23,10 +21,7 @@ export const toHSVValueFromHSL = (
  * @returns The saturation component of HSV, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_HSV
  */
-export const toHSVSaturationFromHSL = (
-    s: number,
-    l: number,
-) => {
+export const toHSVSaturationFromHSL = (s: number, l: number) => {
     const value = l + s * Math.min(l, 1 - l);
     return value && 2 * (1 - l / value);
 };

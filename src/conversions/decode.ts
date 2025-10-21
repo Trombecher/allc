@@ -28,8 +28,7 @@ export const toRGBGFromInteger = (integer: number) =>
  *
  * @returns The blue component.
  */
-export const toRGBBFromInteger = (integer: number) =>
-    (integer & 255) / 255;
+export const toRGBBFromInteger = (integer: number) => (integer & 255) / 255;
 
 /**
  * Calculates the red component of a hex representation in either of the formats
@@ -47,8 +46,8 @@ export const toRGBBFromInteger = (integer: number) =>
  * @returns The red component.
  */
 export const toRGBRFromHexString = (hex: string) => {
-    if(hex.startsWith("#")) hex = hex.slice(1);
-    if(hex.length <= 4) return nanTo0(parseInt(hex[0]!, 16)) / 15;
+    if (hex.startsWith("#")) hex = hex.slice(1);
+    if (hex.length <= 4) return nanTo0(parseInt(hex[0] ?? "0", 16)) / 15;
     return nanTo0(parseInt(hex.slice(0, 2), 16)) / 255;
 };
 
@@ -68,8 +67,8 @@ export const toRGBRFromHexString = (hex: string) => {
  * @returns The green component.
  */
 export const toRGBGFromHexString = (hex: string) => {
-    if(hex.startsWith("#")) hex = hex.slice(1);
-    if(hex.length <= 4) return nanTo0(parseInt(hex[1]!, 16)) / 15;
+    if (hex.startsWith("#")) hex = hex.slice(1);
+    if (hex.length <= 4) return nanTo0(parseInt(hex[1] ?? "0", 16)) / 15;
     return nanTo0(parseInt(hex.slice(2, 4), 16)) / 255;
 };
 
@@ -89,9 +88,9 @@ export const toRGBGFromHexString = (hex: string) => {
  * @returns The blue component.
  */
 export const toRGBBFromHexString = (hex: string) => {
-    if(hex.startsWith("#")) hex = hex.slice(1);
-    if(hex.length <= 4) return nanTo0(parseInt(hex[2]!, 16)) / 15;
+    if (hex.startsWith("#")) hex = hex.slice(1);
+    if (hex.length <= 4) return nanTo0(parseInt(hex[2] ?? "0", 16)) / 15;
     return nanTo0(parseInt(hex.slice(4, 6), 16)) / 255;
 };
 
-const nanTo0 = (x: number) => isNaN(x) ? 0 : x;
+const nanTo0 = (x: number) => (Number.isNaN(x) ? 0 : x);

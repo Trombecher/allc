@@ -1,7 +1,5 @@
 import {
     toAdobeRGBComponentFromLinearAdobeRGBComponent,
-    toCIE1931xyYxFromCIE1931XYZ,
-    toCIE1931xyYyFromCIE1931XYZ,
     toCIE1931XYZXFromCIE1931xyY,
     toCIE1931XYZXFromCIELAB,
     toCIE1931XYZXFromLinearAdobeRGB,
@@ -19,6 +17,8 @@ import {
     toCIE1931XYZZFromLinearDisplayP3,
     toCIE1931XYZZFromLinearSRGB,
     toCIE1931XYZZFromLMS,
+    toCIE1931xyYxFromCIE1931XYZ,
+    toCIE1931xyYyFromCIE1931XYZ,
     toCIELABAFromCIE1931XYZ,
     toCIELABBFromCIE1931XYZ,
     toCIELABLFromCIE1931XYZ,
@@ -148,8 +148,7 @@ export class Color {
         private readonly _X: number,
         private readonly _Y: number,
         private readonly _Z: number,
-    ) {
-    }
+    ) {}
 
     // CIE 1931 XYZ
 
@@ -192,9 +191,19 @@ export class Color {
      *
      * @returns The new color.
      */
-    static fromRGB(r: number, g: number, b: number, colorSpace: RGBColorSpace): Color {
+    static fromRGB(
+        r: number,
+        g: number,
+        b: number,
+        colorSpace: RGBColorSpace,
+    ): Color {
         const toLinear = MAP_RGB_TO_LINEAR[colorSpace];
-        return Color.fromLinearRGB(toLinear(r), toLinear(g), toLinear(b), colorSpace);
+        return Color.fromLinearRGB(
+            toLinear(r),
+            toLinear(g),
+            toLinear(b),
+            colorSpace,
+        );
     }
 
     /**
@@ -252,7 +261,12 @@ export class Color {
      *
      * @returns The new color.
      */
-    static fromHSV(h: number, s: number, v: number, colorSpace: RGBColorSpace): Color {
+    static fromHSV(
+        h: number,
+        s: number,
+        v: number,
+        colorSpace: RGBColorSpace,
+    ): Color {
         return Color.fromRGB(
             toRGBRFromHSV(h, s, v),
             toRGBGFromHSV(h, s, v),
@@ -271,7 +285,12 @@ export class Color {
      *
      * @returns The new color.
      */
-    static fromHSL(h: number, s: number, l: number, colorSpace: RGBColorSpace): Color {
+    static fromHSL(
+        h: number,
+        s: number,
+        l: number,
+        colorSpace: RGBColorSpace,
+    ): Color {
         return Color.fromRGB(
             toRGBRFromHSL(h, s, l),
             toRGBGFromHSL(h, s, l),
@@ -292,7 +311,12 @@ export class Color {
      *
      * @returns The new color.
      */
-    static fromHSI(h: number, s: number, i: number, colorSpace: RGBColorSpace): Color {
+    static fromHSI(
+        h: number,
+        s: number,
+        i: number,
+        colorSpace: RGBColorSpace,
+    ): Color {
         return Color.fromRGB(
             toRGBRFromHSI(h, s, i),
             toRGBGFromHSI(h, s, i),
@@ -311,13 +335,14 @@ export class Color {
      *
      * @return The new color.
      */
-    static fromLinearRGB(lr: number, lg: number, lb: number, colorSpace: RGBColorSpace): Color {
+    static fromLinearRGB(
+        lr: number,
+        lg: number,
+        lb: number,
+        colorSpace: RGBColorSpace,
+    ): Color {
         const [tr, tg, tb] = MAP_LINEAR_TO_CIE_1931_XYZ[colorSpace];
-        return new Color(
-            tr(lr, lg, lb),
-            tg(lr, lg, lb),
-            tb(lr, lg, lb),
-        );
+        return new Color(tr(lr, lg, lb), tg(lr, lg, lb), tb(lr, lg, lb));
     }
 
     /**
@@ -330,11 +355,22 @@ export class Color {
      *
      * @return The new color.
      */
-    static fromLAB(l: number, a: number, b: number, colorSpace: PerceptualColorSpace): Color {
-        if(colorSpace === "Ok") {
-            const _l = toLMSComponentFromLMSDashComponent(toLMSDashLFromOklab(l, a, b));
-            const _m = toLMSComponentFromLMSDashComponent(toLMSDashMFromOklab(l, a, b));
-            const _s = toLMSComponentFromLMSDashComponent(toLMSDashSFromOklab(l, a, b));
+    static fromLAB(
+        l: number,
+        a: number,
+        b: number,
+        colorSpace: PerceptualColorSpace,
+    ): Color {
+        if (colorSpace === "Ok") {
+            const _l = toLMSComponentFromLMSDashComponent(
+                toLMSDashLFromOklab(l, a, b),
+            );
+            const _m = toLMSComponentFromLMSDashComponent(
+                toLMSDashMFromOklab(l, a, b),
+            );
+            const _s = toLMSComponentFromLMSDashComponent(
+                toLMSDashSFromOklab(l, a, b),
+            );
 
             return new Color(
                 toCIE1931XYZXFromLMS(_l, _m, _s),
@@ -360,7 +396,12 @@ export class Color {
      *
      * @returns The new color.
      */
-    static fromLCH(l: number, c: number, h: number, colorSpace: PerceptualColorSpace): Color {
+    static fromLCH(
+        l: number,
+        c: number,
+        h: number,
+        colorSpace: PerceptualColorSpace,
+    ): Color {
         return Color.fromLAB(
             l,
             toLABAFromLCH(c, h),
@@ -574,7 +615,11 @@ export class Color {
      * @param colorSpace The color space to use.
      */
     lr(colorSpace: RGBColorSpace): number {
-        return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_R[colorSpace](this._X, this._Y, this._Z);
+        return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_R[colorSpace](
+            this._X,
+            this._Y,
+            this._Z,
+        );
     }
 
     // LAB / LCH
@@ -584,7 +629,11 @@ export class Color {
      * @param colorSpace The color space to use.
      */
     lg(colorSpace: RGBColorSpace): number {
-        return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_G[colorSpace](this._X, this._Y, this._Z);
+        return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_G[colorSpace](
+            this._X,
+            this._Y,
+            this._Z,
+        );
     }
 
     /**
@@ -592,7 +641,11 @@ export class Color {
      * @param colorSpace The color space to use.
      */
     lb(colorSpace: RGBColorSpace): number {
-        return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_B[colorSpace](this._X, this._Y, this._Z);
+        return MAP_CIE_1931_XYZ_TO_LINEAR_RGB_B[colorSpace](
+            this._X,
+            this._Y,
+            this._Z,
+        );
     }
 
     /**
@@ -600,10 +653,16 @@ export class Color {
      * @param colorSpace The color space to use.
      */
     pl(colorSpace: PerceptualColorSpace): number {
-        if(colorSpace === "Ok") {
-            const _l = toLMSDashComponentFromLMSComponent(toLMSLFromCIE1931XYZ(this._X, this._Y, this._Z)),
-                _m = toLMSDashComponentFromLMSComponent(toLMSMFromCIE1931XYZ(this._X, this._Y, this._Z)),
-                _s = toLMSDashComponentFromLMSComponent(toLMSSFromCIE1931XYZ(this._X, this._Y, this._Z));
+        if (colorSpace === "Ok") {
+            const _l = toLMSDashComponentFromLMSComponent(
+                    toLMSLFromCIE1931XYZ(this._X, this._Y, this._Z),
+                ),
+                _m = toLMSDashComponentFromLMSComponent(
+                    toLMSMFromCIE1931XYZ(this._X, this._Y, this._Z),
+                ),
+                _s = toLMSDashComponentFromLMSComponent(
+                    toLMSSFromCIE1931XYZ(this._X, this._Y, this._Z),
+                );
 
             return toOklabLFromLMSDash(_l, _m, _s);
         }
@@ -616,10 +675,16 @@ export class Color {
      * @param colorSpace The color space to use.
      */
     pa(colorSpace: PerceptualColorSpace): number {
-        if(colorSpace === "Ok") {
-            const _l = toLMSDashComponentFromLMSComponent(toLMSLFromCIE1931XYZ(this._X, this._Y, this._Z)),
-                _m = toLMSDashComponentFromLMSComponent(toLMSMFromCIE1931XYZ(this._X, this._Y, this._Z)),
-                _s = toLMSDashComponentFromLMSComponent(toLMSSFromCIE1931XYZ(this._X, this._Y, this._Z));
+        if (colorSpace === "Ok") {
+            const _l = toLMSDashComponentFromLMSComponent(
+                    toLMSLFromCIE1931XYZ(this._X, this._Y, this._Z),
+                ),
+                _m = toLMSDashComponentFromLMSComponent(
+                    toLMSMFromCIE1931XYZ(this._X, this._Y, this._Z),
+                ),
+                _s = toLMSDashComponentFromLMSComponent(
+                    toLMSSFromCIE1931XYZ(this._X, this._Y, this._Z),
+                );
 
             return toOklabAFromLMSDash(_l, _m, _s);
         }
@@ -632,10 +697,16 @@ export class Color {
      * @param colorSpace The color space to use
      */
     pb(colorSpace: PerceptualColorSpace): number {
-        if(colorSpace === "Ok") {
-            const _l = toLMSDashComponentFromLMSComponent(toLMSLFromCIE1931XYZ(this._X, this._Y, this._Z)),
-                _m = toLMSDashComponentFromLMSComponent(toLMSMFromCIE1931XYZ(this._X, this._Y, this._Z)),
-                _s = toLMSDashComponentFromLMSComponent(toLMSSFromCIE1931XYZ(this._X, this._Y, this._Z));
+        if (colorSpace === "Ok") {
+            const _l = toLMSDashComponentFromLMSComponent(
+                    toLMSLFromCIE1931XYZ(this._X, this._Y, this._Z),
+                ),
+                _m = toLMSDashComponentFromLMSComponent(
+                    toLMSMFromCIE1931XYZ(this._X, this._Y, this._Z),
+                ),
+                _s = toLMSDashComponentFromLMSComponent(
+                    toLMSSFromCIE1931XYZ(this._X, this._Y, this._Z),
+                );
 
             return toOklabBFromLMSDash(_l, _m, _s);
         }

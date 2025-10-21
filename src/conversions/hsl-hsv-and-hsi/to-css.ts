@@ -17,7 +17,8 @@ export const toCSSFromSRGBHSL = (
     s: number,
     l: number,
     withAlpha?: number,
-) => `hsl(${h * 360} ${s * 100} ${l * 100}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+) =>
+    `hsl(${h * 360} ${s * 100} ${l * 100}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
 
 /**
  * Calculates the CSS representation of the given HSV color in the sRGB color space.
@@ -38,4 +39,5 @@ export const toCSSFromSRGBHSV = (
     s: number,
     v: number,
     withAlpha?: number,
-) => `hsv(${h * 360} ${s * 100} ${v * 100}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+) =>
+    `hsv(${h * 360} ${s * 100} ${v * 100}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;

@@ -19,20 +19,18 @@ return new RGB(c + m, m, x + m, this._);
  * @returns The red component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSI_to_RGB
  */
-export const toRGBRFromHSI = (
-    h: number,
-    s: number,
-    i: number,
-) => {
-    const hPrime = (h * 3 / Math.PI) % 6;
-    const z = 1 - Math.abs(hPrime % 2 - 1);
-    const c = 3 * i * s / (1 + z);
+export const toRGBRFromHSI = (h: number, s: number, i: number) => {
+    const hPrime = ((h * 3) / Math.PI) % 6;
+    const z = 1 - Math.abs((hPrime % 2) - 1);
+    const c = (3 * i * s) / (1 + z);
 
-    return i * (1 - s) // m
+    return (
+        i * (1 - s) + // m
         // Equivalent to adding `x = c * z` if `(hPrime | 0) == 1 || (hPrime | 0) == 4`.
-        + (hPrime | 0) % 3 % 2 * c * z
+        (((hPrime | 0) % 3) % 2) * c * z +
         // Equivalent to adding `c` if `(hPrime | 0) == 0 || (hPrime | 0) == 5`.
-        + +!((hPrime | 0) % 5) * c;
+        +!((hPrime | 0) % 5) * c
+    );
 };
 
 /**
@@ -45,20 +43,18 @@ export const toRGBRFromHSI = (
  * @returns The green component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSI_to_RGB
  */
-export const toRGBGFromHSI = (
-    h: number,
-    s: number,
-    i: number,
-) => {
-    const hPrime = (h * 3 / Math.PI) % 6;
-    const z = 1 - Math.abs(hPrime % 2 - 1);
-    const c = 3 * i * s / (1 + z);
+export const toRGBGFromHSI = (h: number, s: number, i: number) => {
+    const hPrime = ((h * 3) / Math.PI) % 6;
+    const z = 1 - Math.abs((hPrime % 2) - 1);
+    const c = (3 * i * s) / (1 + z);
 
-    return i * (1 - s) // m
+    return (
+        i * (1 - s) + // m
         // Equivalent to adding `x = c * z` if `(hPrime | 0) == 0 || (hPrime | 0) == 3`.
-        + +!((hPrime | 0) % 3) * c * z
+        +!((hPrime | 0) % 3) * c * z +
         // Equivalent to adding `c` if `(hPrime | 0) == 1 || (hPrime | 0) == 2`.
-        + +!(((hPrime | 0) + 5) % 6 > 1) * c;
+        +!(((hPrime | 0) + 5) % 6 > 1) * c
+    );
 };
 
 /**
@@ -71,18 +67,16 @@ export const toRGBGFromHSI = (
  * @returns The blue component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSI_to_RGB
  */
-export const toRGBBFromHSI = (
-    h: number,
-    s: number,
-    i: number,
-) => {
-    const hPrime = (h * 3 / Math.PI) % 6;
-    const z = 1 - Math.abs(hPrime % 2 - 1);
-    const c = 3 * i * s / (1 + z);
+export const toRGBBFromHSI = (h: number, s: number, i: number) => {
+    const hPrime = ((h * 3) / Math.PI) % 6;
+    const z = 1 - Math.abs((hPrime % 2) - 1);
+    const c = (3 * i * s) / (1 + z);
 
-    return i * (1 - s) // m
+    return (
+        i * (1 - s) + // m
         // Equivalent to adding `x = c * z` if `(hPrime | 0) == 2 || (hPrime | 0) == 5`.
-        + +!((hPrime | 0) % 3 - 2) * c * z
+        +!(((hPrime | 0) % 3) - 2) * c * z +
         // Equivalent to adding `c` if `(hPrime | 0) == 3 || (hPrime | 0) == 4`.
-        + +!(((hPrime | 0) + 1) % 6 < 4) * c;
+        +!(((hPrime | 0) + 1) % 6 < 4) * c
+    );
 };

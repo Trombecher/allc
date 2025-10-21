@@ -10,10 +10,7 @@
  * @returns The chroma component of LCH.
  * @see https://bottosson.github.io/posts/oklab/#the-oklab-color-space
  */
-export const toLCHCFromLAB = (
-    a: number,
-    b: number,
-) => Math.hypot(a, b);
+export const toLCHCFromLAB = (a: number, b: number) => Math.hypot(a, b);
 
 /**
  * Calculates the hue component of LCH from LAB.
@@ -27,7 +24,4 @@ export const toLCHCFromLAB = (
  * @returns The hue component of LCH.
  * @see https://bottosson.github.io/posts/oklab/#the-oklab-color-space
  */
-export const toLCHHFromLAB = (
-    a: number,
-    b: number,
-) => Math.atan2(b, a);
+export const toLCHHFromLAB = (a: number, b: number) => Math.atan2(b, a);

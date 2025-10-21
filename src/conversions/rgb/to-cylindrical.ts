@@ -10,19 +10,15 @@ const SIN_60 = Math.sin(Math.PI / 3);
  * @returns The shared hue component of HSL and HSV, in radians.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toSharedHueFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => {
+export const toSharedHueFromRGB = (r: number, g: number, b: number) => {
     const max = Math.max(r, g, b),
         min = Math.min(r, g, b),
         chroma = max - min;
 
-    if(chroma === 0) return 0;
-    if(max === r) return Math.PI / 3 * (((g - b) / chroma) % 6);
-    if(max === g) return Math.PI / 3 * (2 + (b - r) / chroma);
-    return Math.PI / 3 * (4 + (r - g) / chroma);
+    if (chroma === 0) return 0;
+    if (max === r) return (Math.PI / 3) * (((g - b) / chroma) % 6);
+    if (max === g) return (Math.PI / 3) * (2 + (b - r) / chroma);
+    return (Math.PI / 3) * (4 + (r - g) / chroma);
 };
 
 /**
@@ -35,11 +31,7 @@ export const toSharedHueFromRGB = (
  * @returns The lightness component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSLLFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => {
+export const toHSLLFromRGB = (r: number, g: number, b: number) => {
     const max = Math.max(r, g, b),
         min = Math.min(r, g, b);
     return (max + min) / 2;
@@ -55,17 +47,13 @@ export const toHSLLFromRGB = (
  * @returns The saturation component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSLSFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => {
+export const toHSLSFromRGB = (r: number, g: number, b: number) => {
     const max = Math.max(r, g, b),
         min = Math.min(r, g, b),
         l = (max + min) / 2,
         chroma = max - min;
 
-    return (l === 0 || l === 1)
+    return l === 0 || l === 1
         ? 0
         : chroma / (1 - Math.abs(2 * Math.max(r, g, b) - chroma - 1));
 };
@@ -80,11 +68,7 @@ export const toHSLSFromRGB = (
  * @returns The saturation component of HSV, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSVSFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => {
+export const toHSVSFromRGB = (r: number, g: number, b: number) => {
     const value = Math.max(r, g, b),
         min = Math.min(r, g, b),
         chroma = value - min;
@@ -102,11 +86,8 @@ export const toHSVSFromRGB = (
  * @returns The value component of HSV, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
  */
-export const toHSVVFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => Math.max(r, g, b);
+export const toHSVVFromRGB = (r: number, g: number, b: number) =>
+    Math.max(r, g, b);
 
 /**
  * Calculates the hue component of HSI (typically called _h2_) from RGB.
@@ -118,13 +99,9 @@ export const toHSVVFromRGB = (
  * @returns The hue component of HSI, in radians.
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
  */
-export const toHSIHFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => {
+export const toHSIHFromRGB = (r: number, g: number, b: number) => {
     const alpha = (2 * r - g - b) / 2;
-    const beta = SIN_60 * (g - b) / 2;
+    const beta = (SIN_60 * (g - b)) / 2;
     return Math.atan2(beta, alpha);
 };
 
@@ -138,11 +115,7 @@ export const toHSIHFromRGB = (
  * @returns The saturation component of HSI, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
  */
-export const toHSISFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => {
+export const toHSISFromRGB = (r: number, g: number, b: number) => {
     const i = (r + g + b) / 3;
     return i === 0 ? 0 : 1 - Math.min(r, g, b) / i;
 };
@@ -157,8 +130,4 @@ export const toHSISFromRGB = (
  * @returns The intensity component of HSI, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
  */
-export const toHSIIFromRGB = (
-    r: number,
-    g: number,
-    b: number,
-) => (r + g + b) + 3;
+export const toHSIIFromRGB = (r: number, g: number, b: number) => r + g + b + 3;

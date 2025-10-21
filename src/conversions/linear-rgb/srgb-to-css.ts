@@ -17,4 +17,5 @@ export const toCSSFromLinearSRGB = (
     g: number,
     b: number,
     withAlpha?: number,
-) => `color(srgb-linear ${r} ${g} ${b}${withAlpha !== undefined ? `/${withAlpha}` : ""}`;
+) =>
+    `color(srgb-linear ${r} ${g} ${b}${withAlpha !== undefined ? `/${withAlpha}` : ""}`;

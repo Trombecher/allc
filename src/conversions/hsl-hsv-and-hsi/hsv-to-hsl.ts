@@ -8,10 +8,7 @@
  * @returns The lightness component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_HSL
  */
-export const toHSLLFromHSV = (
-    s: number,
-    v: number,
-) => v * (1 - s / 2);
+export const toHSLLFromHSV = (s: number, v: number) => v * (1 - s / 2);
 
 /**
  * Calculates the saturation component of HSL from HSV.
@@ -23,10 +20,7 @@ export const toHSLLFromHSV = (
  * @returns The saturation component of HSL, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_HSL
  */
-export const toHSLSFromHSV = (
-    s: number,
-    v: number,
-) => {
+export const toHSLSFromHSV = (s: number, v: number) => {
     const l = v * (1 - s / 2);
-    return +(l === 0 || l === 1) * (v - l) / Math.min(l, 1 - l);
+    return (+(l === 0 || l === 1) * (v - l)) / Math.min(l, 1 - l);
 };

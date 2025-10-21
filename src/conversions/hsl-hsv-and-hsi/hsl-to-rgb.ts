@@ -9,13 +9,8 @@
  * @returns The RGB component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB_alternative
  */
-const f = (
-    h: number,
-    s: number,
-    l: number,
-    n: number,
-) => {
-    const k = (n + h * 6 / Math.PI) % 12;
+const f = (h: number, s: number, l: number, n: number) => {
+    const k = (n + (h * 6) / Math.PI) % 12;
     return l - s * Math.min(l, 1 - l) * Math.max(-1, Math.min(k - 3, 9 - k, 1));
 };
 
@@ -29,11 +24,7 @@ const f = (
  * @returns The red component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB_alternative
  */
-export const toRGBRFromHSL = (
-    h: number,
-    s: number,
-    l: number,
-) => f(h, s, l, 0);
+export const toRGBRFromHSL = (h: number, s: number, l: number) => f(h, s, l, 0);
 
 /**
  * Calculates the green component of RGB from HSL.
@@ -45,11 +36,7 @@ export const toRGBRFromHSL = (
  * @returns The green component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB_alternative
  */
-export const toRGBGFromHSL = (
-    h: number,
-    s: number,
-    l: number,
-) => f(h, s, l, 8);
+export const toRGBGFromHSL = (h: number, s: number, l: number) => f(h, s, l, 8);
 
 /**
  * Calculates the blue component of RGB from HSL.
@@ -61,8 +48,4 @@ export const toRGBGFromHSL = (
  * @returns The blue component, typically in the range [0, 1].
  * @see https://en.wikipedia.org/wiki/HSL_and_HSV#HSL_to_RGB_alternative
  */
-export const toRGBBFromHSL = (
-    h: number,
-    s: number,
-    l: number,
-) => f(h, s, l, 4);
+export const toRGBBFromHSL = (h: number, s: number, l: number) => f(h, s, l, 4);

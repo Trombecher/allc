@@ -11,7 +11,7 @@ export const MATRIX_YIQ_FCC_FROM_RGB_2_2 = 0.3121;
 
 // Taken from https://en.wikipedia.org/wiki/YIQ#From_RGB_to_YIQ.
 export const MATRIX_YIQ_1953_FROM_RGB_0_0 = 0.299;
-export const MATRIX_YIQ_1953_FROM_RGB_0_1 = .587;
+export const MATRIX_YIQ_1953_FROM_RGB_0_1 = 0.587;
 export const MATRIX_YIQ_1953_FROM_RGB_0_2 = 0.114;
 export const MATRIX_YIQ_1953_FROM_RGB_1_0 = 0.5959;
 export const MATRIX_YIQ_1953_FROM_RGB_1_1 = -0.2746;

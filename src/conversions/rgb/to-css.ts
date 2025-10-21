@@ -13,7 +13,8 @@ export const toCSSFromSRGB = (
     g: number,
     b: number,
     withAlpha?: number,
-) => `rgb(${r * 255} ${g * 255} ${b * 255}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+) =>
+    `rgb(${r * 255} ${g * 255} ${b * 255}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
 
 /**
  * Calculates the CSS representation of the given Display P3 color.
@@ -30,7 +31,8 @@ export const toCSSFromDisplayP3 = (
     g: number,
     b: number,
     withAlpha?: number,
-) => `color(display-p3 ${r} ${g} ${b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+) =>
+    `color(display-p3 ${r} ${g} ${b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
 
 /**
  * Calculates the CSS representation of the given Adobe RGB color.
@@ -47,4 +49,5 @@ export const toCSSFromAdobeRGB = (
     g: number,
     b: number,
     withAlpha?: number,
-) => `color(a98-rgb ${r} ${g} ${b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;
+) =>
+    `color(a98-rgb ${r} ${g} ${b}${withAlpha !== undefined ? `/${withAlpha}` : ""})`;

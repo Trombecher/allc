@@ -1,46 +1,11 @@
 {
-    "compilerOptions": {
-        // Target
-        "target": "ES2022",
-        "lib": [
-            "ES2022"
-        ],
-        "module": "ES2022",
-        "moduleResolution": "Bundler",
-        "rootDirs": [
-            "src",
-            "tests"
-        ],
-        // Generate
-        "declaration": true,
-        "declarationMap": true,
-        "outDir": "./dist",
-        // Interop
-        "isolatedModules": true,
-        "forceConsistentCasingInFileNames": true,
-        // Type Checking
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "strictBindCallApply": true,
-        "strictPropertyInitialization": true,
-        "noImplicitThis": true,
-        "useUnknownInCatchVariables": true,
-        "alwaysStrict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "exactOptionalPropertyTypes": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "noUncheckedIndexedAccess": true,
-        "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
-        // Libs
-        "skipDefaultLibCheck": true,
-        "skipLibCheck": true
-    },
-    "include": [
-        "src"
-    ]
+    "references": [
+        {
+            "path": "./tsconfig.dev.json"
+        },
+        {
+            "path": "./tsconfig.package.json"
+        },
+    ],
+    "include": []
 }
