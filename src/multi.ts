@@ -4,17 +4,23 @@ import {
     toCIE1931XYZXFromCIELAB,
     toCIE1931XYZXFromLinearAdobeRGB,
     toCIE1931XYZXFromLinearDisplayP3,
+    toCIE1931XYZXFromLinearProPhotoRGB,
+    toCIE1931XYZXFromLinearRec2020,
     toCIE1931XYZXFromLinearSRGB,
     toCIE1931XYZXFromLMS,
     toCIE1931XYZYFromCIELAB,
     toCIE1931XYZYFromLinearAdobeRGB,
     toCIE1931XYZYFromLinearDisplayP3,
+    toCIE1931XYZYFromLinearProPhotoRGB,
+    toCIE1931XYZYFromLinearRec2020,
     toCIE1931XYZYFromLinearSRGB,
     toCIE1931XYZYFromLMS,
     toCIE1931XYZZFromCIE1931xyY,
     toCIE1931XYZZFromCIELAB,
     toCIE1931XYZZFromLinearAdobeRGB,
     toCIE1931XYZZFromLinearDisplayP3,
+    toCIE1931XYZZFromLinearProPhotoRGB,
+    toCIE1931XYZZFromLinearRec2020,
     toCIE1931XYZZFromLinearSRGB,
     toCIE1931XYZZFromLMS,
     toCIE1931xyYxFromCIE1931XYZ,
@@ -44,6 +50,14 @@ import {
     toLinearDisplayP3ComponentFromDisplayP3Component,
     toLinearDisplayP3GFromCIE1931XYZ,
     toLinearDisplayP3RFromCIE1931XYZ,
+    toLinearProPhotoRGBBFromCIE1931XYZ,
+    toLinearProPhotoRGBComponentFromProPhotoRGBComponent,
+    toLinearProPhotoRGBGFromCIE1931XYZ,
+    toLinearProPhotoRGBRFromCIE1931XYZ,
+    toLinearRec2020BFromCIE1931XYZ,
+    toLinearRec2020ComponentFromRec2020Component,
+    toLinearRec2020GFromCIE1931XYZ,
+    toLinearRec2020RFromCIE1931XYZ,
     toLinearSRGBBFromCIE1931XYZ,
     toLinearSRGBComponentFromSRGBComponent,
     toLinearSRGBGFromCIE1931XYZ,
@@ -59,6 +73,8 @@ import {
     toOklabAFromLMSDash,
     toOklabBFromLMSDash,
     toOklabLFromLMSDash,
+    toProPhotoRGBComponentFromLinearProPhotoRGBComponent,
+    toRec2020ComponentFromLinearRec2020Component,
     toRGBBFromHexString,
     toRGBBFromHSI,
     toRGBBFromHSL,
@@ -79,53 +95,98 @@ import {
 } from "./conversions";
 import type {PerceptualColorSpace, RGBColorSpace} from "./index";
 
-const MAP_LINEAR_TO_RGB = {
-    sRGB: toSRGBComponentFromLinearSRGBComponent,
-    "Display P3": toDisplayP3ComponentFromLinearDisplayP3Component,
-    "Adobe RGB": toAdobeRGBComponentFromLinearAdobeRGBComponent,
-} as const;
+const TYPE_SRGB = "sRGB" satisfies RGBColorSpace;
+const TYPE_DISPLAY_P3 = "Display P3" satisfies RGBColorSpace;
+const TYPE_ADOBE_RGB = "Adobe RGB" satisfies RGBColorSpace;
+const TYPE_PROPHOTO_RGB = "ProPhoto RGB" satisfies RGBColorSpace;
+const TYPE_REC_2020 = "Rec. 2020" satisfies RGBColorSpace;
 
-const MAP_RGB_TO_LINEAR = {
-    sRGB: toLinearSRGBComponentFromSRGBComponent,
-    "Display P3": toLinearDisplayP3ComponentFromDisplayP3Component,
-    "Adobe RGB": toLinearAdobeRGBComponentFromAdobeRGBComponent,
-} as const;
+type TransferFunction = (component: number) => number;
 
-const MAP_CIE_1931_XYZ_TO_LINEAR_RGB_R = {
-    sRGB: toLinearSRGBRFromCIE1931XYZ,
-    "Display P3": toLinearDisplayP3RFromCIE1931XYZ,
-    "Adobe RGB": toLinearAdobeRGBRFromCIE1931XYZ,
-} as const;
+const MAP_LINEAR_TO_RGB: Readonly<Record<RGBColorSpace, TransferFunction>> = {
+    [TYPE_SRGB]: toSRGBComponentFromLinearSRGBComponent,
+    [TYPE_DISPLAY_P3]: toDisplayP3ComponentFromLinearDisplayP3Component,
+    [TYPE_ADOBE_RGB]: toAdobeRGBComponentFromLinearAdobeRGBComponent,
+    [TYPE_PROPHOTO_RGB]: toProPhotoRGBComponentFromLinearProPhotoRGBComponent,
+    [TYPE_REC_2020]: toRec2020ComponentFromLinearRec2020Component,
+};
 
-const MAP_CIE_1931_XYZ_TO_LINEAR_RGB_G = {
-    sRGB: toLinearSRGBGFromCIE1931XYZ,
-    "Display P3": toLinearDisplayP3GFromCIE1931XYZ,
-    "Adobe RGB": toLinearAdobeRGBGFromCIE1931XYZ,
-} as const;
+const MAP_RGB_TO_LINEAR: Readonly<Record<RGBColorSpace, TransferFunction>> = {
+    [TYPE_SRGB]: toLinearSRGBComponentFromSRGBComponent,
+    [TYPE_DISPLAY_P3]: toLinearDisplayP3ComponentFromDisplayP3Component,
+    [TYPE_ADOBE_RGB]: toLinearAdobeRGBComponentFromAdobeRGBComponent,
+    [TYPE_PROPHOTO_RGB]: toLinearProPhotoRGBComponentFromProPhotoRGBComponent,
+    [TYPE_REC_2020]: toLinearRec2020ComponentFromRec2020Component,
+};
 
-const MAP_CIE_1931_XYZ_TO_LINEAR_RGB_B = {
-    sRGB: toLinearSRGBBFromCIE1931XYZ,
-    "Display P3": toLinearDisplayP3BFromCIE1931XYZ,
-    "Adobe RGB": toLinearAdobeRGBBFromCIE1931XYZ,
-} as const;
+type MatrixComponentFunction = (x: number, y: number, z: number) => number;
 
-const MAP_LINEAR_TO_CIE_1931_XYZ = {
-    sRGB: [
+const MAP_CIE_1931_XYZ_TO_LINEAR_RGB_R: Readonly<
+    Record<RGBColorSpace, MatrixComponentFunction>
+> = {
+    [TYPE_SRGB]: toLinearSRGBRFromCIE1931XYZ,
+    [TYPE_DISPLAY_P3]: toLinearDisplayP3RFromCIE1931XYZ,
+    [TYPE_ADOBE_RGB]: toLinearAdobeRGBRFromCIE1931XYZ,
+    [TYPE_PROPHOTO_RGB]: toLinearProPhotoRGBRFromCIE1931XYZ,
+    [TYPE_REC_2020]: toLinearRec2020RFromCIE1931XYZ,
+};
+
+const MAP_CIE_1931_XYZ_TO_LINEAR_RGB_G: Readonly<
+    Record<RGBColorSpace, MatrixComponentFunction>
+> = {
+    [TYPE_SRGB]: toLinearSRGBGFromCIE1931XYZ,
+    [TYPE_DISPLAY_P3]: toLinearDisplayP3GFromCIE1931XYZ,
+    [TYPE_ADOBE_RGB]: toLinearAdobeRGBGFromCIE1931XYZ,
+    [TYPE_PROPHOTO_RGB]: toLinearProPhotoRGBGFromCIE1931XYZ,
+    [TYPE_REC_2020]: toLinearRec2020GFromCIE1931XYZ,
+};
+
+const MAP_CIE_1931_XYZ_TO_LINEAR_RGB_B: Readonly<
+    Record<RGBColorSpace, MatrixComponentFunction>
+> = {
+    [TYPE_SRGB]: toLinearSRGBBFromCIE1931XYZ,
+    [TYPE_DISPLAY_P3]: toLinearDisplayP3BFromCIE1931XYZ,
+    [TYPE_ADOBE_RGB]: toLinearAdobeRGBBFromCIE1931XYZ,
+    [TYPE_PROPHOTO_RGB]: toLinearProPhotoRGBBFromCIE1931XYZ,
+    [TYPE_REC_2020]: toLinearRec2020BFromCIE1931XYZ,
+};
+
+const MAP_LINEAR_TO_CIE_1931_XYZ: Readonly<
+    Record<
+        RGBColorSpace,
+        readonly [
+            MatrixComponentFunction,
+            MatrixComponentFunction,
+            MatrixComponentFunction,
+        ]
+    >
+> = {
+    [TYPE_SRGB]: [
         toCIE1931XYZXFromLinearSRGB,
         toCIE1931XYZYFromLinearSRGB,
         toCIE1931XYZZFromLinearSRGB,
-    ] as const,
-    "Display P3": [
+    ],
+    [TYPE_DISPLAY_P3]: [
         toCIE1931XYZXFromLinearDisplayP3,
         toCIE1931XYZYFromLinearDisplayP3,
         toCIE1931XYZZFromLinearDisplayP3,
-    ] as const,
-    "Adobe RGB": [
+    ],
+    [TYPE_ADOBE_RGB]: [
         toCIE1931XYZXFromLinearAdobeRGB,
         toCIE1931XYZYFromLinearAdobeRGB,
         toCIE1931XYZZFromLinearAdobeRGB,
-    ] as const,
-} as const;
+    ],
+    [TYPE_PROPHOTO_RGB]: [
+        toCIE1931XYZXFromLinearProPhotoRGB,
+        toCIE1931XYZYFromLinearProPhotoRGB,
+        toCIE1931XYZZFromLinearProPhotoRGB,
+    ],
+    [TYPE_REC_2020]: [
+        toCIE1931XYZXFromLinearRec2020,
+        toCIE1931XYZYFromLinearRec2020,
+        toCIE1931XYZZFromLinearRec2020,
+    ],
+};
 
 /**
  * Represents a color. You can create colors from various color models and spaces.

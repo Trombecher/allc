@@ -1,15 +1,14 @@
 export * from "./multi";
 
 /**
- * A color space that is applicable to RGB-like color models. These are:
- *
- * * Linear RGB
- * * RGB
- * * HSL
- * * HSV
- * * HSI
+ * A color space that is based off interpolating three primaries: red, green, and blue.
  */
-export type RGBColorSpace = "sRGB" | "Adobe RGB" | "Display P3";
+export type RGBColorSpace =
+    | "sRGB"
+    | "Adobe RGB"
+    | "Display P3"
+    | "Rec. 2020"
+    | "ProPhoto RGB";
 
 /**
  * A _perceptual_ color space. Applicable to LAB-like color models. These are:
