@@ -68,11 +68,9 @@ Y = 1
 => Z = 1.0890577507598784
 ```
 
-## 2° D65 Linear sRGB -> CIE 1931 XYZ
+## Linear sRGB -> CIE 1931 XYZ
 
-### Allc (This Repo)
-
-What should I do here?
+(D65, 2° standard observer)
 
 ### Bruce Lindbloom
 
@@ -82,13 +80,17 @@ What should I do here?
 0.0193339, 0.1191920, 0.9503041,
 ```
 
-### Wikipedia (sRGB)
+### [IEC 61966-2-1](https://webstore.iec.ch/en/publication/6168) / [Wikipedia (sRGB)](https://en.wikipedia.org/wiki/SRGB#Primaries)
+
+This appears to be the definition of the conversion matrix ("these coefficients should be considered exact").
 
 ```
 0.4124, 0.3576, 0.1805,
 0.2126, 0.7152, 0.0722,
 0.0193, 0.1192, 0.9505,
 ```
+
+The 1999 standard did also define a rounded version of the inverse and the 2003 version provides a more accurate inverse. But inverses should be calculated to maximum precision from the definition matrix regardless.
 
 ### Viereck
 
@@ -100,7 +102,7 @@ What should I do here?
 
 ### Matrixmaker
 
-(console output)
+(console output; I don't know where these numbers come from.)
 
 ```
 0.4124564390896923, 0.357576077643909, 0.18043748326639894
@@ -108,7 +110,17 @@ What should I do here?
 0.019333895582329307, 0.11919202588130297, 0.9503040785363679
 ```
 
-### CSS 4 Sample Code, Culori, Color.js, CSS 4 GitHub issue, and color-space
+### [Skia](https://github.com/google/skia/blob/main/include/core/SkColorSpace.h)
+
+Chromium appears to be using these through Skia.
+
+```
+0.436065674, 0.385147095, 0.143066406,
+0.222488403, 0.716873169, 0.060607910,
+0.013916016, 0.097076416, 0.714096069,
+```
+
+### [CSS 4](https://github.com/w3c/csswg-drafts/blob/main/css-color-4/conversions.js), Culori, [Color.js](https://github.com/color-js/color.js/blob/main/src/spaces/srgb-linear.js), [CSS 4 GitHub issue](https://github.com/w3c/csswg-drafts/issues/5922), and color-space
 
 ```
 506752 / 1228815,  87881 / 245763,   12673 /   70218,

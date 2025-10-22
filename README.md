@@ -160,7 +160,7 @@ the format `PRIMARY_<SPACE>_<COMPONENT>_<X_OR_Y>` with
     * `ADOBE_RGB` (Adobe RGB),
     * `DISPLAY_P3` (Display P3),
     * `REC_2020` (Rec. 2020), or
-    * `PROPHOTO_RGB` (ProPhoto RGB);
+    * `PRO_PHOTO_RGB` (ProPhoto RGB);
 * `CHANNEL` being either
     * `RED`,
     * `GREEN`, or
