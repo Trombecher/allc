@@ -20,18 +20,15 @@ import {
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The red component of linear DCI-P3 "D60 sim".
+ * @returns The red component of linear DCI-P3 "D60 sim", clamped to [0, 1].
  */
 export const toLinearDCIP3D60RFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_0_0 +
-            y * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_0_1 +
-            z * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_0_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_0_2);
 
 /**
  * Calculates the green component of linear DCI-P3 "D60 sim" from CIE 1931 XYZ.
@@ -40,18 +37,15 @@ export const toLinearDCIP3D60RFromCIE1931XYZ = (
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The green component of linear DCI-P3 "D60 sim".
+ * @returns The green component of linear DCI-P3 "D60 sim", clamped to [0, 1].
  */
 export const toLinearDCIP3D60GFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_1_0 +
-            y * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_1_1 +
-            z * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_1_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_1_2);
 
 /**
  * Calculates the blue component of linear DCI-P3 "D60 sim" from CIE 1931 XYZ.
@@ -60,15 +54,12 @@ export const toLinearDCIP3D60GFromCIE1931XYZ = (
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The blue component of linear DCI-P3 "D60 sim".
+ * @returns The blue component of linear DCI-P3 "D60 sim", clamped to [0, 1].
  */
 export const toLinearDCIP3D60BFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_2_0 +
-            y * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_2_1 +
-            z * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_2_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_DCI_P3_D60_FROM_CIE_1931_XYZ_2_2);

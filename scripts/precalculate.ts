@@ -267,21 +267,21 @@ const addRGBColorSpace = async ({
 
         linearRGBToCIE1931XYZMatrix = calculateLinearRGBToCIE1931XYZMatrix(
             // @ts-expect-error
-            primaries[`PRIMARY_${primariesId}_RED_x`],
+            primaries[`PRIMARY_${matrix.primariesId}_RED_x`],
             // @ts-expect-error
-            primaries[`PRIMARY_${primariesId}_RED_y`],
+            primaries[`PRIMARY_${matrix.primariesId}_RED_y`],
             // @ts-expect-error
-            primaries[`PRIMARY_${primariesId}_GREEN_x`],
+            primaries[`PRIMARY_${matrix.primariesId}_GREEN_x`],
             // @ts-expect-error
-            primaries[`PRIMARY_${primariesId}_GREEN_y`],
+            primaries[`PRIMARY_${matrix.primariesId}_GREEN_y`],
             // @ts-expect-error
-            primaries[`PRIMARY_${primariesId}_BLUE_x`],
+            primaries[`PRIMARY_${matrix.primariesId}_BLUE_x`],
             // @ts-expect-error
-            primaries[`PRIMARY_${primariesId}_BLUE_y`],
+            primaries[`PRIMARY_${matrix.primariesId}_BLUE_y`],
             // @ts-expect-error
-            illuminants[`${illuminant}_x`],
+            illuminants[`${matrix.illuminant}_x`],
             // @ts-expect-error
-            illuminants[`${illuminant}_x`],
+            illuminants[`${matrix.illuminant}_x`],
         );
 
         addSquareMatrix(
@@ -294,7 +294,7 @@ const addRGBColorSpace = async ({
             inverse(linearRGBToCIE1931XYZMatrix).to1DArray(),
         );
     } else {
-        addInverseMatrixOfExtracted(upperCase, "CIE_1931_XYZ");
+        addInverseMatrixOfExtracted("CIE_1931_XYZ", `LINEAR_${upperCase}`);
     }
 
     await Promise.all([
@@ -357,7 +357,7 @@ await Promise.all([
         matrix: {
             type: "generated",
             illuminant: "CIE_ILLUMINANT_D60_2d",
-            primariesId: "PCI_P3",
+            primariesId: "DCI_P3",
         },
     }),
     addRGBColorSpace({

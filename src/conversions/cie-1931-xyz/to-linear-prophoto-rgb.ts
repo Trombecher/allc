@@ -20,18 +20,15 @@ import {
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The red component of linear ProPhoto RGB.
+ * @returns The red component of linear ProPhoto RGB, clamped to [0, 1].
  */
 export const toLinearProPhotoRGBRFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_0_0 +
-            y * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_0_1 +
-            z * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_0_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_0_2);
 
 /**
  * Calculates the green component of linear ProPhoto RGB from CIE 1931 XYZ.
@@ -40,18 +37,15 @@ export const toLinearProPhotoRGBRFromCIE1931XYZ = (
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The green component of linear ProPhoto RGB.
+ * @returns The green component of linear ProPhoto RGB, clamped to [0, 1].
  */
 export const toLinearProPhotoRGBGFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_1_0 +
-            y * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_1_1 +
-            z * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_1_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_1_2);
 
 /**
  * Calculates the blue component of linear ProPhoto RGB from CIE 1931 XYZ.
@@ -60,15 +54,12 @@ export const toLinearProPhotoRGBGFromCIE1931XYZ = (
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The blue component of linear ProPhoto RGB.
+ * @returns The blue component of linear ProPhoto RGB, clamped to [0, 1].
  */
 export const toLinearProPhotoRGBBFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_2_0 +
-            y * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_2_1 +
-            z * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_2_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_PRO_PHOTO_RGB_FROM_CIE_1931_XYZ_2_2);

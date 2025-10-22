@@ -21,10 +21,13 @@ import {
  *
  * @returns The X component of CIE 1931 XYZ.
  */
-export const toCIE1931XYZXFromLinearDCIP3 = (r: number, g: number, b: number) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_0_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_0_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_0_2;
+export const toCIE1931XYZXFromLinearDCIP3 = (
+    r: number,
+    g: number,
+    b: number,
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear DCI-P3.
@@ -35,10 +38,13 @@ export const toCIE1931XYZXFromLinearDCIP3 = (r: number, g: number, b: number) =>
  *
  * @returns The Y component of CIE 1931 XYZ.
  */
-export const toCIE1931XYZYFromLinearDCIP3 = (r: number, g: number, b: number) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_1_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_1_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_1_2;
+export const toCIE1931XYZYFromLinearDCIP3 = (
+    r: number,
+    g: number,
+    b: number,
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear DCI-P3.
@@ -49,7 +55,10 @@ export const toCIE1931XYZYFromLinearDCIP3 = (r: number, g: number, b: number) =>
  *
  * @returns The Z component of CIE 1931 XYZ.
  */
-export const toCIE1931XYZZFromLinearDCIP3 = (r: number, g: number, b: number) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_2_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_2_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_2_2;
+export const toCIE1931XYZZFromLinearDCIP3 = (
+    r: number,
+    g: number,
+    b: number,
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_2_2;

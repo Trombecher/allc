@@ -25,10 +25,9 @@ export const toCIE1931XYZXFromLinearRec2020 = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_0_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_0_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_0_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear Rec. 2020.
@@ -43,10 +42,9 @@ export const toCIE1931XYZYFromLinearRec2020 = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_1_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_1_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_1_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear Rec. 2020.
@@ -61,7 +59,6 @@ export const toCIE1931XYZZFromLinearRec2020 = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_2_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_2_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_2_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_REC_2020_2_2;

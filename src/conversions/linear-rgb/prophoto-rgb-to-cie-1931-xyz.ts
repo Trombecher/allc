@@ -25,10 +25,9 @@ export const toCIE1931XYZXFromLinearProPhotoRGB = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_0_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_0_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_0_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear ProPhoto RGB.
@@ -43,10 +42,9 @@ export const toCIE1931XYZYFromLinearProPhotoRGB = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_1_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_1_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_1_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear ProPhoto RGB.
@@ -61,7 +59,6 @@ export const toCIE1931XYZZFromLinearProPhotoRGB = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_2_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_2_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_2_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_PRO_PHOTO_RGB_2_2;

@@ -25,10 +25,9 @@ export const toCIE1931XYZXFromLinearSMPTEC = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear SMPTE C (1987).
@@ -43,10 +42,9 @@ export const toCIE1931XYZYFromLinearSMPTEC = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear SMPTE C (1987).
@@ -61,7 +59,6 @@ export const toCIE1931XYZZFromLinearSMPTEC = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_2_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_2_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_2_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_SMPTE_C_2_2;

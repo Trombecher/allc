@@ -20,14 +20,15 @@ import {
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The red component of linear NTSC (1953).
+ * @returns The red component of linear NTSC (1953), clamped to [0, 1].
  */
-export const toLinearNTSCRFromCIE1931XYZ = (x: number, y: number, z: number) =>
-    clamp01(
-        x * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_0 +
-            y * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_1 +
-            z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_2,
-    );
+export const toLinearNTSCRFromCIE1931XYZ = (
+    x: number,
+    y: number,
+    z: number,
+) => clamp01(x * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_0_2);
 
 /**
  * Calculates the green component of linear NTSC (1953) from CIE 1931 XYZ.
@@ -36,14 +37,15 @@ export const toLinearNTSCRFromCIE1931XYZ = (x: number, y: number, z: number) =>
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The green component of linear NTSC (1953).
+ * @returns The green component of linear NTSC (1953), clamped to [0, 1].
  */
-export const toLinearNTSCGFromCIE1931XYZ = (x: number, y: number, z: number) =>
-    clamp01(
-        x * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_0 +
-            y * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_1 +
-            z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_2,
-    );
+export const toLinearNTSCGFromCIE1931XYZ = (
+    x: number,
+    y: number,
+    z: number,
+) => clamp01(x * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_1_2);
 
 /**
  * Calculates the blue component of linear NTSC (1953) from CIE 1931 XYZ.
@@ -52,11 +54,12 @@ export const toLinearNTSCGFromCIE1931XYZ = (x: number, y: number, z: number) =>
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The blue component of linear NTSC (1953).
+ * @returns The blue component of linear NTSC (1953), clamped to [0, 1].
  */
-export const toLinearNTSCBFromCIE1931XYZ = (x: number, y: number, z: number) =>
-    clamp01(
-        x * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_2_0 +
-            y * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_2_1 +
-            z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_2_2,
-    );
+export const toLinearNTSCBFromCIE1931XYZ = (
+    x: number,
+    y: number,
+    z: number,
+) => clamp01(x * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_NTSC_FROM_CIE_1931_XYZ_2_2);

@@ -21,10 +21,13 @@ import {
  *
  * @returns The X component of CIE 1931 XYZ.
  */
-export const toCIE1931XYZXFromLinearNTSC = (r: number, g: number, b: number) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_2;
+export const toCIE1931XYZXFromLinearNTSC = (
+    r: number,
+    g: number,
+    b: number,
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear NTSC (1953).
@@ -35,10 +38,13 @@ export const toCIE1931XYZXFromLinearNTSC = (r: number, g: number, b: number) =>
  *
  * @returns The Y component of CIE 1931 XYZ.
  */
-export const toCIE1931XYZYFromLinearNTSC = (r: number, g: number, b: number) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_2;
+export const toCIE1931XYZYFromLinearNTSC = (
+    r: number,
+    g: number,
+    b: number,
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear NTSC (1953).
@@ -49,7 +55,10 @@ export const toCIE1931XYZYFromLinearNTSC = (r: number, g: number, b: number) =>
  *
  * @returns The Z component of CIE 1931 XYZ.
  */
-export const toCIE1931XYZZFromLinearNTSC = (r: number, g: number, b: number) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_2_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_2_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_2_2;
+export const toCIE1931XYZZFromLinearNTSC = (
+    r: number,
+    g: number,
+    b: number,
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_NTSC_2_2;

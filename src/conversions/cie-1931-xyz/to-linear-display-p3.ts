@@ -20,18 +20,15 @@ import {
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The red component of linear Display P3.
+ * @returns The red component of linear Display P3, clamped to [0, 1].
  */
 export const toLinearDisplayP3RFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_0 +
-            y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_1 +
-            z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_0
+    + y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_1
+    + z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_0_2);
 
 /**
  * Calculates the green component of linear Display P3 from CIE 1931 XYZ.
@@ -40,18 +37,15 @@ export const toLinearDisplayP3RFromCIE1931XYZ = (
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The green component of linear Display P3.
+ * @returns The green component of linear Display P3, clamped to [0, 1].
  */
 export const toLinearDisplayP3GFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_0 +
-            y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_1 +
-            z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_0
+    + y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_1
+    + z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_1_2);
 
 /**
  * Calculates the blue component of linear Display P3 from CIE 1931 XYZ.
@@ -60,15 +54,12 @@ export const toLinearDisplayP3GFromCIE1931XYZ = (
  * @param y The Y component of CIE 1931 XYZ.
  * @param z The Z component of CIE 1931 XYZ.
  *
- * @returns The blue component of linear Display P3.
+ * @returns The blue component of linear Display P3, clamped to [0, 1].
  */
 export const toLinearDisplayP3BFromCIE1931XYZ = (
     x: number,
     y: number,
     z: number,
-) =>
-    clamp01(
-        x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_0 +
-            y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_1 +
-            z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_2,
-    );
+) => clamp01(x * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_0
+    + y * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_1
+    + z * MATRIX_LINEAR_DISPLAY_P3_FROM_CIE_1931_XYZ_2_2);

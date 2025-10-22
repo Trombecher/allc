@@ -25,10 +25,9 @@ export const toCIE1931XYZXFromLinearDCIP3D60 = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_0_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_0_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_0_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_0_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_0_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_0_2;
 
 /**
  * Calculates the Y component of CIE 1931 XYZ from linear DCI-P3 "D60 sim".
@@ -43,10 +42,9 @@ export const toCIE1931XYZYFromLinearDCIP3D60 = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_1_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_1_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_1_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_1_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_1_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_1_2;
 
 /**
  * Calculates the Z component of CIE 1931 XYZ from linear DCI-P3 "D60 sim".
@@ -61,7 +59,6 @@ export const toCIE1931XYZZFromLinearDCIP3D60 = (
     r: number,
     g: number,
     b: number,
-) =>
-    r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_2_0 +
-    g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_2_1 +
-    b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_2_2;
+) => r * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_2_0
+    + g * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_2_1
+    + b * MATRIX_CIE_1931_XYZ_FROM_LINEAR_DCI_P3_D60_2_2;
